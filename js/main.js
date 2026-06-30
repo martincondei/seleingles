@@ -2,7 +2,7 @@ import {
   loadProgressAttempts,
   renderProgress,
   saveProgressAttempt
-} from "./logic/progress.js";
+} from "./logic/progress.js?v=20260630-progress";
 
 // ================= UTIL =================
 
