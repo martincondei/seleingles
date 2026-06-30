@@ -1,3 +1,9 @@
+import {
+  loadProgressAttempts,
+  renderProgress,
+  saveProgressAttempt
+} from "./logic/progress.js";
+
 // ================= UTIL =================
 
 function normalizeText(text) {
@@ -7,6 +13,15 @@ function normalizeText(text) {
     .replace(/[^\w\s]/g, "")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function escapeHtml(text) {
+  return String(text ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 const CONTRACTION_EQUIVALENCES = [
@@ -342,6 +357,10 @@ let selectedUseGroups = [];
 let manualUseScores = new Map();
 let currentSectionId = "startSelection";
 let restoringHistory = false;
+let examStartedAt = null;
+let currentProgressAttemptId = null;
+let latestReadingStats = null;
+let latestUseStats = null;
 
 // ================= LOAD =================
 
@@ -355,6 +374,155 @@ async function loadFile(path) {
   const res = await fetch(`./js/data/${path}`);
   if (!res.ok) throw new Error(`No se pudo cargar el archivo: ${path}`);
   return res.json();
+}
+
+function startProgressAttempt() {
+  examStartedAt = Date.now();
+  currentProgressAttemptId = null;
+  latestReadingStats = null;
+  latestUseStats = null;
+}
+
+function getElapsedSeconds() {
+  if (!examStartedAt) return null;
+  return Math.max(0, Math.round((Date.now() - examStartedAt) / 1000));
+}
+
+function renderProgressDashboard() {
+  renderProgress(
+    document.getElementById("progressPanel"),
+    loadProgressAttempts()
+  );
+}
+
+function getAttemptModeLabel() {
+  if (examFlow === "practice_reading") return "Practice Reading";
+  if (examFlow === "practice_use") return "Practice Use of English";
+  if (examFlow === "random") return "Examen aleatorio";
+  return "Examen concreto";
+}
+
+function getAttemptTarget() {
+  if (examFlow === "practice_reading") {
+    const reading = readingsData.find(r => r.id === activeReadingId);
+    return {
+      id: `${selectedExam?.id || "reading"}:${activeReadingId || ""}`,
+      name: `${reading?.title || "Reading"} · ${selectedExam?.label || ""}`.trim()
+    };
+  }
+
+  if (examFlow === "practice_use") {
+    return {
+      id: `${selectedExam?.id || "use"}:${useData?.id || ""}`,
+      name: `${useData?.title || "Use of English"} · ${selectedExam?.label || ""}`.trim()
+    };
+  }
+
+  return {
+    id: selectedExam?.id || "exam",
+    name: selectedExam?.label || "Examen"
+  };
+}
+
+function getUseStatsWithManualScores() {
+  if (!latestUseStats) return null;
+
+  const score = latestUseStats.score + getManualUseScoreTotal();
+  const correct = latestUseStats.correct + getManualUseCorrectCount();
+  const total = latestUseStats.total;
+  const wrongQuestions = (latestUseStats.wrongQuestions || []).filter(question =>
+    !(question.manual && manualUseScores.get(question.id) > 0)
+  );
+
+  return {
+    ...latestUseStats,
+    score,
+    correct,
+    failures: Math.max(0, total - correct),
+    wrongQuestions
+  };
+}
+
+function buildSectionBreakdown(readingStats, useStats) {
+  return {
+    reading: readingStats ? {
+      score: readingStats.score,
+      maxScore: readingStats.maxScore,
+      correct: readingStats.correct,
+      wrong: readingStats.failures,
+      total: readingStats.total,
+      percentage: readingStats.total > 0 ? (readingStats.correct / readingStats.total) * 100 : 0
+    } : null,
+    useOfEnglish: useStats ? {
+      score: useStats.score,
+      maxScore: useStats.maxScore,
+      correct: useStats.correct,
+      wrong: useStats.failures,
+      total: useStats.total,
+      percentage: useStats.total > 0 ? (useStats.correct / useStats.total) * 100 : 0
+    } : null
+  };
+}
+
+function saveCurrentProgressAttempt() {
+  let score = 0;
+  let maxScore = 0;
+  let correctCount = 0;
+  let totalQuestions = 0;
+
+  if (examFlow === "practice_reading") {
+    if (!latestReadingStats) return;
+    score = latestReadingStats.score;
+    maxScore = latestReadingStats.maxScore;
+    correctCount = latestReadingStats.correct;
+    totalQuestions = latestReadingStats.total;
+  } else if (examFlow === "practice_use") {
+    const useStats = getUseStatsWithManualScores();
+    if (!useStats) return;
+    score = useStats.score;
+    maxScore = useStats.maxScore;
+    correctCount = useStats.correct;
+    totalQuestions = useStats.total;
+  } else {
+    const useStats = getUseStatsWithManualScores();
+    if (!latestReadingStats || !useStats) return;
+    score = latestReadingStats.score + useStats.score;
+    maxScore = latestReadingStats.maxScore + useStats.maxScore;
+    correctCount = latestReadingStats.correct + useStats.correct;
+    totalQuestions = latestReadingStats.total + useStats.total;
+  }
+
+  const target = getAttemptTarget();
+  const percentage = totalQuestions > 0 ? (correctCount / totalQuestions) * 100 : 0;
+  const readingStats = latestReadingStats;
+  const useStats = getUseStatsWithManualScores();
+  const wrongQuestions = [
+    ...(readingStats?.wrongQuestions || []),
+    ...(useStats?.wrongQuestions || [])
+  ];
+  currentProgressAttemptId =
+    currentProgressAttemptId || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+  saveProgressAttempt({
+    id: currentProgressAttemptId,
+    date: new Date().toISOString(),
+    mode: getAttemptModeLabel(),
+    targetId: target.id,
+    targetName: target.name,
+    score,
+    maxScore,
+    correctCount,
+    failureCount: Math.max(0, totalQuestions - correctCount),
+    totalQuestions,
+    totalCorrect: correctCount,
+    totalWrong: Math.max(0, totalQuestions - correctCount),
+    percentage,
+    sectionBreakdown: buildSectionBreakdown(readingStats, useStats),
+    wrongQuestions,
+    elapsedSeconds: getElapsedSeconds()
+  });
+
+  renderProgressDashboard();
 }
 
 // ================= NAVIGATION =================
@@ -523,6 +691,8 @@ document.querySelectorAll('input[name="randomModel"]').forEach(input => {
     document.querySelector('input[name="randomModel"][value="legacy_new"]').checked = true;
   });
 });
+
+renderProgressDashboard();
 
 // ================= EXAM SELECTION =================
 
@@ -808,6 +978,7 @@ async function startPracticeReading(criteria) {
     useData = null;
     activeUseBlockId = null;
     selectedUseGroups = [];
+    startProgressAttempt();
 
     document.getElementById("finalScore").innerHTML = "";
     showSection("exam");
@@ -874,6 +1045,7 @@ async function startPracticeUse(criteria) {
     useData = await loadFile(exam.useOfEnglish.file);
     activeUseBlockId = null;
     selectedUseGroups = [];
+    startProgressAttempt();
 
     document.getElementById("finalScore").innerHTML = "";
     showSection("exam");
@@ -908,6 +1080,7 @@ function configureExamSections(visiblePart = "full") {
 async function startExam(exam) {
   try {
     selectedExam = exam;
+    startProgressAttempt();
     document.getElementById("finalScore").innerHTML = "";
 
     showSection("exam");
@@ -1232,6 +1405,8 @@ function updateUseBlockVisibility() {
 function clearFeedback() {
   document.querySelectorAll(".feedback").forEach(f => f.remove());
   manualUseScores = new Map();
+  latestReadingStats = null;
+  latestUseStats = null;
 }
 
 function addFeedback(div, html, ok) {
@@ -1243,18 +1418,95 @@ function addFeedback(div, html, ok) {
   div.appendChild(f);
 }
 
+function getQuestionKind(q) {
+  return q.task || q.type || "pregunta";
+}
+
+function getReadingUserAnswer(q, div) {
+  if (q.type === "mcq") {
+    const selected = div.querySelector(`input[name="${q.id}"]:checked`);
+    return selected ? `(${selected.value}) ${q.options?.[selected.value] || ""}`.trim() : null;
+  }
+
+  if (q.type === "tf") {
+    const selected = div.querySelector(`input[name="${q.id}"]:checked`);
+    const justification = div.querySelector(`[name="${q.id}_justification"]`)?.value.trim();
+    return [selected?.value?.toUpperCase(), justification].filter(Boolean).join(" · ") || null;
+  }
+
+  const input = div.querySelector(`[name="${q.id}"]`);
+  return input?.value.trim() || null;
+}
+
+function getReadingCorrectAnswer(q) {
+  if (q.type === "mcq") {
+    return (q.answer || [])
+      .map(letter => `(${letter}) ${q.options?.[letter] || ""}`.trim())
+      .join(" / ") || null;
+  }
+
+  if (q.type === "tf") {
+    return q.answer?.length ? q.answer[0].toString().toUpperCase() : null;
+  }
+
+  return (q.answer || []).join(" / ") || null;
+}
+
+function getUseUserAnswer(q, div) {
+  if (q.type === "mcq") {
+    const selected = div.querySelector(`input[name="${q.id}"]:checked`);
+    return selected ? `(${selected.value}) ${q.options?.[selected.value] || ""}`.trim() : null;
+  }
+
+  const input = div.querySelector(`[name="${q.id}"]`);
+  if (!input) return null;
+  if (!input.value.trim()) return null;
+
+  return instructionHasCompletionGap(q)
+    ? buildInstructionCompletionAnswer(q, input.value)
+    : input.value.trim();
+}
+
+function getUseCorrectAnswer(q) {
+  if (requiresManualUseCorrection(q)) {
+    return q.manualCorrection?.structure || null;
+  }
+
+  if (q.type === "mcq") {
+    return (q.answer || [])
+      .map(letter => `(${letter}) ${q.options?.[letter] || ""}`.trim())
+      .join(" / ") || null;
+  }
+
+  return (q.answers || []).join(" / ") || null;
+}
+
+function createWrongQuestion(section, q, div, options = {}) {
+  const isReading = section === "Reading";
+  return {
+    section,
+    id: q.id,
+    type: getQuestionKind(q),
+    userAnswer: isReading ? getReadingUserAnswer(q, div) : getUseUserAnswer(q, div),
+    correctAnswer: isReading ? getReadingCorrectAnswer(q) : getUseCorrectAnswer(q),
+    manual: Boolean(options.manual)
+  };
+}
+
 function correctExam() {
   clearFeedback();
 
   if (examFlow === "practice_reading") {
     const readingScore = correctReading();
     renderPracticeReadingScore(readingScore);
+    saveCurrentProgressAttempt();
     return;
   }
 
   if (examFlow === "practice_use") {
     const useResult = correctUsePracticeAll();
     renderPracticeUseScore(useResult);
+    saveCurrentProgressAttempt();
     return;
   }
 
@@ -1264,12 +1516,15 @@ function correctExam() {
 
   renderFinalScore(readingScore, useScore);
   refreshManualUseScores();
+  saveCurrentProgressAttempt();
 }
 
 // ---------- READING ----------
 
 function correctReading() {
   let score = 0;
+  let correctCount = 0;
+  const wrongQuestions = [];
   const reading = readingsData.find(r => r.id === activeReadingId);
   if (!reading) return 0;
 
@@ -1309,8 +1564,10 @@ function correctReading() {
 
     if (correct) {
       score += q.points;
+      correctCount += 1;
       addFeedback(div, "✅ Correcto", true);
     } else {
+      wrongQuestions.push(createWrongQuestion("Reading", q, div));
       let html = "❌ Incorrecto<br>";
       if (q.type === "tf") {
         if (selectedTfAnswerCorrect && !justificationCorrect) {
@@ -1334,6 +1591,15 @@ function correctReading() {
     }
   });
 
+  latestReadingStats = {
+    score,
+    maxScore: 4,
+    correct: correctCount,
+    failures: reading.questions.length - correctCount,
+    total: reading.questions.length,
+    wrongQuestions
+  };
+
   return score;
 }
 
@@ -1345,6 +1611,8 @@ function correctUse() {
   }
 
   let score = 0;
+  let correctCount = 0;
+  const wrongQuestions = [];
   const block = useData.blocks.find(b => b.id === activeUseBlockId);
   if (!block) return 0;
 
@@ -1363,6 +1631,7 @@ function correctUse() {
       if (c) correct = (q.answer || []).includes(c.value);
     } else if (requiresManualUseCorrection(q)) {
       addManualUseFeedback(div, q);
+      wrongQuestions.push(createWrongQuestion("Use of English", q, div, { manual: true }));
       return;
     } else {
       const i = div.querySelector(`[name="${q.id}"]`);
@@ -1378,8 +1647,10 @@ function correctUse() {
 
     if (correct) {
       score += q.points;
+      correctCount += 1;
       addFeedback(div, "✅ Correcto", true);
     } else {
+      wrongQuestions.push(createWrongQuestion("Use of English", q, div));
       // ✅ AQUÍ ESTÁ LA CORRECCIÓN IMPORTANTE: MCQ usa q.answer, no q.answers
       let html = "❌ Incorrecto<br>";
 
@@ -1403,6 +1674,15 @@ function correctUse() {
     }
   });
 
+  latestUseStats = {
+    score,
+    maxScore: 3,
+    correct: correctCount,
+    failures: block.questionIds.length - correctCount,
+    total: block.questionIds.length,
+    wrongQuestions
+  };
+
   return score;
 }
 
@@ -1413,6 +1693,8 @@ function correctUseChooseAny() {
   }
 
   let score = 0;
+  const groupResults = new Map();
+  const wrongQuestions = [];
 
   useData.questions.forEach(q => {
     const div = document.querySelector(
@@ -1428,25 +1710,48 @@ function correctUseChooseAny() {
 
     if (!isChooseAnyUseMode() && !isUseQuestionAnswered(div, q)) return;
 
+    if (!groupResults.has(groupId)) {
+      groupResults.set(groupId, []);
+    }
+
     if (requiresManualUseCorrection(q)) {
       addManualUseFeedback(div, q);
+      groupResults.get(groupId).push(false);
+      wrongQuestions.push(createWrongQuestion("Use of English", q, div, { manual: true }));
       return;
     }
 
     const correct = isUseAnswerCorrect(div, q);
+    groupResults.get(groupId).push(correct);
     if (correct) {
       score += q.points;
       addFeedback(div, "✅ Correcto", true);
     } else {
+      wrongQuestions.push(createWrongQuestion("Use of English", q, div));
       addUseIncorrectFeedback(div, q);
     }
   });
+
+  let correctGroups = 0;
+  groupResults.forEach(results => {
+    if (results.length && results.every(Boolean)) correctGroups += 1;
+  });
+
+  latestUseStats = {
+    score,
+    maxScore: 3,
+    correct: correctGroups,
+    failures: selectedUseGroups.length - correctGroups,
+    total: selectedUseGroups.length,
+    wrongQuestions
+  };
 
   return score;
 }
 
 function correctUsePracticeAll() {
   const groupResults = new Map();
+  const wrongQuestions = [];
 
   useData.questions.forEach(q => {
     const div = document.querySelector(
@@ -1461,6 +1766,7 @@ function correctUsePracticeAll() {
         groupResults.set(groupId, []);
       }
       groupResults.get(groupId).push(false);
+      wrongQuestions.push(createWrongQuestion("Use of English", q, div, { manual: true }));
       return;
     }
 
@@ -1473,6 +1779,7 @@ function correctUsePracticeAll() {
     if (correct) {
       addFeedback(div, "✅ Correcto", true);
     } else {
+      wrongQuestions.push(createWrongQuestion("Use of English", q, div));
       addUseIncorrectFeedback(div, q);
     }
   });
@@ -1481,6 +1788,15 @@ function correctUsePracticeAll() {
   groupResults.forEach(results => {
     if (results.every(Boolean)) correctGroups += 1;
   });
+
+  latestUseStats = {
+    score: correctGroups,
+    maxScore: groupResults.size,
+    correct: correctGroups,
+    failures: groupResults.size - correctGroups,
+    total: groupResults.size,
+    wrongQuestions
+  };
 
   return {
     correct: correctGroups,
@@ -1550,6 +1866,15 @@ function setManualUseScore(questionId, score, feedback) {
   feedback.classList.remove("feedback-neutral", "feedback-correct", "feedback-incorrect");
   feedback.classList.add(score > 0 ? "feedback-correct" : "feedback-incorrect");
   refreshManualUseScores();
+  if (examFlow === "practice_use") {
+    renderPracticeUseScore({
+      correct: latestUseStats?.correct || 0,
+      total: latestUseStats?.total || 0
+    });
+  } else if (latestReadingStats && latestUseStats) {
+    renderFinalScore(latestReadingStats.score, latestUseStats.score);
+  }
+  saveCurrentProgressAttempt();
 }
 
 function getManualUseScoreTotal() {
@@ -1613,38 +1938,178 @@ function addUseIncorrectFeedback(div, q) {
 
 // ================= FINAL SCORE =================
 
-function renderFinalScore(readingScore, useScore) {
+function getStatsAccuracy(stats) {
+  if (!stats?.total) return 0;
+  return (stats.correct / stats.total) * 100;
+}
+
+function getCombinedStats(sections) {
+  const activeSections = sections.filter(Boolean);
+  const score = activeSections.reduce((sum, section) => sum + section.score, 0);
+  const maxScore = activeSections.reduce((sum, section) => sum + section.maxScore, 0);
+  const correct = activeSections.reduce((sum, section) => sum + section.correct, 0);
+  const total = activeSections.reduce((sum, section) => sum + section.total, 0);
+
+  return {
+    score,
+    maxScore,
+    correct,
+    failures: Math.max(0, total - correct),
+    total,
+    percentage: total > 0 ? (correct / total) * 100 : 0,
+    wrongQuestions: activeSections.flatMap(section => section.wrongQuestions || [])
+  };
+}
+
+function renderSectionResult(label, stats) {
+  if (!stats) return "";
+
+  return `
+    <div class="result-section-card">
+      <strong>${label}</strong>
+      <span>${stats.score.toFixed(2)} / ${stats.maxScore.toFixed(2)}</span>
+      <small>${stats.correct} aciertos · ${stats.failures} fallos · ${stats.total} preguntas · ${getStatsAccuracy(stats).toFixed(0)}%</small>
+    </div>
+  `;
+}
+
+function renderWrongQuestions(wrongQuestions) {
+  if (!wrongQuestions.length) {
+    return `<p class="result-empty">No hay preguntas falladas registradas.</p>`;
+  }
+
+  return `
+    <ul class="wrong-question-list">
+      ${wrongQuestions.map(question => `
+        <li class="wrong-question-item">
+          <div>
+            <strong>${escapeHtml(question.section)} · ${escapeHtml(question.id)}</strong>
+            <small>${escapeHtml(question.type)}</small>
+          </div>
+          <p><strong>Tu respuesta:</strong> ${escapeHtml(question.userAnswer || "Sin respuesta")}</p>
+          <p><strong>Respuesta correcta:</strong> ${escapeHtml(question.correctAnswer || "No disponible")}</p>
+        </li>
+      `).join("")}
+    </ul>
+  `;
+}
+
+function attachResultActions() {
+  const homeButton = document.getElementById("resultBackHome");
+  if (homeButton) {
+    homeButton.onclick = () => showSection("startSelection");
+  }
+
+  const similarButton = document.getElementById("resultTrySimilar");
+  if (!similarButton) return;
+
+  similarButton.onclick = () => {
+    if (examFlow === "practice_reading") {
+      startNextPracticeReading();
+    } else if (examFlow === "practice_use") {
+      startNextPracticeUse();
+    } else if (examFlow === "random") {
+      startNextRandomExam();
+    } else if (selectedExam) {
+      startExam(selectedExam);
+    }
+  };
+}
+
+function renderActionableResults({ title, totalStats, readingStats = null, useStats = null, noteLabel }) {
   const div = document.getElementById("finalScore");
+  const wrongQuestions = totalStats.wrongQuestions || [];
 
   div.innerHTML = `
-    <h3>Resultados</h3>
-    <p><strong>Reading:</strong> ${readingScore} / 4</p>
-    <p><strong>Use of English:</strong> <span id="finalUseScore" data-base="${useScore}">${useScore}</span> / 3</p>
-    <p><strong>Nota final:</strong> <span id="finalTotalScore" data-reading="${readingScore}">${(readingScore + useScore).toFixed(2)}</span> / 7</p>
+    <h3>${title}</h3>
+    <div class="result-summary-grid">
+      <div>
+        <span>${totalStats.score.toFixed(2)} / ${totalStats.maxScore.toFixed(2)}</span>
+        <small>${noteLabel}</small>
+      </div>
+      <div>
+        <span>${totalStats.correct}</span>
+        <small>Aciertos</small>
+      </div>
+      <div>
+        <span>${totalStats.failures}</span>
+        <small>Fallos</small>
+      </div>
+      <div>
+        <span>${totalStats.percentage.toFixed(0)}%</span>
+        <small>Acierto</small>
+      </div>
+    </div>
+    <p class="result-total-line"><strong>Total:</strong> ${totalStats.correct} aciertos · ${totalStats.failures} fallos · ${totalStats.total} preguntas</p>
+    <div class="result-section-grid">
+      ${renderSectionResult("Reading", readingStats)}
+      ${renderSectionResult("Use of English", useStats)}
+    </div>
+    <div class="wrong-question-panel">
+      <h4>Preguntas falladas</h4>
+      ${renderWrongQuestions(wrongQuestions)}
+    </div>
+    <div class="result-actions">
+      <button id="resultBackHome" class="button-secondary" type="button">Volver al inicio</button>
+      <button id="resultTrySimilar" class="button-primary" type="button">Hacer otro intento similar</button>
+    </div>
   `;
+
+  attachResultActions();
+}
+
+function renderFinalScore(readingScore, useScore) {
+  const useStats = getUseStatsWithManualScores() || latestUseStats;
+  const totalStats = getCombinedStats([latestReadingStats, useStats]);
+  renderActionableResults({
+    title: "Resultados",
+    totalStats,
+    readingStats: latestReadingStats,
+    useStats,
+    noteLabel: "Nota final"
+  });
+
+  const useScoreEl = document.createElement("span");
+  useScoreEl.id = "finalUseScore";
+  useScoreEl.dataset.base = useScore;
+  useScoreEl.hidden = true;
+  const finalScoreEl = document.createElement("span");
+  finalScoreEl.id = "finalTotalScore";
+  finalScoreEl.dataset.reading = readingScore;
+  finalScoreEl.hidden = true;
+  document.getElementById("finalScore").append(useScoreEl, finalScoreEl);
 }
 
 function renderPracticeReadingScore(readingScore) {
-  const div = document.getElementById("finalScore");
-
-  div.innerHTML = `
-    <h3>Resultados</h3>
-    <p><strong>Reading:</strong> ${readingScore} / 4</p>
-  `;
+  const totalStats = getCombinedStats([latestReadingStats]);
+  renderActionableResults({
+    title: "Resultados",
+    totalStats,
+    readingStats: latestReadingStats,
+    noteLabel: "Reading"
+  });
 }
 
 function renderPracticeUseScore(useResult) {
-  const div = document.getElementById("finalScore");
+  const useStats = getUseStatsWithManualScores() || latestUseStats;
+  const totalStats = getCombinedStats([useStats]);
+  renderActionableResults({
+    title: "Resultados",
+    totalStats,
+    useStats,
+    noteLabel: "Use of English"
+  });
 
-  div.innerHTML = `
-    <h3>Resultados</h3>
-    <p>
-      <strong>Use of English:</strong>
-      <span id="practiceUseCorrect" data-base="${useResult.correct}">${useResult.correct}</span>
-      respuestas correctas /
-      <span id="practiceUseTotal">${useResult.total}</span>
-    </p>
-  `;
+  const correctEl = document.createElement("span");
+  correctEl.id = "practiceUseCorrect";
+  correctEl.dataset.base = useResult.correct;
+  correctEl.textContent = useResult.correct;
+  correctEl.hidden = true;
+  const totalEl = document.createElement("span");
+  totalEl.id = "practiceUseTotal";
+  totalEl.textContent = useResult.total;
+  totalEl.hidden = true;
+  document.getElementById("finalScore").append(correctEl, totalEl);
 }
 
 function updatePracticeUseScore(correct, total) {
