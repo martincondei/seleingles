@@ -8,10 +8,11 @@ export function getGrade(stats) {
   return (Number(stats.score || 0) / Number(stats.maxScore || 0)) * 10;
 }
 
-export function buildSectionBreakdown(readingStats, useStats) {
+export function buildSectionBreakdown(readingStats, useStats, writingStats = null) {
   return {
     reading: readingStats ? toBreakdown(readingStats) : null,
-    useOfEnglish: useStats ? toBreakdown(useStats) : null
+    useOfEnglish: useStats ? toBreakdown(useStats) : null,
+    writing: writingStats ? toBreakdown(writingStats) : null
   };
 }
 

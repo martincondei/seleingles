@@ -174,12 +174,14 @@ export function buildInventory(examsIndex) {
   const exams = examsIndex?.exams || [];
   const readings = exams.reduce((sum, exam) => sum + (exam.reading || []).length, 0);
   const useBlocks = exams.filter(exam => Boolean(exam.useOfEnglish)).length;
+  const writingBlocks = exams.filter(exam => Boolean(exam.writing)).length;
   const years = getAvailableYears(examsIndex);
 
   return {
     exams: exams.length,
     readings,
     useBlocks,
+    writingBlocks,
     years
   };
 }

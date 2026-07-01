@@ -1042,7 +1042,7 @@ function renderWritingCorrectorView({ exam = null, writing = null, canSkip = fal
   });
   form.addEventListener("submit", event => {
     event.preventDefault();
-    correctWritingWithApi(form, results);
+    correctWritingWithApi(form, results, { exam, writing });
   });
 
   app.querySelector('[data-action="clear-writing"]').addEventListener("click", () => {
@@ -1052,7 +1052,7 @@ function renderWritingCorrectorView({ exam = null, writing = null, canSkip = fal
   });
 }
 
-async function correctWritingWithApi(form, results) {
+async function correctWritingWithApi(form, results, context = {}) {
   const submitButton = form.querySelector('button[type="submit"]');
   const formData = new FormData(form);
   const prompt = String(formData.get("writingPrompt") || "").trim();
@@ -1086,6 +1086,10 @@ async function correctWritingWithApi(form, results) {
     }
 
     results.innerHTML = renderWritingResult(payload);
+    persistWritingAttempt(payload, {
+      ...context,
+      prompt
+    });
     showToast("Writing corregido.", "info");
   } catch (error) {
     results.innerHTML = renderWritingErrorState(error.message);
@@ -1094,6 +1098,52 @@ async function correctWritingWithApi(form, results) {
     submitButton.disabled = false;
     submitButton.textContent = "Corregir writing";
   }
+}
+
+function persistWritingAttempt(result, { exam = null, writing = null, prompt = "" } = {}) {
+  const stats = buildWritingStats(result);
+  const targetName = exam?.label || writing?.title || "Writing";
+  const wrongQuestions = (result.main_errors || []).map((error, index) => ({
+    section: "Writing",
+    id: `W${index + 1}`,
+    type: "Writing error",
+    topic: "Errores principales",
+    prompt: error.original || prompt,
+    userAnswer: error.original || "No disponible",
+    correctAnswer: error.correction || "No disponible"
+  }));
+
+  saveProgressAttempt({
+    id: `writing-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    date: new Date().toISOString(),
+    mode: "Writing",
+    targetId: exam?.id || writing?.id || "writing",
+    targetName,
+    score: stats.score,
+    maxScore: stats.maxScore,
+    correctCount: 0,
+    failureCount: wrongQuestions.length,
+    totalQuestions: 1,
+    percentage: stats.percentage,
+    sectionBreakdown: buildSectionBreakdown(null, null, stats),
+    wrongQuestions,
+    elapsedSeconds: null
+  });
+}
+
+function buildWritingStats(result) {
+  const score = Number(result.final_score || 0);
+  const maxScore = Number(result.max_score || 3);
+  return {
+    kind: "writing",
+    score,
+    maxScore,
+    correct: score,
+    failures: (result.main_errors || []).length,
+    total: maxScore,
+    percentage: maxScore > 0 ? (score / maxScore) * 100 : 0,
+    wrongQuestions: []
+  };
 }
 
 function renderWritingEmptyState() {

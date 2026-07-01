@@ -108,7 +108,8 @@ export function getProgressSummary(attempts = loadProgressAttempts()) {
 export function getSectionAverages(attempts = loadProgressAttempts()) {
   const sections = {
     reading: [],
-    useOfEnglish: []
+    useOfEnglish: [],
+    writing: []
   };
 
   attempts.forEach(attempt => {
@@ -210,7 +211,6 @@ export function getPendingMistakes(attempts = loadProgressAttempts()) {
 export function buildRecommendations(attempts = loadProgressAttempts()) {
   const summary = getProgressSummary(attempts);
   const sections = getSectionAverages(attempts);
-  const insights = getWrongQuestionInsights(attempts);
   const recommendations = [];
 
   if (!attempts.length) {
@@ -244,11 +244,11 @@ export function buildRecommendations(attempts = loadProgressAttempts()) {
     });
   }
 
-  if (insights.length) {
+  if (sections.writing && sections.writing < 70) {
     recommendations.push({
-      title: `Revisa ${insights[0].type}`,
-      body: `Es tu patrón de fallo más repetido en ${insights[0].section}. Empieza por los errores guardados.`,
-      action: "mistakes"
+      title: "Mejora el Writing",
+      body: "Tu media de Writing está por debajo del 70%. Practica una redacción con rúbrica y revisa errores concretos.",
+      action: "section_writing"
     });
   }
 

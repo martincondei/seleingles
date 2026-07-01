@@ -3,7 +3,6 @@ import {
   formatAttemptDate,
   formatElapsedTime,
   getAttemptGrade,
-  getPendingMistakes,
   getProgressSummary,
   getReadingSkillInsights,
   getSectionAverages,
@@ -103,18 +102,13 @@ export function renderDashboard(container, { attempts, inventory, onAction, onRe
   const insights = getWrongQuestionInsights(attempts);
   const useTopicInsights = getUseTopicInsights(attempts);
   const readingSkillInsights = getReadingSkillInsights(attempts);
-  const pendingMistakes = getPendingMistakes(attempts);
-  const yearRange = inventory.years?.length
-    ? `${Math.min(...inventory.years)}-${Math.max(...inventory.years)}`
-    : "Sin años";
-
   container.innerHTML = `
     <section class="screen dashboard-screen">
       <div class="hero-product">
         <div>
           <p class="eyebrow">Selectividad English Prep</p>
           <h1>Entrena con exámenes reales y mejora por patrones.</h1>
-          <p>Reading, Use of English, Writing, examen completo, revisión de fallos y progreso local en una sola herramienta.</p>
+          <p>Reading, Use of English, Writing, examen completo y progreso local en una sola herramienta.</p>
           <div class="hero-actions">
             <button class="button button-primary" type="button" data-action="section_exam">Examen completo</button>
             <button class="button button-secondary" type="button" data-action="section_reading">Practicar Reading</button>
@@ -124,7 +118,7 @@ export function renderDashboard(container, { attempts, inventory, onAction, onRe
           ${stat(String(inventory.exams), "Exámenes")}
           ${stat(String(inventory.readings), "Readings")}
           ${stat(String(inventory.useBlocks), "Bloques Use")}
-          ${stat(yearRange, "Años")}
+          ${stat(String(inventory.writingBlocks || 0), "Writings")}
         </div>
       </div>
 
@@ -149,6 +143,7 @@ export function renderDashboard(container, { attempts, inventory, onAction, onRe
           <div class="skill-bars">
             <div><span>Reading</span><progress value="${averages.reading || 0}" max="100"></progress><b>${(averages.reading || 0).toFixed(0)}%</b></div>
             <div><span>Use of English</span><progress value="${averages.useOfEnglish || 0}" max="100"></progress><b>${(averages.useOfEnglish || 0).toFixed(0)}%</b></div>
+            <div><span>Writing</span><progress value="${averages.writing || 0}" max="100"></progress><b>${(averages.writing || 0).toFixed(0)}%</b></div>
           </div>
         </section>
 
@@ -186,17 +181,12 @@ export function renderDashboard(container, { attempts, inventory, onAction, onRe
           <button class="mode-card" type="button" data-action="section_writing">
             <span>03</span>
             <strong>Writing</strong>
-            <p>Carga enunciados reales y revisa tu texto con rúbrica simulada.</p>
+            <p>Carga enunciados reales y revisa tu texto con rúbrica.</p>
           </button>
           <button class="mode-card" type="button" data-action="section_exam">
             <span>04</span>
             <strong>Examen completo</strong>
             <p>Haz Reading y Use juntos como convocatoria concreta o simulacro.</p>
-          </button>
-          <button class="mode-card" type="button" data-action="mistakes">
-            <span>${pendingMistakes.length}</span>
-            <strong>Revisión de fallos</strong>
-            <p>Consulta tus errores guardados y decide qué reforzar después.</p>
           </button>
         </div>
       </section>

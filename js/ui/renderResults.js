@@ -17,6 +17,9 @@ function renderStatCard(value, label) {
 
 function renderSectionResult(label, stats) {
   if (!stats) return "";
+  const details = stats.kind === "writing" || label === "Writing"
+    ? `${formatNumber(stats.percentage, 0)}% · ${stats.failures} errores principales`
+    : `${stats.correct} aciertos · ${stats.failures} fallos · ${stats.total} preguntas · ${formatNumber(stats.percentage, 0)}%`;
 
   return `
     <div class="section-result">
@@ -24,7 +27,7 @@ function renderSectionResult(label, stats) {
         <strong>${escapeHtml(label)}</strong>
         <span>${formatNumber(stats.score)} / ${formatNumber(stats.maxScore)}</span>
       </div>
-      <p>${stats.correct} aciertos · ${stats.failures} fallos · ${stats.total} preguntas · ${formatNumber(stats.percentage, 0)}%</p>
+      <p>${details}</p>
     </div>
   `;
 }
@@ -141,7 +144,8 @@ export function renderResults(container, options) {
   const manualScores = options.manualScores || new Map();
   const readingStats = options.readingStats;
   const useStats = applyManualScores(options.useStats, manualScores);
-  const totalStats = combineSectionStats([readingStats, useStats]);
+  const writingStats = options.writingStats;
+  const totalStats = combineSectionStats([readingStats, useStats, writingStats]);
   const grade = getGrade(totalStats);
   const nextAction = getNextActionFromStats(readingStats, useStats);
   const wrongQuestions = totalStats.wrongQuestions || [];
@@ -170,6 +174,7 @@ export function renderResults(container, options) {
       <div class="section-result-grid">
         ${renderSectionResult("Reading", readingStats)}
         ${renderSectionResult("Use of English", useStats)}
+        ${renderSectionResult("Writing", writingStats)}
       </div>
 
       ${renderFailureDiagnostics(wrongQuestions)}
@@ -211,6 +216,7 @@ export function renderResults(container, options) {
     totalStats,
     readingStats,
     useStats,
+    writingStats,
     wrongQuestions
   };
 }
