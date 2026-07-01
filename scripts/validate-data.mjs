@@ -58,6 +58,21 @@ function validateQuestion(file, question, section) {
   }
 }
 
+function validateWriting(file, data) {
+  assert(data?.id, `${file}: sin id`);
+  assert(data?.examId, `${file}: sin examId`);
+  assert(Number.isFinite(Number(data?.year)), `${file}: sin year numérico`);
+  assert(Number.isFinite(Number(data?.points)), `${file}: sin points numérico`);
+  assert(Number.isFinite(Number(data?.minWords)), `${file}: sin minWords numérico`);
+  assert(typeof data?.instructions === "string" && data.instructions.trim(), `${file}: sin instructions`);
+  assert(Array.isArray(data?.prompts) && data.prompts.length, `${file}: sin prompts[]`);
+
+  for (const prompt of data?.prompts || []) {
+    assert(prompt.id, `${file}: prompt sin id`);
+    assert(typeof prompt.prompt === "string" && prompt.prompt.trim(), `${file}: ${prompt.id} sin prompt`);
+  }
+}
+
 const examsIndexPath = join(dataRoot, "exams", "index.json");
 const examsIndex = readJson(examsIndexPath);
 assert(Array.isArray(examsIndex?.exams), "El índice de exámenes no contiene exams[]");
@@ -68,6 +83,7 @@ for (const exam of examsIndex?.exams || []) {
   assert(exam.label, `${exam.id}: sin label`);
   assert(Array.isArray(exam.reading) && exam.reading.length, `${exam.id}: sin readings`);
   assert(exam.useOfEnglish?.file, `${exam.id}: sin useOfEnglish.file`);
+  assert(exam.writing?.file, `${exam.id}: sin writing.file`);
 
   for (const reading of exam.reading || []) {
     const file = join(dataRoot, reading.file);
@@ -98,6 +114,23 @@ for (const exam of examsIndex?.exams || []) {
   for (const question of useData?.questions || []) {
     validateQuestion(exam.useOfEnglish.file, question, "use");
   }
+
+  const writingFile = join(dataRoot, exam.writing.file);
+  assert(existsSync(writingFile), `${exam.id}: no existe ${exam.writing.file}`);
+  const writingData = readJson(writingFile);
+  validateWriting(exam.writing.file, writingData);
+}
+
+const writingIndexPath = join(dataRoot, "writing", "index.json");
+const writingIndex = readJson(writingIndexPath);
+assert(Array.isArray(writingIndex?.items), "El índice de writing no contiene items[]");
+
+const examIds = new Set((examsIndex?.exams || []).map(exam => exam.id));
+for (const item of writingIndex?.items || []) {
+  assert(item.id, "Writing index: item sin id");
+  assert(item.examId && examIds.has(item.examId), `${item.id || "writing"}: examId inexistente`);
+  assert(item.file, `${item.id || "writing"}: sin file`);
+  assert(existsSync(join(dataRoot, "writing", item.file)), `${item.id}: no existe writing/${item.file}`);
 }
 
 if (errors.length) {

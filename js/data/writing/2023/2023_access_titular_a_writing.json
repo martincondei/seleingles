@@ -1,0 +1,20 @@
+{
+  "id": "2023_access_titular_a_writing",
+  "examId": "2023_access_titular_a",
+  "year": 2023,
+  "title": "Writing – 2023 – Acceso Titular A",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "Helping others is important in today’s world. Discuss."
+    },
+    {
+      "id": "C2",
+      "prompt": "If you travelled to a new city on holiday, what would you like to do? Give reasons."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2023_ingles/CRITERIOS INGLES TITULAR ACCESO A.pdf"
+}

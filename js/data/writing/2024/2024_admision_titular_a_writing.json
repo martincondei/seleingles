@@ -1,0 +1,20 @@
+{
+  "id": "2024_admision_titular_a_writing",
+  "examId": "2024_admision_titular_a",
+  "year": 2024,
+  "title": "Writing – 2024 – Admisión Titular A",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "Should we preserve our traditions and/or be open to new ones? Give reasons."
+    },
+    {
+      "id": "C2",
+      "prompt": "What would you like to do if you won the lottery? Explain."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2024_ingles/2024_admision_titular_a_criteria.pdf"
+}

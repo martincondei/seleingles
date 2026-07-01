@@ -1,0 +1,20 @@
+{
+  "id": "2024_access_titular_a_writing",
+  "examId": "2024_access_titular_a",
+  "year": 2024,
+  "title": "Writing – 2024 – Acceso Titular A",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "What do you think about using mobile phones in schools? Give reasons."
+    },
+    {
+      "id": "C2",
+      "prompt": "“Young people do not read books anymore.” Discuss."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2024_ingles/2024_access_titular_a_criteria.pdf"
+}

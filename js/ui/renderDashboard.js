@@ -114,10 +114,10 @@ export function renderDashboard(container, { attempts, inventory, onAction, onRe
         <div>
           <p class="eyebrow">Selectividad English Prep</p>
           <h1>Entrena con exámenes reales y mejora por patrones.</h1>
-          <p>Reading, Use of English, simulacros, revisión de fallos y progreso local en una sola herramienta.</p>
+          <p>Reading, Use of English, Writing, examen completo, revisión de fallos y progreso local en una sola herramienta.</p>
           <div class="hero-actions">
-            <button class="button button-primary" type="button" data-action="random">Empezar simulacro</button>
-            <button class="button button-secondary" type="button" data-action="specific">Elegir examen</button>
+            <button class="button button-primary" type="button" data-action="section_exam">Examen completo</button>
+            <button class="button button-secondary" type="button" data-action="section_reading">Practicar Reading</button>
           </div>
         </div>
         <div class="hero-metrics">
@@ -173,25 +173,25 @@ export function renderDashboard(container, { attempts, inventory, onAction, onRe
           </div>
         </div>
         <div class="mode-grid">
-          <button class="mode-card primary" type="button" data-action="specific">
+          <button class="mode-card primary" type="button" data-action="section_reading">
             <span>01</span>
-            <strong>Examen concreto</strong>
-            <p>Elige año, convocatoria y modelo exacto para practicar con intención.</p>
+            <strong>Reading</strong>
+            <p>Elige un reading concreto o genera uno aleatorio por años.</p>
           </button>
-          <button class="mode-card" type="button" data-action="random">
+          <button class="mode-card" type="button" data-action="section_use">
             <span>02</span>
-            <strong>Simulacro aleatorio</strong>
-            <p>Filtra por años y deja que la app genere un intento distinto.</p>
-          </button>
-          <button class="mode-card" type="button" data-action="practice_reading">
-            <span>03</span>
-            <strong>Reading enfocado</strong>
-            <p>Trabaja textos, true/false, vocabulario y justificación.</p>
-          </button>
-          <button class="mode-card" type="button" data-action="practice_use">
-            <span>04</span>
             <strong>Use of English</strong>
-            <p>Practica transformaciones, pasivas, reported speech y gramática.</p>
+            <p>Practica gramática con el formato oficial de cada convocatoria.</p>
+          </button>
+          <button class="mode-card" type="button" data-action="section_writing">
+            <span>03</span>
+            <strong>Writing</strong>
+            <p>Carga enunciados reales y revisa tu texto con rúbrica simulada.</p>
+          </button>
+          <button class="mode-card" type="button" data-action="section_exam">
+            <span>04</span>
+            <strong>Examen completo</strong>
+            <p>Haz Reading y Use juntos como convocatoria concreta o simulacro.</p>
           </button>
           <button class="mode-card" type="button" data-action="mistakes">
             <span>${pendingMistakes.length}</span>

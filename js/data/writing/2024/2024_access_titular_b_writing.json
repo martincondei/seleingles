@@ -1,0 +1,20 @@
+{
+  "id": "2024_access_titular_b_writing",
+  "examId": "2024_access_titular_b",
+  "year": 2024,
+  "title": "Writing – 2024 – Acceso Titular B",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "What type of films or series do you like best? Give reasons."
+    },
+    {
+      "id": "C2",
+      "prompt": "Pros and cons of sharing your life on social media. Discuss."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2024_ingles/2024_access_titular_b_criteria.pdf"
+}

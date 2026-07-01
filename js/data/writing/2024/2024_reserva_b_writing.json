@@ -1,0 +1,20 @@
+{
+  "id": "2024_reserva_b_writing",
+  "examId": "2024_reserva_b",
+  "year": 2024,
+  "title": "Writing – 2024 – Reserva B",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "Are you a day or night person? Explain."
+    },
+    {
+      "id": "C2",
+      "prompt": "What type of outdoor activities do you enjoy best? Give reasons."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2024_ingles/2024_reserva_b_criteria.pdf"
+}

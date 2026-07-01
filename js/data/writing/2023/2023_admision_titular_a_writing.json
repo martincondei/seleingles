@@ -1,0 +1,20 @@
+{
+  "id": "2023_admision_titular_a_writing",
+  "examId": "2023_admision_titular_a",
+  "year": 2023,
+  "title": "Writing – 2023 – Admisión Titular A",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "Describe important moments or special people that have made a difference in your life."
+    },
+    {
+      "id": "C2",
+      "prompt": "How can animals help people? Explain."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2023_ingles/CRITERIOS INGLES TITULAR ADMISION A.pdf"
+}

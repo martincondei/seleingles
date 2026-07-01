@@ -167,6 +167,7 @@ progress::-moz-progress-bar {
 
 .top-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   padding: 4px;
   border: 1px solid var(--border);
@@ -465,10 +466,15 @@ progress::-moz-progress-bar {
   background: #fff;
 }
 
-.mode-grid {
+.mode-grid,
+.section-mode-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
+}
+
+.section-mode-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .mode-card {
@@ -977,6 +983,208 @@ input[type="checkbox"] {
   scroll-margin-top: 92px;
 }
 
+.writing-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.writing-form,
+.writing-results {
+  display: grid;
+  gap: 18px;
+}
+
+.writing-textarea {
+  min-height: 136px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.writing-textarea-large {
+  min-height: 280px;
+}
+
+.writing-empty h2,
+.writing-result-head h2 {
+  margin: 0;
+}
+
+.writing-result-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: start;
+}
+
+.writing-summary-grid,
+.rubric-grid,
+.resource-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.writing-summary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.rubric-grid,
+.resource-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.writing-metric,
+.rubric-card,
+.resource-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+}
+
+.writing-metric {
+  display: grid;
+  align-content: space-between;
+  min-height: 92px;
+  padding: 14px;
+}
+
+.writing-metric span {
+  color: var(--text-soft);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.writing-metric strong {
+  margin-top: 10px;
+  color: var(--title);
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.status-pill {
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: var(--primary-strong);
+  background: var(--primary-soft);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.writing-block {
+  display: grid;
+  gap: 10px;
+}
+
+.writing-block h3 {
+  margin: 0;
+  color: var(--title);
+  font-size: 1rem;
+}
+
+.writing-block p,
+.writing-tip-list,
+.resource-card ul {
+  color: var(--text-soft);
+}
+
+.rubric-card,
+.resource-card {
+  padding: 14px;
+}
+
+.rubric-card header,
+.rubric-item div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--title);
+}
+
+.rubric-card header span,
+.rubric-item span {
+  color: var(--primary-strong);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.rubric-item {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.rubric-item p {
+  margin-top: 6px;
+  font-size: 0.92rem;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.writing-error-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.writing-error-table th,
+.writing-error-table td {
+  padding: 10px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.writing-error-table th {
+  color: var(--title);
+  background: var(--surface-soft);
+}
+
+.writing-tip-list,
+.resource-card ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 18px;
+}
+
+.resource-card {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.resource-card strong {
+  color: var(--title);
+}
+
+.resource-card-wide {
+  grid-column: 1 / -1;
+}
+
+.resource-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.resource-tags span {
+  padding: 7px 10px;
+  border: 1px solid rgba(31, 94, 255, 0.18);
+  border-radius: 999px;
+  color: var(--primary-strong);
+  background: var(--primary-soft);
+  font-weight: 800;
+}
+
+.vocabulary-suggestions {
+  display: grid;
+  gap: 6px;
+}
+
 .results-hero {
   align-items: stretch;
   margin-bottom: 16px;
@@ -1129,6 +1337,10 @@ input[type="checkbox"] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .section-mode-grid {
+    grid-template-columns: 1fr;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1144,7 +1356,7 @@ input[type="checkbox"] {
 
   .top-nav {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     overflow-x: auto;
   }
 
@@ -1167,12 +1379,17 @@ input[type="checkbox"] {
 
   .hero-metrics,
   .mode-grid,
+  .section-mode-grid,
   .choice-set,
   .stats-grid,
   .section-result-grid,
   .session-meta,
   .insight-list,
-  .diagnostic-grid {
+  .diagnostic-grid,
+  .writing-layout,
+  .writing-summary-grid,
+  .rubric-grid,
+  .resource-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1216,6 +1433,14 @@ input[type="checkbox"] {
 
   .button {
     width: 100%;
+  }
+
+  .writing-result-head {
+    flex-direction: column;
+  }
+
+  .resource-card-wide {
+    grid-column: auto;
   }
 }
 

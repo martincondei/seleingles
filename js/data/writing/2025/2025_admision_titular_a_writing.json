@@ -1,0 +1,20 @@
+{
+  "id": "2025_admision_titular_a_writing",
+  "examId": "2025_admision_titular_a",
+  "year": 2025,
+  "title": "Writing – 2025 – Admisión Titular A",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "Share a memorable story from your childhood."
+    },
+    {
+      "id": "C2",
+      "prompt": "Do you think everyone has the same opportunities for education and self-improvement? Discuss."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2025_ingles/Criterios_Titular-A_Lengua Extranjera Inglés_Admisión.pdf"
+}

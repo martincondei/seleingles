@@ -5,6 +5,7 @@ export const FLOW = {
   random: "random",
   reading: "practice_reading",
   use: "practice_use",
+  writing: "practice_writing",
   mistakes: "mistakes"
 };
 
@@ -123,6 +124,16 @@ export function getPracticeUseCandidates(examsIndex, criteria) {
     }));
 }
 
+export function getPracticeWritingCandidates(examsIndex, criteria) {
+  return (examsIndex?.exams || [])
+    .filter(exam => criteria.years.includes(Number(exam.year)) && exam.writing?.file)
+    .map(exam => ({
+      exam,
+      writing: exam.writing,
+      key: exam.id
+    }));
+}
+
 export async function loadExamPayload(exam) {
   const readings = [];
   for (const reading of exam.reading || []) {
@@ -149,6 +160,13 @@ export async function loadUsePayload(exam) {
     exam,
     readings: [],
     use: await loadDataFile(exam.useOfEnglish.file)
+  };
+}
+
+export async function loadWritingPayload(exam) {
+  return {
+    exam,
+    writing: await loadDataFile(exam.writing.file)
   };
 }
 

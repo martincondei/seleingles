@@ -1,0 +1,20 @@
+{
+  "id": "2025_suplente1_a_writing",
+  "examId": "2025_suplente1_a",
+  "year": 2025,
+  "title": "Writing – 2025 – Suplente 1 A",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "Share a memorable experience you’ve had during your favourite holiday or celebration."
+    },
+    {
+      "id": "C2",
+      "prompt": "Holidays and festivities encourage us to spend more than we should. Discuss."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2025_ingles/Criterios_Suplente1-A_Lengua extranjera Ingl‚s.pdf"
+}

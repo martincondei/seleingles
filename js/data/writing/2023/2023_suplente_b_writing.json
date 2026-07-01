@@ -1,0 +1,20 @@
+{
+  "id": "2023_suplente_b_writing",
+  "examId": "2023_suplente_b",
+  "year": 2023,
+  "title": "Writing – 2023 – Suplente B",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "Online shopping or traditional shopping? Discuss."
+    },
+    {
+      "id": "C2",
+      "prompt": "What is your ideal school like? Explain."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2023_ingles/CRITERIOS INGLES SUPLENTE B.pdf"
+}

@@ -9,6 +9,7 @@ Aplicación web estática para practicar Inglés de Selectividad/PAU con exámen
 - Simulacro aleatorio filtrado por años y modelo.
 - Práctica enfocada de Reading.
 - Práctica enfocada de Use of English.
+- Writing Corrector conectado a backend seguro con OpenAI.
 - Corrección automática de MCQ, true/false con justificación, vocabulario y transformaciones.
 - Autocorrección guiada para respuestas abiertas sin solución única.
 - Banco de fallos basado en intentos guardados en `localStorage`.
@@ -39,7 +40,8 @@ Aplicación web estática para practicar Inglés de Selectividad/PAU con exámen
 │   └── data/
 │       ├── exams/
 │       ├── reading/
-│       └── use_of_english/
+│       ├── use_of_english/
+│       └── writing/
 ├── scripts/
 │   ├── serve.mjs
 │   └── validate-data.mjs
@@ -56,6 +58,29 @@ npm run check
 ```
 
 `npm start` sirve la app en `http://localhost:4173`.
+
+## Writing Corrector con OpenAI
+
+La API key nunca debe ir en el frontend. El navegador llama a `POST /api/writing-correction` y el servidor lee la clave desde `OPENAI_API_KEY`.
+
+```bash
+export OPENAI_API_KEY="tu_api_key"
+export OPENAI_MODEL="gpt-4.1-mini"
+npm start
+```
+
+También puedes copiar `.env.example` como referencia, pero no subas un `.env` real al repositorio.
+
+La ruta espera:
+
+```json
+{
+  "writingPrompt": "Enunciado del writing",
+  "studentWriting": "Texto del alumno"
+}
+```
+
+El servidor calcula el número de palabras y la penalización por extensión antes de llamar a OpenAI, y después recompone la nota final con esos valores. La API devuelve una evaluación estructurada con nota, rúbrica, errores concretos, consejos y recursos. No devuelve una redacción corregida completa ni una versión mejorada completa.
 
 ## Añadir Contenido
 

@@ -1,0 +1,20 @@
+{
+  "id": "2023_access_titular_b_writing",
+  "examId": "2023_access_titular_b",
+  "year": 2023,
+  "title": "Writing – 2023 – Acceso Titular B",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "How do you see yourself in twenty years? Explain."
+    },
+    {
+      "id": "C2",
+      "prompt": "“Dressed to impress.” Discuss the role of clothes in today’s society."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2023_ingles/CRITERIOS INGLES TITULAR ACCESO B.pdf"
+}

@@ -7,11 +7,13 @@ import {
   getExamsForYear,
   getPracticeReadingCandidates,
   getPracticeUseCandidates,
+  getPracticeWritingCandidates,
   getRandomExamCandidates,
   loadExamPayload,
   loadExamsIndex,
   loadSingleReadingPayload,
   loadUsePayload,
+  loadWritingPayload,
   pickRandomItem,
   resolveExamMode
 } from "./logic/examGenerator.js";
@@ -44,14 +46,19 @@ let currentResults = null;
 let randomCriteria = null;
 let practiceReadingCriteria = null;
 let practiceUseCriteria = null;
+let practiceWritingCriteria = null;
 let lastRandomExamId = null;
 let lastPracticeReadingKey = null;
 let lastPracticeUseExamId = null;
+let lastPracticeWritingExamId = null;
 let setupState = {
   selectedYear: null,
   selectedExamId: null,
+  selectedReadingId: null,
   selectedModel: EXAM_MODE.legacyNew
 };
+
+const WRITING_CORRECTOR_VIEW = "writing_corrector";
 
 const timer = createTimer({
   onTick: seconds => updateTimerDisplay(seconds)
@@ -83,8 +90,10 @@ function setupNavigation() {
     button.addEventListener("click", () => {
       const target = button.dataset.nav;
       if (target === "dashboard") renderDashboardView();
-      if (target === "specific") renderSpecificSetup();
-      if (target === "random") renderRandomSetup();
+      if (target === "reading") renderSectionHub("reading");
+      if (target === "use") renderSectionHub("use");
+      if (target === WRITING_CORRECTOR_VIEW) renderSectionHub("writing");
+      if (target === "specific") renderSectionHub("exam");
       if (target === "mistakes") renderMistakesView();
     });
   });
@@ -131,11 +140,107 @@ function handleResetAnalytics() {
 }
 
 function handleDashboardAction(action) {
+  if (action === "section_reading") renderSectionHub("reading");
+  if (action === "section_use") renderSectionHub("use");
+  if (action === "section_writing") renderSectionHub("writing");
+  if (action === "section_exam") renderSectionHub("exam");
+  if (action === "reading_specific") renderReadingSpecificSetup();
+  if (action === "reading_random") renderPracticeSetup("reading");
+  if (action === "use_specific") renderUseSpecificSetup();
+  if (action === "use_random") renderPracticeSetup("use");
+  if (action === "writing_specific") renderWritingSpecificSetup();
+  if (action === "writing_random") renderWritingRandomSetup();
   if (action === FLOW.specific) renderSpecificSetup();
   if (action === FLOW.random) renderRandomSetup();
   if (action === FLOW.reading) renderPracticeSetup("reading");
   if (action === FLOW.use) renderPracticeSetup("use");
+  if (action === WRITING_CORRECTOR_VIEW) renderSectionHub("writing");
   if (action === FLOW.mistakes) renderMistakesView();
+}
+
+function renderSectionHub(kind) {
+  const config = getSectionConfig(kind);
+  setView(config.view, config.title);
+  timer.reset();
+  currentSession = null;
+  currentResults = null;
+
+  app.innerHTML = `
+    <section class="screen section-hub-screen">
+      <div class="setup-header">
+        <div>
+          <button class="button button-ghost button-small" type="button" data-action="dashboard">Volver</button>
+          <p class="eyebrow">${escapeHtml(config.eyebrow)}</p>
+          <h1>${escapeHtml(config.title)}</h1>
+          <p>${escapeHtml(config.body)}</p>
+        </div>
+      </div>
+      <div class="section-mode-grid">
+        <button class="mode-card primary" type="button" data-action="${escapeHtml(config.specificAction)}">
+          <span>01</span>
+          <strong>Examen concreto</strong>
+          <p>${escapeHtml(config.specificText)}</p>
+        </button>
+        <button class="mode-card" type="button" data-action="${escapeHtml(config.randomAction)}">
+          <span>02</span>
+          <strong>Aleatorio</strong>
+          <p>${escapeHtml(config.randomText)}</p>
+        </button>
+      </div>
+    </section>
+  `;
+
+  app.querySelector('[data-action="dashboard"]').addEventListener("click", renderDashboardView);
+  app.querySelectorAll(".section-mode-grid [data-action]").forEach(button => {
+    button.addEventListener("click", () => handleDashboardAction(button.dataset.action));
+  });
+}
+
+function getSectionConfig(kind) {
+  const configs = {
+    reading: {
+      view: "reading",
+      eyebrow: "Reading",
+      title: "Practicar Reading",
+      body: "Elige una convocatoria exacta o deja que la app seleccione un texto de los años que quieras practicar.",
+      specificAction: "reading_specific",
+      randomAction: "reading_random",
+      specificText: "Selecciona año, convocatoria y, en 2023/2024, el reading 1 o 2.",
+      randomText: "Selecciona años y recibe un reading aleatorio de esa bolsa."
+    },
+    use: {
+      view: "use",
+      eyebrow: "Use of English",
+      title: "Practicar Use of English",
+      body: "Trabaja solo la parte de gramática con formato oficial según el año elegido.",
+      specificAction: "use_specific",
+      randomAction: "use_random",
+      specificText: "Selecciona año y convocatoria. En 2023/2024 entregarás 6 preguntas de 12.",
+      randomText: "Selecciona años y recibe un bloque aleatorio con sus reglas oficiales."
+    },
+    writing: {
+      view: WRITING_CORRECTOR_VIEW,
+      eyebrow: "Writing",
+      title: "Writing Corrector",
+      body: "Carga un enunciado real y prueba la interfaz de corrección simulada, sin API conectada todavía.",
+      specificAction: "writing_specific",
+      randomAction: "writing_random",
+      specificText: "Selecciona año y convocatoria para cargar sus dos enunciados de writing.",
+      randomText: "Selecciona años y recibe una convocatoria aleatoria con sus prompts."
+    },
+    exam: {
+      view: "specific",
+      eyebrow: "Examen completo",
+      title: "Practicar examen completo",
+      body: "Haz Reading y Use of English juntos, por convocatoria exacta o como simulacro aleatorio.",
+      specificAction: FLOW.specific,
+      randomAction: FLOW.random,
+      specificText: "Elige año, convocatoria y modelo antes de empezar.",
+      randomText: "Filtra años y modelo para generar un simulacro completo."
+    }
+  };
+
+  return configs[kind] || configs.exam;
 }
 
 function renderSetupShell({ view, eyebrow, title, body, innerHtml, onSubmit }) {
@@ -302,6 +407,201 @@ function renderRandomSetup() {
   });
 }
 
+function renderReadingSpecificSetup(selectedYear = setupState.selectedYear) {
+  const years = getAvailableYears(examsIndex);
+  const year = selectedYear || years[0];
+  const exams = getExamsForYear(examsIndex, year).filter(exam => exam.reading?.length);
+  const selectedExamId = exams.some(exam => exam.id === setupState.selectedExamId)
+    ? setupState.selectedExamId
+    : exams[0]?.id;
+  const selectedExam = getExamById(examsIndex, selectedExamId);
+  const readings = selectedExam?.reading || [];
+  const selectedReadingId = readings.some(reading => reading.id === setupState.selectedReadingId)
+    ? setupState.selectedReadingId
+    : readings[0]?.id;
+
+  setupState = {
+    ...setupState,
+    selectedYear: year,
+    selectedExamId,
+    selectedReadingId
+  };
+
+  renderSetupShell({
+    view: "reading",
+    eyebrow: "Reading concreto",
+    title: "Elige el reading exacto",
+    body: "Selecciona año y convocatoria. En 2023 y 2024 puedes elegir entre los dos readings del modelo antiguo.",
+    innerHtml: `
+      <div class="form-grid">
+        <label class="field-label">
+          <span>Año</span>
+          <select name="year" id="yearSelect">
+            ${years.map(item => `<option value="${item}" ${Number(item) === Number(year) ? "selected" : ""}>${item}</option>`).join("")}
+          </select>
+        </label>
+        <label class="field-label">
+          <span>Convocatoria</span>
+          <select name="examId" id="examSelect">
+            ${exams.map(exam => `<option value="${escapeHtml(exam.id)}" ${exam.id === selectedExamId ? "selected" : ""}>${escapeHtml(exam.label)}</option>`).join("")}
+          </select>
+        </label>
+      </div>
+      <label class="field-label">
+        <span>Reading</span>
+        <select name="readingId" id="readingSelect">
+          ${readings.map(reading => `<option value="${escapeHtml(reading.id)}" ${reading.id === selectedReadingId ? "selected" : ""}>${escapeHtml(reading.title)}</option>`).join("")}
+        </select>
+      </label>
+    `,
+    onSubmit: formData => {
+      const exam = getExamById(examsIndex, formData.get("examId"));
+      const reading = (exam?.reading || []).find(item => item.id === formData.get("readingId"));
+      startSpecificReading(exam, reading);
+    }
+  });
+
+  app.querySelector("#yearSelect").addEventListener("change", event => {
+    setupState.selectedExamId = null;
+    setupState.selectedReadingId = null;
+    renderReadingSpecificSetup(Number(event.target.value));
+  });
+  app.querySelector("#examSelect").addEventListener("change", event => {
+    setupState.selectedExamId = event.target.value;
+    setupState.selectedReadingId = null;
+    renderReadingSpecificSetup(year);
+  });
+  app.querySelector("#readingSelect").addEventListener("change", event => {
+    setupState.selectedReadingId = event.target.value;
+  });
+}
+
+function renderUseSpecificSetup(selectedYear = setupState.selectedYear) {
+  const years = getAvailableYears(examsIndex);
+  const year = selectedYear || years[0];
+  const exams = getExamsForYear(examsIndex, year).filter(exam => exam.useOfEnglish?.file);
+  const selectedExamId = exams.some(exam => exam.id === setupState.selectedExamId)
+    ? setupState.selectedExamId
+    : exams[0]?.id;
+
+  setupState = {
+    ...setupState,
+    selectedYear: year,
+    selectedExamId
+  };
+
+  renderSetupShell({
+    view: "use",
+    eyebrow: "Use of English concreto",
+    title: "Elige el bloque exacto",
+    body: "En 2023 y 2024 se usa el modelo antiguo: selecciona 6 preguntas de 12 dentro del intento.",
+    innerHtml: `
+      <div class="form-grid">
+        <label class="field-label">
+          <span>Año</span>
+          <select name="year" id="yearSelect">
+            ${years.map(item => `<option value="${item}" ${Number(item) === Number(year) ? "selected" : ""}>${item}</option>`).join("")}
+          </select>
+        </label>
+        <label class="field-label">
+          <span>Convocatoria</span>
+          <select name="examId" id="examSelect">
+            ${exams.map(exam => `<option value="${escapeHtml(exam.id)}" ${exam.id === selectedExamId ? "selected" : ""}>${escapeHtml(exam.label)}</option>`).join("")}
+          </select>
+        </label>
+      </div>
+      <p class="form-note">${Number(year) < 2025 ? "Modelo antiguo: entregarás 6 preguntas de 12." : "Modelo actual: escogerás el bloque oficial que quieras entregar."}</p>
+    `,
+    onSubmit: formData => {
+      startSpecificUse(getExamById(examsIndex, formData.get("examId")));
+    }
+  });
+
+  app.querySelector("#yearSelect").addEventListener("change", event => {
+    setupState.selectedExamId = null;
+    renderUseSpecificSetup(Number(event.target.value));
+  });
+  app.querySelector("#examSelect").addEventListener("change", event => {
+    setupState.selectedExamId = event.target.value;
+  });
+}
+
+function renderWritingSpecificSetup(selectedYear = setupState.selectedYear) {
+  const years = getAvailableYears(examsIndex);
+  const year = selectedYear || years[0];
+  const exams = getExamsForYear(examsIndex, year).filter(exam => exam.writing?.file);
+  const selectedExamId = exams.some(exam => exam.id === setupState.selectedExamId)
+    ? setupState.selectedExamId
+    : exams[0]?.id;
+
+  setupState = {
+    ...setupState,
+    selectedYear: year,
+    selectedExamId
+  };
+
+  renderSetupShell({
+    view: WRITING_CORRECTOR_VIEW,
+    eyebrow: "Writing concreto",
+    title: "Elige el writing exacto",
+    body: "Carga los enunciados oficiales de una convocatoria y usa el corrector simulado sobre tu respuesta.",
+    innerHtml: `
+      <div class="form-grid">
+        <label class="field-label">
+          <span>Año</span>
+          <select name="year" id="yearSelect">
+            ${years.map(item => `<option value="${item}" ${Number(item) === Number(year) ? "selected" : ""}>${item}</option>`).join("")}
+          </select>
+        </label>
+        <label class="field-label">
+          <span>Convocatoria</span>
+          <select name="examId" id="examSelect">
+            ${exams.map(exam => `<option value="${escapeHtml(exam.id)}" ${exam.id === selectedExamId ? "selected" : ""}>${escapeHtml(exam.label)}</option>`).join("")}
+          </select>
+        </label>
+      </div>
+    `,
+    onSubmit: formData => {
+      startSpecificWriting(getExamById(examsIndex, formData.get("examId")));
+    }
+  });
+
+  app.querySelector("#yearSelect").addEventListener("change", event => {
+    setupState.selectedExamId = null;
+    renderWritingSpecificSetup(Number(event.target.value));
+  });
+  app.querySelector("#examSelect").addEventListener("change", event => {
+    setupState.selectedExamId = event.target.value;
+  });
+}
+
+function renderWritingRandomSetup() {
+  const years = practiceWritingCriteria?.years || getAvailableYears(examsIndex);
+
+  renderSetupShell({
+    view: WRITING_CORRECTOR_VIEW,
+    eyebrow: "Writing aleatorio",
+    title: "Genera un writing aleatorio",
+    body: "Selecciona de qué años quieres practicar y la app cargará una convocatoria con sus enunciados reales.",
+    innerHtml: `
+      <div class="setup-section">
+        <h2>Años disponibles</h2>
+        <div class="check-grid">${renderYearCheckboxes("year", years)}</div>
+      </div>
+    `,
+    onSubmit: formData => {
+      const selectedYears = formData.getAll("year").map(Number);
+      if (!selectedYears.length) {
+        showToast("Elige al menos un año.", "warning");
+        return;
+      }
+
+      practiceWritingCriteria = { years: selectedYears };
+      startNextPracticeWriting();
+    }
+  });
+}
+
 function renderPracticeSetup(kind) {
   const criteria = kind === "reading" ? practiceReadingCriteria : practiceUseCriteria;
   const view = kind === "reading" ? FLOW.reading : FLOW.use;
@@ -385,6 +685,57 @@ function startNextRandomExam() {
   });
 }
 
+async function startSpecificReading(exam, reading) {
+  if (!exam || !reading) {
+    showToast("No se encontró el reading seleccionado.", "error");
+    return;
+  }
+
+  try {
+    const payload = await loadSingleReadingPayload(exam, reading);
+    currentSession = createSessionState(payload, {
+      flow: FLOW.reading,
+      examMode: EXAM_MODE.reading,
+      modeLabel: "Reading concreto",
+      goalLabel: Number(exam.year) < 2025 ? "Modelo antiguo" : "Modelo actual",
+      title: reading.title,
+      description: `${exam.label}. Trabaja comprensión lectora, true/false y vocabulario.`,
+      visibleSections: ["reading"],
+      canSkip: false
+    });
+    renderCurrentSession(true);
+  } catch (error) {
+    showToast(error.message, "error");
+  }
+}
+
+async function startSpecificUse(exam) {
+  if (!exam) {
+    showToast("No se encontró el bloque seleccionado.", "error");
+    return;
+  }
+
+  try {
+    const payload = await loadUsePayload(exam);
+    const isLegacy = Number(exam.year) < 2025;
+    currentSession = createSessionState(payload, {
+      flow: FLOW.use,
+      examMode: isLegacy ? EXAM_MODE.legacyOld : EXAM_MODE.use,
+      modeLabel: "Use of English concreto",
+      goalLabel: isLegacy ? "Modelo antiguo" : "Modelo actual",
+      title: exam.useOfEnglish.title,
+      description: isLegacy
+        ? `${exam.label}. Selecciona exactamente 6 preguntas para entregar.`
+        : `${exam.label}. Escoge el bloque oficial que quieras entregar.`,
+      visibleSections: ["use"],
+      canSkip: false
+    });
+    renderCurrentSession(true);
+  } catch (error) {
+    showToast(error.message, "error");
+  }
+}
+
 async function startNextPracticeReading() {
   const criteria = practiceReadingCriteria || { years: getAvailableYears(examsIndex) };
   const candidates = getPracticeReadingCandidates(examsIndex, criteria);
@@ -425,18 +776,55 @@ async function startNextPracticeUse() {
   try {
     lastPracticeUseExamId = choice.key;
     const payload = await loadUsePayload(choice.exam);
+    const isLegacy = Number(choice.exam.year) < 2025;
     currentSession = createSessionState(payload, {
       flow: FLOW.use,
-      examMode: EXAM_MODE.use,
+      examMode: isLegacy ? EXAM_MODE.legacyOld : EXAM_MODE.use,
       modeLabel: "Use of English enfocado",
-      goalLabel: "Parte 2",
+      goalLabel: isLegacy ? "Modelo antiguo" : "Parte 2",
       title: choice.exam.useOfEnglish.title,
-      description: `${choice.exam.label}. Se corrigen todos los grupos para detectar patrones de gramática.`,
+      description: isLegacy
+        ? `${choice.exam.label}. Selecciona exactamente 6 preguntas para entregar.`
+        : `${choice.exam.label}. Escoge el bloque oficial que quieras entregar.`,
       visibleSections: ["use"],
-      practiceAll: true,
       canSkip: true
     });
     renderCurrentSession(true);
+  } catch (error) {
+    showToast(error.message, "error");
+  }
+}
+
+async function startSpecificWriting(exam) {
+  if (!exam) {
+    showToast("No se encontró el writing seleccionado.", "error");
+    return;
+  }
+
+  try {
+    const payload = await loadWritingPayload(exam);
+    renderWritingCorrectorView(payload);
+  } catch (error) {
+    showToast(error.message, "error");
+  }
+}
+
+async function startNextPracticeWriting() {
+  const criteria = practiceWritingCriteria || { years: getAvailableYears(examsIndex) };
+  const candidates = getPracticeWritingCandidates(examsIndex, criteria);
+  const choice = pickRandomItem(candidates, lastPracticeWritingExamId, item => item.key);
+  if (!choice) {
+    showToast("No hay writings disponibles con esos criterios.", "warning");
+    return;
+  }
+
+  try {
+    lastPracticeWritingExamId = choice.key;
+    const payload = await loadWritingPayload(choice.exam);
+    renderWritingCorrectorView({
+      ...payload,
+      canSkip: true
+    });
   } catch (error) {
     showToast(error.message, "error");
   }
@@ -586,6 +974,284 @@ function persistCurrentAttempt() {
     wrongQuestions: totalStats.wrongQuestions,
     elapsedSeconds: timer.getElapsedSeconds()
   });
+}
+
+function renderWritingCorrectorView({ exam = null, writing = null, canSkip = false } = {}) {
+  timer.reset();
+  currentSession = null;
+  currentResults = null;
+  setView(WRITING_CORRECTOR_VIEW, "Writing Corrector");
+  const prompts = writing?.prompts || [];
+  const initialPrompt = prompts[0]?.prompt || "";
+  const sourceLabel = exam?.label || "Enunciado manual";
+
+  app.innerHTML = `
+    <section class="screen writing-screen">
+      <div class="setup-header">
+        <div>
+          <button class="button button-ghost button-small" type="button" data-action="writing-hub">Volver</button>
+          <p class="eyebrow">Writing Corrector</p>
+          <h1>Corrige tu writing con rúbrica</h1>
+          <p>${escapeHtml(sourceLabel)}. Introduce o ajusta el enunciado y tu respuesta para ver una evaluación simulada.</p>
+        </div>
+        ${canSkip ? '<button class="button button-secondary" type="button" data-action="skip-writing">Otro writing similar</button>' : ""}
+      </div>
+
+      <div class="writing-layout">
+        <form class="panel writing-form" id="writingCorrectorForm">
+          ${prompts.length ? `
+            <label class="field-label">
+              <span>Enunciado oficial</span>
+              <select name="officialPrompt" id="officialPromptSelect">
+                ${prompts.map((prompt, index) => `<option value="${index}">${escapeHtml(prompt.id)} · ${escapeHtml(prompt.prompt)}</option>`).join("")}
+              </select>
+            </label>
+          ` : ""}
+
+          <label class="field-label">
+            <span>Enunciado del writing</span>
+            <textarea class="field-textarea writing-textarea" name="writingPrompt" placeholder="Ejemplo: Write an opinion essay about the advantages and disadvantages of social media.">${escapeHtml(initialPrompt)}</textarea>
+          </label>
+
+          <label class="field-label">
+            <span>Tu writing</span>
+            <textarea class="field-textarea writing-textarea writing-textarea-large" name="studentWriting" placeholder="Escribe aquí tu texto en inglés."></textarea>
+          </label>
+
+          <div class="form-actions">
+            <button class="button button-primary" type="submit">Corregir writing</button>
+            <button class="button button-secondary" type="button" data-action="clear-writing">Limpiar</button>
+          </div>
+        </form>
+
+        <section class="panel writing-results" id="writingResults" aria-live="polite">
+          ${renderWritingEmptyState()}
+        </section>
+      </div>
+    </section>
+  `;
+
+  const form = app.querySelector("#writingCorrectorForm");
+  const results = app.querySelector("#writingResults");
+
+  app.querySelector('[data-action="writing-hub"]').addEventListener("click", () => renderSectionHub("writing"));
+  app.querySelector('[data-action="skip-writing"]')?.addEventListener("click", startNextPracticeWriting);
+  app.querySelector("#officialPromptSelect")?.addEventListener("change", event => {
+    const prompt = prompts[Number(event.target.value)]?.prompt || "";
+    form.elements.writingPrompt.value = prompt;
+  });
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    correctWritingWithApi(form, results);
+  });
+
+  app.querySelector('[data-action="clear-writing"]').addEventListener("click", () => {
+    form.reset();
+    if (initialPrompt) form.elements.writingPrompt.value = initialPrompt;
+    results.innerHTML = renderWritingEmptyState();
+  });
+}
+
+async function correctWritingWithApi(form, results) {
+  const submitButton = form.querySelector('button[type="submit"]');
+  const formData = new FormData(form);
+  const prompt = String(formData.get("writingPrompt") || "").trim();
+  const writing = String(formData.get("studentWriting") || "").trim();
+
+  if (!prompt || !writing) {
+    showToast("Escribe el enunciado y tu writing para probar la corrección.", "info");
+    return;
+  }
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Corrigiendo...";
+  results.innerHTML = renderWritingLoadingState();
+
+  try {
+    const response = await fetch("/api/writing-correction", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        writingPrompt: prompt,
+        studentWriting: writing
+      })
+    });
+
+    const payload = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(payload.error || "No se pudo corregir el writing.");
+    }
+
+    results.innerHTML = renderWritingResult(payload);
+    showToast("Writing corregido.", "info");
+  } catch (error) {
+    results.innerHTML = renderWritingErrorState(error.message);
+    showToast(error.message, "warning");
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Corregir writing";
+  }
+}
+
+function renderWritingEmptyState() {
+  return `
+    <div class="writing-empty">
+      <p class="eyebrow">Resultado</p>
+      <h2>Esperando corrección</h2>
+      <p class="empty-state">Cuando pulses “Corregir writing”, enviaremos el enunciado y tu texto al backend seguro para obtener la evaluación con rúbrica.</p>
+    </div>
+  `;
+}
+
+function renderWritingLoadingState() {
+  return `
+    <div class="writing-empty">
+      <p class="eyebrow">Corrección</p>
+      <h2>Analizando writing</h2>
+      <p class="empty-state">Estamos evaluando el texto con la rúbrica. No se generará una versión reescrita completa.</p>
+    </div>
+  `;
+}
+
+function renderWritingErrorState(message) {
+  return `
+    <div class="writing-empty">
+      <p class="eyebrow">No se pudo corregir</p>
+      <h2>Revisa la configuración</h2>
+      <p class="empty-state">${escapeHtml(message)}</p>
+    </div>
+  `;
+}
+
+function renderWritingResult(result) {
+  return `
+    <div class="writing-result-head">
+      <div>
+        <p class="eyebrow">Resultado OpenAI</p>
+        <h2>${formatWritingScore(result.final_score)} / ${formatWritingScore(result.max_score)}</h2>
+      </div>
+      <span class="status-pill">API conectada</span>
+    </div>
+
+    <div class="writing-summary-grid">
+      ${renderWritingMetric("Nota final", `${formatWritingScore(result.final_score)} / ${formatWritingScore(result.max_score)}`)}
+      ${renderWritingMetric("Palabras", result.word_count)}
+      ${renderWritingMetric("Penalización extensión", result.length_penalty)}
+    </div>
+
+    <section class="writing-block">
+      <h3>Desglose de la rúbrica</h3>
+      <div class="rubric-grid">
+        ${renderRubricCard("Contenido", result.rubric.content, [
+          ["Adecuación al tema", result.rubric.content.topic_relevance],
+          ["Organización", result.rubric.content.organization]
+        ])}
+        ${renderRubricCard("Expresión", result.rubric.expression, [
+          ["Gramática", result.rubric.expression.grammar],
+          ["Vocabulario", result.rubric.expression.vocabulary],
+          ["Ortografía y puntuación", result.rubric.expression.spelling_punctuation]
+        ])}
+      </div>
+    </section>
+
+    <section class="writing-block">
+      <h3>Comentario general</h3>
+      <p>${escapeHtml(result.general_comment)}</p>
+    </section>
+
+    <section class="writing-block">
+      <h3>Errores principales</h3>
+      <div class="table-scroll">
+        <table class="writing-error-table">
+          <thead>
+            <tr>
+              <th>Original</th>
+              <th>Corrección</th>
+              <th>Explicación</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${result.main_errors.map(error => `
+              <tr>
+                <td>${escapeHtml(error.original)}</td>
+                <td>${escapeHtml(error.correction)}</td>
+                <td>${escapeHtml(error.explanation)}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="writing-block">
+      <h3>Consejos para mejorar</h3>
+      <ul class="writing-tip-list">
+        ${result.improvement_tips.map(tip => `<li>${escapeHtml(tip)}</li>`).join("")}
+      </ul>
+    </section>
+
+    <section class="writing-block">
+      <h3>Recursos útiles</h3>
+      <div class="resource-grid">
+        <article class="resource-card">
+          <strong>Conectores</strong>
+          <div class="resource-tags">
+            ${result.useful_resources.connectors.map(connector => `<span>${escapeHtml(connector)}</span>`).join("")}
+          </div>
+        </article>
+        <article class="resource-card">
+          <strong>Gramática</strong>
+          <ul>
+            ${result.useful_resources.grammar_focus.map(item => `<li>${escapeHtml(item)}</li>`).join("")}
+          </ul>
+        </article>
+        <article class="resource-card resource-card-wide">
+          <strong>Vocabulario</strong>
+          <div class="vocabulary-suggestions">
+            ${result.useful_resources.vocabulary_suggestions.map(item => `
+              <p><b>${escapeHtml(item.basic)}</b>: ${item.better_options.map(option => escapeHtml(option)).join(", ")}</p>
+            `).join("")}
+          </div>
+        </article>
+      </div>
+    </section>
+  `;
+}
+
+function renderWritingMetric(label, value) {
+  return `
+    <div class="writing-metric">
+      <span>${escapeHtml(label)}</span>
+      <strong>${escapeHtml(String(value))}</strong>
+    </div>
+  `;
+}
+
+function renderRubricCard(title, section, items) {
+  return `
+    <article class="rubric-card">
+      <header>
+        <strong>${escapeHtml(title)}</strong>
+        <span>${formatWritingScore(section.score)} / ${formatWritingScore(section.max)}</span>
+      </header>
+      ${items.map(([label, item]) => `
+        <div class="rubric-item">
+          <div>
+            <strong>${escapeHtml(label)}</strong>
+            <span>${formatWritingScore(item.score)} / ${formatWritingScore(item.max)}</span>
+          </div>
+          <p>${escapeHtml(item.comment)}</p>
+        </div>
+      `).join("")}
+    </article>
+  `;
+}
+
+function formatWritingScore(value) {
+  return Number(value).toFixed(2).replace(/\.00$/, "").replace(/0$/, "");
 }
 
 function renderMistakesView() {

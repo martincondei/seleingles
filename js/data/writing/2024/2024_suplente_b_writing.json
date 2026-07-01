@@ -1,0 +1,20 @@
+{
+  "id": "2024_suplente_b_writing",
+  "examId": "2024_suplente_b",
+  "year": 2024,
+  "title": "Writing – 2024 – Suplente B",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "“There should be more money spent on scientific research.” Discuss."
+    },
+    {
+      "id": "C2",
+      "prompt": "The importance of personal care and beauty today. Discuss."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2024_ingles/2024_suplente_b_criteria.pdf"
+}

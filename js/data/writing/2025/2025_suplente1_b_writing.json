@@ -1,0 +1,20 @@
+{
+  "id": "2025_suplente1_b_writing",
+  "examId": "2025_suplente1_b",
+  "year": 2025,
+  "title": "Writing – 2025 – Suplente 1 B",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "Describe a trip you would consider perfect: Where would you go, and what would you do?"
+    },
+    {
+      "id": "C2",
+      "prompt": "How does social media influence the preferences of people? Explain."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2025_ingles/Criterios_Suplente1-B_Lengua extranjera_ Ingl‚s.pdf"
+}

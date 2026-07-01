@@ -1,0 +1,20 @@
+{
+  "id": "2025_access_titular_a_writing",
+  "examId": "2025_access_titular_a",
+  "year": 2025,
+  "title": "Writing – 2025 – Acceso Titular A",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "What are the advantages and disadvantages of using apps to meet other people?"
+    },
+    {
+      "id": "C2",
+      "prompt": "The importance of listening to your parents. Should we always listen?"
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2025_ingles/Criterios_Titular-A_Lengua extranjera Inglés_Acceso.pdf"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "2025_suplente2_a_writing",
+  "examId": "2025_suplente2_a",
+  "year": 2025,
+  "title": "Writing – 2025 – Suplente 2 A",
+  "points": 3,
+  "minWords": 120,
+  "instructions": "Write a composition of at least 120 words about one of the topics proposed. Choose one topic only.",
+  "prompts": [
+    {
+      "id": "C1",
+      "prompt": "Do you believe in supernatural things? Explain."
+    },
+    {
+      "id": "C2",
+      "prompt": "Discuss the impact of fake news in our society or in the digital world."
+    }
+  ],
+  "sourcePdf": "examenes_pdf/sel_2025_ingles/Criterios_Suplente2-A_Lengua extranjera Ingl‚s.pdf"
+}
