@@ -1,2122 +1,650 @@
 import {
+  EXAM_MODE,
+  FLOW,
+  buildInventory,
+  getAvailableYears,
+  getExamById,
+  getExamsForYear,
+  getPracticeReadingCandidates,
+  getPracticeUseCandidates,
+  getRandomExamCandidates,
+  loadExamPayload,
+  loadExamsIndex,
+  loadSingleReadingPayload,
+  loadUsePayload,
+  pickRandomItem,
+  resolveExamMode
+} from "./logic/examGenerator.js";
+import {
+  applyManualScores,
+  combineSectionStats,
+  correctReading,
+  correctUse
+} from "./logic/correction.js";
+import {
+  clearProgressAttempts,
+  getPendingMistakes,
   loadProgressAttempts,
-  renderProgress,
   saveProgressAttempt
-} from "./logic/progress.js?v=20260630-progress";
+} from "./logic/progress.js";
+import { buildSectionBreakdown } from "./logic/statistics.js";
+import { escapeHtml, getFormResponses, scrollToTop, setViewTitle, showToast } from "./ui/dom.js";
+import { renderDashboard } from "./ui/renderDashboard.js";
+import { createSessionState, renderExamView, renderInlineFeedback } from "./ui/renderExam.js";
+import { renderResults } from "./ui/renderResults.js";
+import { createTimer, formatTimer } from "./ui/timer.js";
 
-// ================= UTIL =================
+const app = document.getElementById("app");
+const nav = document.getElementById("topNav");
 
-function normalizeText(text) {
-  return String(text || "")
-    .toLowerCase()
-    .replace(/[’‘`´]/g, "'")
-    .replace(/[^\w\s]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+let examsIndex = null;
+let currentView = "dashboard";
+let currentSession = null;
+let currentResults = null;
+let randomCriteria = null;
+let practiceReadingCriteria = null;
+let practiceUseCriteria = null;
+let lastRandomExamId = null;
+let lastPracticeReadingKey = null;
+let lastPracticeUseExamId = null;
+let setupState = {
+  selectedYear: null,
+  selectedExamId: null,
+  selectedModel: EXAM_MODE.legacyNew
+};
+
+const timer = createTimer({
+  onTick: seconds => updateTimerDisplay(seconds)
+});
+
+function updateTimerDisplay(seconds) {
+  const display = document.getElementById("timerDisplay");
+  if (display) display.textContent = formatTimer(seconds);
 }
 
-function escapeHtml(text) {
-  return String(text ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+async function boot() {
+  try {
+    examsIndex = await loadExamsIndex();
+    setupNavigation();
+    renderDashboardView();
+  } catch (error) {
+    app.innerHTML = `
+      <section class="screen panel">
+        <p class="eyebrow">Error de carga</p>
+        <h1>No se pudo iniciar la aplicación</h1>
+        <p>${escapeHtml(error.message)}</p>
+      </section>
+    `;
+  }
 }
 
-const CONTRACTION_EQUIVALENCES = [
-  ["aren't", "are not"],
-  ["can't", "cannot"],
-  ["can't", "can not"],
-  ["couldn't", "could not"],
-  ["didn't", "did not"],
-  ["doesn't", "does not"],
-  ["don't", "do not"],
-  ["hadn't", "had not"],
-  ["hasn't", "has not"],
-  ["haven't", "have not"],
-  ["he'll", "he will"],
-  ["he's been", "he has been"],
-  ["he's", "he is"],
-  ["i'd rather", "i would rather"],
-  ["i'll", "i will"],
-  ["i'm", "i am"],
-  ["i've", "i have"],
-  ["isn't", "is not"],
-  ["it'll", "it will"],
-  ["it's been", "it has been"],
-  ["it's", "it is"],
-  ["let's", "let us"],
-  ["mightn't", "might not"],
-  ["mustn't", "must not"],
-  ["shan't", "shall not"],
-  ["she'll", "she will"],
-  ["she's been", "she has been"],
-  ["she's", "she is"],
-  ["shouldn't", "should not"],
-  ["that's", "that is"],
-  ["there's been", "there has been"],
-  ["there's", "there is"],
-  ["they'll", "they will"],
-  ["they're", "they are"],
-  ["they've", "they have"],
-  ["wasn't", "was not"],
-  ["we'll", "we will"],
-  ["we're", "we are"],
-  ["we've", "we have"],
-  ["weren't", "were not"],
-  ["what's", "what is"],
-  ["where's", "where is"],
-  ["who's", "who is"],
-  ["won't", "will not"],
-  ["wouldn't", "would not"],
-  ["you'll", "you will"],
-  ["you're", "you are"],
-  ["you've", "you have"]
-];
-
-function escapeRegExp(text) {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function replacePhrase(text, from, to) {
-  return text.replace(
-    new RegExp(`(^|\\s)${escapeRegExp(from)}(?=\\s|$)`, "g"),
-    `$1${to}`
-  );
-}
-
-function expandFlexibleAnswerForms(text) {
-  const rawText = String(text || "")
-    .toLowerCase()
-    .replace(/[’‘`´]/g, "'")
-    .replace(/\s+/g, " ")
-    .trim();
-  const forms = new Set([rawText]);
-
-  CONTRACTION_EQUIVALENCES.forEach(([contracted, expanded]) => {
-    Array.from(forms).forEach(form => {
-      forms.add(replacePhrase(form, contracted, expanded));
-      if (!shouldSkipExpandedToContractedForm(form, expanded)) {
-        forms.add(replacePhrase(form, expanded, contracted));
-      }
+function setupNavigation() {
+  nav.querySelectorAll("[data-nav]").forEach(button => {
+    button.addEventListener("click", () => {
+      const target = button.dataset.nav;
+      if (target === "dashboard") renderDashboardView();
+      if (target === "specific") renderSpecificSetup();
+      if (target === "random") renderRandomSetup();
+      if (target === "mistakes") renderMistakesView();
     });
   });
-
-  return Array.from(forms);
 }
 
-function shouldSkipExpandedToContractedForm(form, expanded) {
-  return /\bis$/.test(expanded) &&
-    new RegExp(`(^|\\s)${escapeRegExp(expanded)}\\s+been(?=\\s|$)`).test(form);
-}
-
-function getComparableTexts(text) {
-  return expandFlexibleAnswerForms(text)
-    .map(normalizeText)
-    .filter(text => !/\b(?:he|she|it|that|there|what|where|who) is been\b/.test(text))
-    .filter(Boolean);
-}
-
-function isTextAccepted(userText, validAnswers = []) {
-  const userForms = new Set(getComparableTexts(userText));
-  if (!userForms.size) return false;
-
-  return validAnswers.some(answer =>
-    getComparableTexts(answer).some(validForm => userForms.has(validForm))
-  );
-}
-
-function isTextAcceptedAsContaining(userText, validText) {
-  const userForms = getComparableTexts(userText);
-  const validForms = getComparableTexts(validText);
-  if (!userForms.length || !validForms.length) return false;
-
-  return userForms.some(userForm =>
-    validForms.some(validForm =>
-      userForm === validForm || userForm.includes(validForm)
-    )
-  );
-}
-
-function isJustificationCorrect(userText, validJustifications = []) {
-  if (!getComparableTexts(userText).length) return false;
-
-  return validJustifications.some(j => {
-    const validTexts = Array.isArray(j.validTexts) && j.validTexts.length
-      ? j.validTexts
-      : [j.text || ""];
-
-    return validTexts.some(text => isTextAcceptedAsContaining(userText, text || ""));
+function setActiveNav(view) {
+  nav.querySelectorAll("[data-nav]").forEach(button => {
+    button.classList.toggle("is-active", button.dataset.nav === view);
   });
 }
 
-function createExpandingTextarea(name, placeholder = "") {
-  const textarea = document.createElement("textarea");
-  textarea.name = name;
-  textarea.placeholder = placeholder;
-  textarea.rows = 1;
-  textarea.className = "expanding-answer";
-
-  const resize = () => {
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  };
-
-  textarea.addEventListener("input", resize);
-  requestAnimationFrame(resize);
-
-  return textarea;
+function setView(view, title) {
+  currentView = view;
+  setActiveNav(view);
+  setViewTitle(title);
+  scrollToTop();
 }
 
-function createInlineGapInput(name, placeholder = "") {
-  const input = document.createElement("input");
-  input.type = "text";
-  input.name = name;
-  input.placeholder = placeholder;
-  input.className = "inline-gap-answer";
-
-  const resize = () => {
-    const textLength = Math.max(input.value.length, input.placeholder.length, 8);
-    input.style.width = `${Math.min(textLength + 1, 72)}ch`;
-  };
-
-  input.addEventListener("input", resize);
-  requestAnimationFrame(resize);
-
-  return input;
+function attempts() {
+  return loadProgressAttempts();
 }
 
-function textHasGap(text = "") {
-  return /\.{3}|…/.test(text);
+function renderDashboardView() {
+  timer.reset();
+  currentSession = null;
+  currentResults = null;
+  setView("dashboard", "Panel");
+  renderDashboard(app, {
+    attempts: attempts(),
+    inventory: buildInventory(examsIndex),
+    onAction: handleDashboardAction,
+    onResetAnalytics: handleResetAnalytics
+  });
 }
 
-function promptHasGap(prompt = "") {
-  return textHasGap(prompt);
-}
-
-function instructionHasCompletionGap(q) {
-  return q?.type !== "mcq" && textHasGap(q.instruction || "");
-}
-
-function splitTextAtFirstGap(text = "") {
-  const match = String(text).match(/\.{3}|…/);
-  if (!match) {
-    return { before: String(text), after: "" };
-  }
-
-  return {
-    before: String(text).slice(0, match.index),
-    after: String(text).slice(match.index + match[0].length)
-  };
-}
-
-function joinSentenceParts(before, completion, after = "") {
-  const cleanCompletion = String(completion || "").trim();
-  const needsBeforeSpace = before && cleanCompletion && !/\s$/.test(before) && !/^[,.;:!?)]/.test(cleanCompletion);
-  const needsAfterSpace = cleanCompletion && after && !/\s$/.test(cleanCompletion) && !/^\s|^[,.;:!?)]/.test(after);
-
-  return `${before}${needsBeforeSpace ? " " : ""}${cleanCompletion}${needsAfterSpace ? " " : ""}${after}`.trim();
-}
-
-function buildInstructionCompletionAnswer(q, completion) {
-  const { before, after } = splitTextAtFirstGap(q.instruction || "");
-  return joinSentenceParts(before, completion, after);
-}
-
-function appendTextWithUnderline(parent, text, underlinedWords) {
-  const phrases = Array.isArray(underlinedWords)
-    ? underlinedWords
-    : underlinedWords
-      ? [underlinedWords]
-      : [];
-
-  if (!phrases.length) {
-    parent.append(text);
+function handleResetAnalytics() {
+  if (!window.confirm("¿Reiniciar las analíticas y el historial de intentos? Esta acción no se puede deshacer.")) {
     return;
   }
 
-  let cursor = 0;
-  const matches = phrases
-    .map(phrase => {
-      const start = text.indexOf(phrase);
-      return start >= 0 ? { phrase, start, end: start + phrase.length } : null;
-    })
-    .filter(Boolean)
-    .sort((a, b) => a.start - b.start);
+  clearProgressAttempts();
+  showToast("Analíticas reiniciadas.", "info");
+  renderDashboardView();
+}
 
-  if (!matches.length) {
-    parent.append(text);
-    return;
-  }
+function handleDashboardAction(action) {
+  if (action === FLOW.specific) renderSpecificSetup();
+  if (action === FLOW.random) renderRandomSetup();
+  if (action === FLOW.reading) renderPracticeSetup("reading");
+  if (action === FLOW.use) renderPracticeSetup("use");
+  if (action === FLOW.mistakes) renderMistakesView();
+}
 
-  matches.forEach(match => {
-    if (match.start < cursor) return;
-    parent.append(text.slice(cursor, match.start));
+function renderSetupShell({ view, eyebrow, title, body, innerHtml, onSubmit }) {
+  setView(view, title);
+  app.innerHTML = `
+    <section class="screen setup-screen">
+      <div class="setup-header">
+        <div>
+          <button class="button button-ghost button-small" type="button" data-action="dashboard">Volver</button>
+          <p class="eyebrow">${escapeHtml(eyebrow)}</p>
+          <h1>${escapeHtml(title)}</h1>
+          <p>${escapeHtml(body)}</p>
+        </div>
+      </div>
+      <form class="panel setup-form" id="setupForm">
+        ${innerHtml}
+        <div class="form-actions">
+          <button class="button button-primary" type="submit">Empezar</button>
+          <button class="button button-secondary" type="button" data-action="dashboard">Cancelar</button>
+        </div>
+      </form>
+    </section>
+  `;
 
-    const underline = document.createElement("u");
-    underline.textContent = text.slice(match.start, match.end);
-    parent.appendChild(underline);
+  app.querySelectorAll('[data-action="dashboard"]').forEach(button => {
+    button.addEventListener("click", renderDashboardView);
+  });
+  app.querySelector("#setupForm").addEventListener("submit", event => {
+    event.preventDefault();
+    onSubmit(new FormData(event.currentTarget));
+  });
+}
 
-    cursor = match.end;
+function renderSpecificSetup(selectedYear = setupState.selectedYear) {
+  const years = getAvailableYears(examsIndex);
+  const year = selectedYear || years[0];
+  const exams = getExamsForYear(examsIndex, year);
+  const selectedExamId = exams.some(exam => exam.id === setupState.selectedExamId)
+    ? setupState.selectedExamId
+    : exams[0]?.id;
+  const selectedExam = getExamById(examsIndex, selectedExamId);
+  const isCurrent = Number(selectedExam?.year) >= 2025;
+  setupState = {
+    selectedYear: year,
+    selectedExamId,
+    selectedModel: isCurrent ? EXAM_MODE.current : setupState.selectedModel || EXAM_MODE.legacyNew
+  };
+
+  renderSetupShell({
+    view: "specific",
+    eyebrow: "Examen concreto",
+    title: "Practica una convocatoria exacta",
+    body: "Elige año, examen y modelo. Ideal para preparar una prueba específica o repetir una convocatoria.",
+    innerHtml: `
+      <div class="form-grid">
+        <label class="field-label">
+          <span>Año</span>
+          <select name="year" id="yearSelect">
+            ${years.map(item => `<option value="${item}" ${Number(item) === Number(year) ? "selected" : ""}>${item}</option>`).join("")}
+          </select>
+        </label>
+        <label class="field-label">
+          <span>Convocatoria</span>
+          <select name="examId" id="examSelect">
+            ${exams.map(exam => `<option value="${escapeHtml(exam.id)}" ${exam.id === selectedExamId ? "selected" : ""}>${escapeHtml(exam.label)}</option>`).join("")}
+          </select>
+        </label>
+      </div>
+      <fieldset class="choice-set" ${isCurrent ? "disabled" : ""}>
+        <legend>Modelo</legend>
+        ${renderModelChoices(setupState.selectedModel, isCurrent)}
+      </fieldset>
+      ${isCurrent ? '<p class="form-note">Las convocatorias de 2025 usan directamente el modelo nuevo.</p>' : ""}
+    `,
+    onSubmit: formData => {
+      const exam = getExamById(examsIndex, formData.get("examId"));
+      const requestedMode = formData.get("model") || getDefaultModelForExam(exam);
+      startFullExam(exam, {
+        flow: FLOW.specific,
+        examMode: resolveExamMode(exam, requestedMode),
+        modeLabel: "Examen concreto",
+        canSkip: false
+      });
+    }
   });
 
-  parent.append(text.slice(cursor));
+  app.querySelector("#yearSelect").addEventListener("change", event => {
+    setupState.selectedExamId = null;
+    renderSpecificSetup(Number(event.target.value));
+  });
+  app.querySelector("#examSelect").addEventListener("change", event => {
+    setupState.selectedExamId = event.target.value;
+    renderSpecificSetup(year);
+  });
+  app.querySelectorAll('input[name="model"]').forEach(input => {
+    input.addEventListener("change", () => {
+      setupState.selectedModel = input.value;
+    });
+  });
 }
 
-function appendPromptWithInlineGap(parent, q) {
-  const parts = q.prompt.split(/(\.{3}|…)/);
-  let insertedAnswer = false;
+function getDefaultModelForExam(exam) {
+  return Number(exam?.year) >= 2025 ? EXAM_MODE.current : EXAM_MODE.legacyNew;
+}
 
-  parts.forEach(part => {
-    if (part === "..." || part === "…") {
-      if (q.type === "mcq") {
-        const gap = document.createElement("span");
-        gap.className = "inline-gap-placeholder";
-        gap.setAttribute("aria-label", "hueco");
-        parent.appendChild(gap);
+function renderModelChoices(selectedModel, isCurrent = false) {
+  const currentSelected = isCurrent ? EXAM_MODE.current : selectedModel;
+  return `
+    <label class="radio-card">
+      <input type="radio" name="model" value="${EXAM_MODE.legacyNew}" ${currentSelected !== EXAM_MODE.legacyOld ? "checked" : ""}>
+      <span><strong>Modelo nuevo</strong><small>Reading asignado y elección de un bloque de Use of English.</small></span>
+    </label>
+    <label class="radio-card">
+      <input type="radio" name="model" value="${EXAM_MODE.legacyOld}" ${currentSelected === EXAM_MODE.legacyOld ? "checked" : ""}>
+      <span><strong>Modelo antiguo</strong><small>Elegir reading y seleccionar 6 preguntas de Use of English.</small></span>
+    </label>
+  `;
+}
+
+function renderYearCheckboxes(inputName, selectedYears = getAvailableYears(examsIndex)) {
+  const selected = new Set(selectedYears.map(Number));
+  return getAvailableYears(examsIndex).map(year => `
+    <label class="check-card">
+      <input type="checkbox" name="${escapeHtml(inputName)}" value="${year}" ${selected.has(Number(year)) ? "checked" : ""}>
+      <span><strong>${year}</strong><small>Incluido</small></span>
+    </label>
+  `).join("");
+}
+
+function renderRandomSetup() {
+  const years = randomCriteria?.years || getAvailableYears(examsIndex);
+  const model = randomCriteria?.model || EXAM_MODE.legacyNew;
+
+  renderSetupShell({
+    view: "random",
+    eyebrow: "Simulacro aleatorio",
+    title: "Genera un intento distinto",
+    body: "Filtra años y modelo para simular variedad sin salir del formato oficial.",
+    innerHtml: `
+      <div class="setup-section">
+        <h2>Años disponibles</h2>
+        <div class="check-grid">${renderYearCheckboxes("year", years)}</div>
+      </div>
+      <fieldset class="choice-set">
+        <legend>Modelo</legend>
+        ${renderModelChoices(model)}
+      </fieldset>
+    `,
+    onSubmit: formData => {
+      const selectedYears = formData.getAll("year").map(Number);
+      const selectedModel = formData.get("model");
+      if (!selectedYears.length) {
+        showToast("Elige al menos un año.", "warning");
+        return;
+      }
+      if (selectedModel === EXAM_MODE.legacyOld && selectedYears.includes(2025)) {
+        showToast("2025 no está disponible con modelo antiguo.", "warning");
         return;
       }
 
-      if (!insertedAnswer) {
-        parent.appendChild(createInlineGapInput(q.id, "respuesta"));
-        insertedAnswer = true;
+      randomCriteria = { years: selectedYears, model: selectedModel };
+      startNextRandomExam();
+    }
+  });
+}
+
+function renderPracticeSetup(kind) {
+  const criteria = kind === "reading" ? practiceReadingCriteria : practiceUseCriteria;
+  const view = kind === "reading" ? FLOW.reading : FLOW.use;
+  const title = kind === "reading" ? "Reading enfocado" : "Use of English enfocado";
+  const body = kind === "reading"
+    ? "Recibe un texto aleatorio de los años seleccionados y trabaja solo comprensión lectora."
+    : "Recibe un bloque aleatorio y practica transformaciones y gramática sin la parte de reading.";
+
+  renderSetupShell({
+    view,
+    eyebrow: "Práctica enfocada",
+    title,
+    body,
+    innerHtml: `
+      <div class="setup-section">
+        <h2>Años disponibles</h2>
+        <div class="check-grid">${renderYearCheckboxes("year", criteria?.years || getAvailableYears(examsIndex))}</div>
+      </div>
+    `,
+    onSubmit: formData => {
+      const years = formData.getAll("year").map(Number);
+      if (!years.length) {
+        showToast("Elige al menos un año.", "warning");
+        return;
+      }
+
+      if (kind === "reading") {
+        practiceReadingCriteria = { years };
+        startNextPracticeReading();
       } else {
-        const gap = document.createElement("span");
-        gap.className = "inline-gap-placeholder";
-        gap.setAttribute("aria-label", "hueco");
-        parent.appendChild(gap);
+        practiceUseCriteria = { years };
+        startNextPracticeUse();
       }
-      return;
     }
-
-    appendTextWithUnderline(parent, part, q.underlinedWords);
   });
 }
 
-function appendUsePromptText(parent, q) {
-  if (promptHasGap(q.prompt)) {
-    appendPromptWithInlineGap(parent, q);
+async function startFullExam(exam, options) {
+  if (!exam) {
+    showToast("No se encontró el examen seleccionado.", "error");
     return;
   }
 
-  appendTextWithUnderline(parent, q.prompt, q.underlinedWords);
-}
-
-function appendUseInstructionText(parent, q) {
-  if (!q.instruction) return;
-
-  if (!instructionHasCompletionGap(q)) {
-    parent.append(` ${q.instruction}`);
-    return;
-  }
-
-  const parts = q.instruction.split(/(\.{3}|…)/);
-  let insertedAnswer = false;
-
-  parent.append(" ");
-  parts.forEach(part => {
-    if (part === "..." || part === "…") {
-      if (!insertedAnswer) {
-        parent.appendChild(createInlineGapInput(q.id, "completa la frase"));
-        insertedAnswer = true;
-      } else {
-        const gap = document.createElement("span");
-        gap.className = "inline-gap-placeholder";
-        gap.setAttribute("aria-label", "hueco");
-        parent.appendChild(gap);
-      }
-      return;
-    }
-
-    parent.append(part);
-  });
-}
-
-// ================= STATE =================
-
-let examMode = null;
-let examFlow = "specific";
-let examsIndex = null;
-let selectedYear = null;
-let pendingExam = null;
-let selectedExam = null;
-let randomCriteria = null;
-let lastRandomExamId = null;
-let practiceReadingCriteria = null;
-let practiceUseCriteria = null;
-let lastPracticeReadingKey = null;
-let lastPracticeUseExamId = null;
-
-let readingsData = [];
-let activeReadingId = null;
-
-let useData = null;
-let activeUseBlockId = null;
-let selectedUseGroups = [];
-let manualUseScores = new Map();
-let currentSectionId = "startSelection";
-let restoringHistory = false;
-let examStartedAt = null;
-let currentProgressAttemptId = null;
-let latestReadingStats = null;
-let latestUseStats = null;
-
-// ================= LOAD =================
-
-async function loadExamsIndex() {
-  const res = await fetch("./js/data/exams/index.json");
-  if (!res.ok) throw new Error("No se pudo cargar el índice de exámenes");
-  return res.json();
-}
-
-async function loadFile(path) {
-  const res = await fetch(`./js/data/${path}`);
-  if (!res.ok) throw new Error(`No se pudo cargar el archivo: ${path}`);
-  return res.json();
-}
-
-function startProgressAttempt() {
-  examStartedAt = Date.now();
-  currentProgressAttemptId = null;
-  latestReadingStats = null;
-  latestUseStats = null;
-}
-
-function getElapsedSeconds() {
-  if (!examStartedAt) return null;
-  return Math.max(0, Math.round((Date.now() - examStartedAt) / 1000));
-}
-
-function renderProgressDashboard() {
-  renderProgress(
-    document.getElementById("progressPanel"),
-    loadProgressAttempts()
-  );
-}
-
-function getAttemptModeLabel() {
-  if (examFlow === "practice_reading") return "Practice Reading";
-  if (examFlow === "practice_use") return "Practice Use of English";
-  if (examFlow === "random") return "Examen aleatorio";
-  return "Examen concreto";
-}
-
-function getAttemptTarget() {
-  if (examFlow === "practice_reading") {
-    const reading = readingsData.find(r => r.id === activeReadingId);
-    return {
-      id: `${selectedExam?.id || "reading"}:${activeReadingId || ""}`,
-      name: `${reading?.title || "Reading"} · ${selectedExam?.label || ""}`.trim()
-    };
-  }
-
-  if (examFlow === "practice_use") {
-    return {
-      id: `${selectedExam?.id || "use"}:${useData?.id || ""}`,
-      name: `${useData?.title || "Use of English"} · ${selectedExam?.label || ""}`.trim()
-    };
-  }
-
-  return {
-    id: selectedExam?.id || "exam",
-    name: selectedExam?.label || "Examen"
-  };
-}
-
-function getUseStatsWithManualScores() {
-  if (!latestUseStats) return null;
-
-  const score = latestUseStats.score + getManualUseScoreTotal();
-  const correct = latestUseStats.correct + getManualUseCorrectCount();
-  const total = latestUseStats.total;
-  const wrongQuestions = (latestUseStats.wrongQuestions || []).filter(question =>
-    !(question.manual && manualUseScores.get(question.id) > 0)
-  );
-
-  return {
-    ...latestUseStats,
-    score,
-    correct,
-    failures: Math.max(0, total - correct),
-    wrongQuestions
-  };
-}
-
-function buildSectionBreakdown(readingStats, useStats) {
-  return {
-    reading: readingStats ? {
-      score: readingStats.score,
-      maxScore: readingStats.maxScore,
-      correct: readingStats.correct,
-      wrong: readingStats.failures,
-      total: readingStats.total,
-      percentage: readingStats.total > 0 ? (readingStats.correct / readingStats.total) * 100 : 0
-    } : null,
-    useOfEnglish: useStats ? {
-      score: useStats.score,
-      maxScore: useStats.maxScore,
-      correct: useStats.correct,
-      wrong: useStats.failures,
-      total: useStats.total,
-      percentage: useStats.total > 0 ? (useStats.correct / useStats.total) * 100 : 0
-    } : null
-  };
-}
-
-function saveCurrentProgressAttempt() {
-  let score = 0;
-  let maxScore = 0;
-  let correctCount = 0;
-  let totalQuestions = 0;
-
-  if (examFlow === "practice_reading") {
-    if (!latestReadingStats) return;
-    score = latestReadingStats.score;
-    maxScore = latestReadingStats.maxScore;
-    correctCount = latestReadingStats.correct;
-    totalQuestions = latestReadingStats.total;
-  } else if (examFlow === "practice_use") {
-    const useStats = getUseStatsWithManualScores();
-    if (!useStats) return;
-    score = useStats.score;
-    maxScore = useStats.maxScore;
-    correctCount = useStats.correct;
-    totalQuestions = useStats.total;
-  } else {
-    const useStats = getUseStatsWithManualScores();
-    if (!latestReadingStats || !useStats) return;
-    score = latestReadingStats.score + useStats.score;
-    maxScore = latestReadingStats.maxScore + useStats.maxScore;
-    correctCount = latestReadingStats.correct + useStats.correct;
-    totalQuestions = latestReadingStats.total + useStats.total;
-  }
-
-  const target = getAttemptTarget();
-  const percentage = totalQuestions > 0 ? (correctCount / totalQuestions) * 100 : 0;
-  const readingStats = latestReadingStats;
-  const useStats = getUseStatsWithManualScores();
-  const wrongQuestions = [
-    ...(readingStats?.wrongQuestions || []),
-    ...(useStats?.wrongQuestions || [])
-  ];
-  currentProgressAttemptId =
-    currentProgressAttemptId || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-
-  saveProgressAttempt({
-    id: currentProgressAttemptId,
-    date: new Date().toISOString(),
-    mode: getAttemptModeLabel(),
-    targetId: target.id,
-    targetName: target.name,
-    score,
-    maxScore,
-    correctCount,
-    failureCount: Math.max(0, totalQuestions - correctCount),
-    totalQuestions,
-    totalCorrect: correctCount,
-    totalWrong: Math.max(0, totalQuestions - correctCount),
-    percentage,
-    sectionBreakdown: buildSectionBreakdown(readingStats, useStats),
-    wrongQuestions,
-    elapsedSeconds: getElapsedSeconds()
-  });
-
-  renderProgressDashboard();
-}
-
-// ================= NAVIGATION =================
-
-function showSection(sectionId, options = {}) {
-  const previousSectionId = currentSectionId;
-
-  [
-    "startSelection",
-    "randomSelection",
-    "practiceReadingSelection",
-    "practiceUseSelection",
-    "yearSelection",
-    "examSelection",
-    "legacyModelSelection",
-    "exam"
-  ].forEach(id => {
-    document.getElementById(id).style.display = id === sectionId ? "block" : "none";
-  });
-
-  currentSectionId = sectionId;
-
-  if (
-    !restoringHistory &&
-    options.pushHistory !== false &&
-    previousSectionId !== sectionId
-  ) {
-    history.pushState({ sectionId }, "", `#${sectionId}`);
-  }
-}
-
-function restoreSection(sectionId) {
-  restoringHistory = true;
-  showSection(sectionId, { pushHistory: false });
-  restoringHistory = false;
-}
-
-function navigateBack(fallbackSectionId) {
-  if (history.state?.sectionId && history.length > 1) {
-    history.back();
-    return;
-  }
-
-  showSection(fallbackSectionId);
-}
-
-history.replaceState({ sectionId: "startSelection" }, "", "#startSelection");
-
-window.addEventListener("popstate", event => {
-  restoreSection(event.state?.sectionId || "startSelection");
-});
-
-function isOldLegacyUseMode() {
-  return examMode === "legacy_old" && selectedExam?.year !== 2025;
-}
-
-function isChooseAnyUseMode() {
-  return isOldLegacyUseMode() || Boolean(useData?.blockRules?.chooseAny);
-}
-
-document.getElementById("chooseSpecificExam").onclick = () => {
-  examFlow = "specific";
-  initYearSelection();
-};
-
-document.getElementById("chooseRandomExam").onclick = () => {
-  examFlow = "random";
-  initRandomSelection();
-};
-
-document.getElementById("choosePracticeReading").onclick = () => {
-  examFlow = "practice_reading";
-  initPracticeSelection("reading");
-};
-
-document.getElementById("choosePracticeUse").onclick = () => {
-  examFlow = "practice_use";
-  initPracticeSelection("use");
-};
-
-document.getElementById("chooseLegacyOld").onclick = () => {
-  if (!pendingExam) return;
-  examFlow = "specific";
-  examMode = "legacy_old";
-  startExam(pendingExam);
-};
-
-document.getElementById("chooseLegacyNew").onclick = () => {
-  if (!pendingExam) return;
-  examFlow = "specific";
-  examMode = "legacy_new";
-  startExam(pendingExam);
-};
-
-document.getElementById("backFromYear").onclick = () => {
-  navigateBack("startSelection");
-};
-
-document.getElementById("backFromRandomSelection").onclick = () => {
-  navigateBack("startSelection");
-};
-
-document.getElementById("backFromPracticeReadingSelection").onclick = () => {
-  navigateBack("startSelection");
-};
-
-document.getElementById("backFromPracticeUseSelection").onclick = () => {
-  navigateBack("startSelection");
-};
-
-document.getElementById("backFromExamSelection").onclick = () => {
-  navigateBack("yearSelection");
-};
-
-document.getElementById("backFromLegacyModel").onclick = () => {
-  navigateBack("examSelection");
-};
-
-document.getElementById("backFromExam").onclick = () => {
-  const fallbackSectionId =
-    examFlow === "practice_reading"
-      ? "practiceReadingSelection"
-      : examFlow === "practice_use"
-        ? "practiceUseSelection"
-        : examFlow === "random"
-          ? "randomSelection"
-          : selectedExam?.year === 2025
-            ? "examSelection"
-            : "legacyModelSelection";
-
-  navigateBack(fallbackSectionId);
-};
-
-document.getElementById("startRandomExam").onclick = () => {
-  startRandomExamFromSelection();
-};
-
-document.getElementById("skipRandomExam").onclick = () => {
-  startNextRandomExam();
-};
-
-document.getElementById("startPracticeReading").onclick = () => {
-  startPracticeReadingFromSelection();
-};
-
-document.getElementById("skipPracticeReading").onclick = () => {
-  startNextPracticeReading();
-};
-
-document.getElementById("startPracticeUse").onclick = () => {
-  startPracticeUseFromSelection();
-};
-
-document.getElementById("skipPracticeUse").onclick = () => {
-  startNextPracticeUse();
-};
-
-document.querySelectorAll('input[name="randomModel"]').forEach(input => {
-  input.addEventListener("change", () => {
-    if (input.value !== "legacy_old" || !input.checked) return;
-
-    const year2025 = document.querySelector('input[name="randomYear"][value="2025"]');
-    if (!year2025?.checked) return;
-
-    alert("2025 no está disponible con modelo antiguo.");
-    document.querySelector('input[name="randomModel"][value="legacy_new"]').checked = true;
-  });
-});
-
-renderProgressDashboard();
-
-// ================= EXAM SELECTION =================
-
-async function initYearSelection() {
   try {
-    examsIndex = examsIndex || (await loadExamsIndex());
-
-    const years = [...new Set(examsIndex.exams.map(exam => exam.year))]
-      .sort((a, b) => b - a);
-
-    const list = document.getElementById("yearList");
-    list.innerHTML = "";
-
-    years.forEach(year => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "option-card option-card-year";
-      btn.textContent = year;
-      btn.onclick = () => selectYear(year);
-      list.appendChild(btn);
+    const payload = await loadExamPayload(exam);
+    const modeLabel = options.modeLabel || "Examen";
+    currentSession = createSessionState(payload, {
+      flow: options.flow,
+      examMode: options.examMode,
+      modeLabel,
+      goalLabel: options.examMode === EXAM_MODE.legacyOld ? "Modelo antiguo" : "Modelo nuevo",
+      title: exam.label,
+      description: "Resuelve Reading y Use of English. Al corregir, se guardará tu progreso y se generará un diagnóstico.",
+      visibleSections: ["reading", "use"],
+      canSkip: Boolean(options.canSkip)
     });
-
-    showSection("yearSelection");
+    renderCurrentSession(true);
   } catch (error) {
-    alert(error.message);
+    showToast(error.message, "error");
   }
-}
-
-function selectYear(year) {
-  selectedYear = year;
-  pendingExam = null;
-
-  const list = document.getElementById("examList");
-  list.innerHTML = "";
-
-  examsIndex.exams
-    .filter(exam => exam.year === year)
-    .forEach(exam => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "option-card option-card-exam";
-      btn.innerHTML = `
-        <span class="option-card-eyebrow">Convocatoria ${exam.year}</span>
-        <span class="option-card-title">${exam.label}</span>
-      `;
-      btn.onclick = () => selectExam(exam);
-      list.appendChild(btn);
-    });
-
-  showSection("examSelection");
-}
-
-function selectExam(exam) {
-  pendingExam = exam;
-  examFlow = "specific";
-
-  if (exam.year === 2025) {
-    examMode = "current";
-    startExam(exam);
-    return;
-  }
-
-  showSection("legacyModelSelection");
-}
-
-async function initRandomSelection() {
-  try {
-    examsIndex = examsIndex || (await loadExamsIndex());
-
-    const years = [...new Set(examsIndex.exams.map(exam => exam.year))]
-      .sort((a, b) => b - a);
-
-    const list = document.getElementById("randomYearList");
-    list.innerHTML = "";
-
-    renderYearChecklist(list, "randomYear", years, {
-      withLegacyNote: true,
-      onChange: (year, checkbox) => {
-        const oldModel = document.querySelector(
-          'input[name="randomModel"][value="legacy_old"]'
-        );
-
-        if (year === 2025 && checkbox.checked && oldModel?.checked) {
-          alert("2025 no está disponible con modelo antiguo.");
-          checkbox.checked = false;
-        }
-      }
-    });
-
-    showSection("randomSelection");
-  } catch (error) {
-    alert(error.message);
-  }
-}
-
-async function initPracticeSelection(kind) {
-  try {
-    examsIndex = examsIndex || (await loadExamsIndex());
-
-    const years = [...new Set(examsIndex.exams.map(exam => exam.year))]
-      .sort((a, b) => b - a);
-    const listId = kind === "reading" ? "practiceReadingYearList" : "practiceUseYearList";
-    const sectionId = kind === "reading" ? "practiceReadingSelection" : "practiceUseSelection";
-    const inputName = kind === "reading" ? "practiceReadingYear" : "practiceUseYear";
-    const list = document.getElementById(listId);
-    list.innerHTML = "";
-
-    renderYearChecklist(list, inputName, years);
-    showSection(sectionId);
-  } catch (error) {
-    alert(error.message);
-  }
-}
-
-function renderYearChecklist(list, inputName, years, options = {}) {
-  years.forEach(year => {
-    const label = document.createElement("label");
-    label.className = "filter-chip";
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = inputName;
-    checkbox.value = year;
-    checkbox.checked = true;
-
-    if (options.onChange) {
-      checkbox.addEventListener("change", () => options.onChange(year, checkbox));
-    }
-
-    const chipUi = document.createElement("span");
-    chipUi.className = "filter-chip-ui";
-    chipUi.dataset.year = year;
-    chipUi.dataset.note =
-      options.withLegacyNote && year === 2025
-        ? "No disponible con modelo antiguo"
-        : "Incluido en la selección";
-
-    label.appendChild(checkbox);
-    label.appendChild(chipUi);
-    list.appendChild(label);
-  });
-}
-
-function getRandomSelectionCriteria() {
-  const years = [...document.querySelectorAll('input[name="randomYear"]:checked')]
-    .map(input => Number(input.value));
-  const model = document.querySelector('input[name="randomModel"]:checked')?.value;
-
-  if (!years.length) {
-    alert("Elige al menos un año.");
-    return null;
-  }
-
-  if (!model) {
-    alert("Elige un modelo de examen.");
-    return null;
-  }
-
-  if (model === "legacy_old" && years.includes(2025)) {
-    alert("2025 no está disponible con modelo antiguo. Quita 2025 o elige modelo nuevo.");
-    return null;
-  }
-
-  return { years, model };
-}
-
-function getPracticeCriteria(inputName) {
-  const years = [...document.querySelectorAll(`input[name="${inputName}"]:checked`)]
-    .map(input => Number(input.value));
-
-  if (!years.length) {
-    alert("Elige al menos un año.");
-    return null;
-  }
-
-  return { years };
-}
-
-function pickRandomExam(candidates) {
-  if (candidates.length === 1) return candidates[0];
-
-  const differentCandidates = candidates.filter(exam => exam.id !== lastRandomExamId);
-  const pool = differentCandidates.length ? differentCandidates : candidates;
-  return pool[Math.floor(Math.random() * pool.length)];
-}
-
-function startRandomExamFromSelection() {
-  examFlow = "random";
-  const criteria = getRandomSelectionCriteria();
-  if (!criteria) return;
-
-  randomCriteria = criteria;
-  startRandomExam(randomCriteria);
 }
 
 function startNextRandomExam() {
-  if (!randomCriteria) {
-    startRandomExamFromSelection();
+  const criteria = randomCriteria || {
+    years: getAvailableYears(examsIndex),
+    model: EXAM_MODE.legacyNew
+  };
+  const candidates = getRandomExamCandidates(examsIndex, criteria);
+  const exam = pickRandomItem(candidates, lastRandomExamId);
+  if (!exam) {
+    showToast("No hay exámenes disponibles con esos criterios.", "warning");
     return;
   }
 
-  startRandomExam(randomCriteria);
-}
-
-function startRandomExam(criteria) {
-  examFlow = "random";
-  const candidates = examsIndex.exams.filter(exam =>
-    criteria.years.includes(exam.year)
-  );
-
-  if (!candidates.length) {
-    alert("No hay exámenes disponibles con esos criterios.");
-    return;
-  }
-
-  const exam = pickRandomExam(candidates);
   lastRandomExamId = exam.id;
+  startFullExam(exam, {
+    flow: FLOW.random,
+    examMode: resolveExamMode(exam, criteria.model),
+    modeLabel: "Simulacro aleatorio",
+    canSkip: true
+  });
+}
 
-  if (criteria.model === "legacy_old") {
-    examMode = "legacy_old";
+async function startNextPracticeReading() {
+  const criteria = practiceReadingCriteria || { years: getAvailableYears(examsIndex) };
+  const candidates = getPracticeReadingCandidates(examsIndex, criteria);
+  const choice = pickRandomItem(candidates, lastPracticeReadingKey, item => item.key);
+  if (!choice) {
+    showToast("No hay readings disponibles con esos criterios.", "warning");
+    return;
+  }
+
+  try {
+    lastPracticeReadingKey = choice.key;
+    const payload = await loadSingleReadingPayload(choice.exam, choice.reading);
+    currentSession = createSessionState(payload, {
+      flow: FLOW.reading,
+      examMode: EXAM_MODE.reading,
+      modeLabel: "Reading enfocado",
+      goalLabel: "Parte 1",
+      title: choice.reading.title,
+      description: `${choice.exam.label}. Trabaja comprensión, true/false y vocabulario.`,
+      visibleSections: ["reading"],
+      canSkip: true
+    });
+    renderCurrentSession(true);
+  } catch (error) {
+    showToast(error.message, "error");
+  }
+}
+
+async function startNextPracticeUse() {
+  const criteria = practiceUseCriteria || { years: getAvailableYears(examsIndex) };
+  const candidates = getPracticeUseCandidates(examsIndex, criteria);
+  const choice = pickRandomItem(candidates, lastPracticeUseExamId, item => item.key);
+  if (!choice) {
+    showToast("No hay bloques de Use of English disponibles con esos criterios.", "warning");
+    return;
+  }
+
+  try {
+    lastPracticeUseExamId = choice.key;
+    const payload = await loadUsePayload(choice.exam);
+    currentSession = createSessionState(payload, {
+      flow: FLOW.use,
+      examMode: EXAM_MODE.use,
+      modeLabel: "Use of English enfocado",
+      goalLabel: "Parte 2",
+      title: choice.exam.useOfEnglish.title,
+      description: `${choice.exam.label}. Se corrigen todos los grupos para detectar patrones de gramática.`,
+      visibleSections: ["use"],
+      practiceAll: true,
+      canSkip: true
+    });
+    renderCurrentSession(true);
+  } catch (error) {
+    showToast(error.message, "error");
+  }
+}
+
+function renderCurrentSession(restartTimer = false) {
+  if (!currentSession) return;
+  currentResults = null;
+  setView("work", currentSession.title);
+  renderExamView(app, currentSession, {
+    onSubmit: handleSubmitAttempt,
+    onBack: renderDashboardView,
+    onHome: renderDashboardView,
+    onSkip: handleSkipCurrent,
+    onReadingChange: readingId => {
+      currentSession.activeReadingId = readingId;
+      renderCurrentSession(false);
+    },
+    onUseBlockChange: blockId => {
+      currentSession.activeUseBlockId = blockId;
+      renderCurrentSession(false);
+    },
+    onUseGroupToggle: (groupId, checked) => {
+      updateUseGroupSelection(groupId, checked);
+      renderCurrentSession(false);
+    }
+  });
+
+  if (restartTimer) {
+    timer.start();
   } else {
-    examMode = exam.year === 2025 ? "current" : "legacy_new";
+    updateTimerDisplay(timer.getElapsedSeconds());
   }
-
-  startExam(exam);
 }
 
-function getPracticeReadingCandidates(criteria) {
-  return examsIndex.exams
-    .filter(exam => criteria.years.includes(exam.year))
-    .flatMap(exam =>
-      exam.reading.map(reading => ({
-        exam,
-        reading,
-        key: `${exam.id}:${reading.id}`
-      }))
-    );
-}
+function updateUseGroupSelection(groupId, checked) {
+  const selected = currentSession.selectedUseGroups.filter(id => id !== groupId);
 
-function pickPracticeReading(candidates) {
-  if (candidates.length === 1) return candidates[0];
-
-  const differentCandidates = candidates.filter(item => item.key !== lastPracticeReadingKey);
-  const pool = differentCandidates.length ? differentCandidates : candidates;
-  return pool[Math.floor(Math.random() * pool.length)];
-}
-
-function startPracticeReadingFromSelection() {
-  examFlow = "practice_reading";
-  const criteria = getPracticeCriteria("practiceReadingYear");
-  if (!criteria) return;
-
-  practiceReadingCriteria = criteria;
-  startPracticeReading(practiceReadingCriteria);
-}
-
-function startNextPracticeReading() {
-  if (!practiceReadingCriteria) {
-    startPracticeReadingFromSelection();
-    return;
-  }
-
-  startPracticeReading(practiceReadingCriteria);
-}
-
-async function startPracticeReading(criteria) {
-  try {
-    examFlow = "practice_reading";
-    examsIndex = examsIndex || (await loadExamsIndex());
-
-    const candidates = getPracticeReadingCandidates(criteria);
-    if (!candidates.length) {
-      alert("No hay readings disponibles con esos criterios.");
+  if (checked) {
+    if (selected.length >= currentSession.expectedUseGroups) {
+      showToast(`Solo puedes elegir ${currentSession.expectedUseGroups} grupos.`, "warning");
       return;
     }
-
-    const chosen = pickPracticeReading(candidates);
-    lastPracticeReadingKey = chosen.key;
-    selectedExam = chosen.exam;
-    examMode = "practice_reading";
-    readingsData = [await loadFile(chosen.reading.file)];
-    activeReadingId = readingsData[0].id;
-    useData = null;
-    activeUseBlockId = null;
-    selectedUseGroups = [];
-    startProgressAttempt();
-
-    document.getElementById("finalScore").innerHTML = "";
-    showSection("exam");
-    configureExamSections("reading");
-    document.getElementById("examTitle").textContent =
-      `Reading aleatorio – ${chosen.exam.label}`;
-    document.getElementById("readingChoice").style.display = "none";
-    document.getElementById("useQuestions").innerHTML = "";
-    renderSingleReading(activeReadingId);
-    document.getElementById("submitExam").onclick = correctExam;
-  } catch (error) {
-    alert(error.message);
-    showSection("practiceReadingSelection");
-  }
-}
-
-function getPracticeUseCandidates(criteria) {
-  return examsIndex.exams.filter(exam => criteria.years.includes(exam.year));
-}
-
-function pickPracticeUse(candidates) {
-  if (candidates.length === 1) return candidates[0];
-
-  const differentCandidates = candidates.filter(exam => exam.id !== lastPracticeUseExamId);
-  const pool = differentCandidates.length ? differentCandidates : candidates;
-  return pool[Math.floor(Math.random() * pool.length)];
-}
-
-function startPracticeUseFromSelection() {
-  examFlow = "practice_use";
-  const criteria = getPracticeCriteria("practiceUseYear");
-  if (!criteria) return;
-
-  practiceUseCriteria = criteria;
-  startPracticeUse(practiceUseCriteria);
-}
-
-function startNextPracticeUse() {
-  if (!practiceUseCriteria) {
-    startPracticeUseFromSelection();
-    return;
+    selected.push(groupId);
   }
 
-  startPracticeUse(practiceUseCriteria);
+  currentSession.selectedUseGroups = selected;
 }
 
-async function startPracticeUse(criteria) {
-  try {
-    examFlow = "practice_use";
-    examsIndex = examsIndex || (await loadExamsIndex());
+function handleSkipCurrent() {
+  if (currentSession?.flow === FLOW.random) startNextRandomExam();
+  if (currentSession?.flow === FLOW.reading) startNextPracticeReading();
+  if (currentSession?.flow === FLOW.use) startNextPracticeUse();
+}
 
-    const candidates = getPracticeUseCandidates(criteria);
-    if (!candidates.length) {
-      alert("No hay Use of English disponibles con esos criterios.");
-      return;
-    }
+function handleSubmitAttempt(formData) {
+  if (!currentSession) return;
+  const responses = getFormResponses(document.getElementById("examForm")) || Object.fromEntries(formData.entries());
+  let readingStats = null;
+  let useStats = null;
 
-    const exam = pickPracticeUse(candidates);
-    lastPracticeUseExamId = exam.id;
-    selectedExam = exam;
-    examMode = "practice_use";
-    readingsData = [];
-    activeReadingId = null;
-    useData = await loadFile(exam.useOfEnglish.file);
-    activeUseBlockId = null;
-    selectedUseGroups = [];
-    startProgressAttempt();
-
-    document.getElementById("finalScore").innerHTML = "";
-    showSection("exam");
-    configureExamSections("use");
-    document.getElementById("examTitle").textContent =
-      `Use of English aleatorio – ${exam.label}`;
-    document.getElementById("readingChoice").style.display = "none";
-    document.getElementById("readingContainer").innerHTML = "";
-    setupUseOfEnglishPracticeAll();
-    document.getElementById("submitExam").onclick = correctExam;
-  } catch (error) {
-    alert(error.message);
-    showSection("practiceUseSelection");
+  if (currentSession.visibleSections.includes("reading")) {
+    const reading = currentSession.readings.find(item => item.id === currentSession.activeReadingId) || currentSession.readings[0];
+    readingStats = correctReading(reading, responses);
   }
-}
 
-function configureExamSections(visiblePart = "full") {
-  document.getElementById("readingSection").style.display =
-    visiblePart === "use" ? "none" : "block";
-  document.getElementById("useSection").style.display =
-    visiblePart === "reading" ? "none" : "block";
-  document.getElementById("examSeparator").style.display =
-    visiblePart === "full" ? "block" : "none";
-  document.getElementById("skipRandomExam").style.display =
-    examFlow === "random" ? "inline-block" : "none";
-  document.getElementById("skipPracticeReading").style.display =
-    examFlow === "practice_reading" ? "inline-block" : "none";
-  document.getElementById("skipPracticeUse").style.display =
-    examFlow === "practice_use" ? "inline-block" : "none";
-}
-
-async function startExam(exam) {
-  try {
-    selectedExam = exam;
-    startProgressAttempt();
-    document.getElementById("finalScore").innerHTML = "";
-
-    showSection("exam");
-    configureExamSections("full");
-    document.getElementById("examTitle").textContent = exam.label;
-
-    readingsData = [];
-    for (const r of exam.reading) {
-      readingsData.push(await loadFile(r.file));
-    }
-
-    useData = await loadFile(exam.useOfEnglish.file);
-
-    setupReadings();
-    setupUseOfEnglish();
-
-    document.getElementById("submitExam").onclick = correctExam;
-  } catch (error) {
-    alert(error.message);
-    showSection(examFlow === "random" ? "randomSelection" : selectedYear ? "examSelection" : "startSelection");
-  }
-}
-
-// ================= READINGS =================
-
-function setupReadings() {
-  const container = document.getElementById("readingContainer");
-  container.innerHTML = "";
-
-  if (examMode === "legacy_old" && readingsData.length > 1) {
-    document.getElementById("readingChoice").style.display = "block";
-    const select = document.getElementById("chosenReading");
-    select.innerHTML = "";
-
-    readingsData.forEach(r => {
-      const opt = document.createElement("option");
-      opt.value = r.id;
-      opt.textContent = r.title;
-      select.appendChild(opt);
+  if (currentSession.visibleSections.includes("use")) {
+    const result = correctUse(currentSession.use, responses, {
+      chooseAny: currentSession.chooseAny,
+      practiceAll: currentSession.practiceAll,
+      activeUseBlockId: currentSession.activeUseBlockId,
+      selectedUseGroups: currentSession.selectedUseGroups
     });
 
-    activeReadingId = readingsData[0].id;
-    renderSingleReading(activeReadingId);
-
-    select.onchange = () => {
-      activeReadingId = select.value;
-      renderSingleReading(activeReadingId);
-    };
-  } else {
-    document.getElementById("readingChoice").style.display = "none";
-    const chosen = readingsData[0];
-
-    activeReadingId = chosen.id;
-    renderSingleReading(activeReadingId);
+    if (!result.valid) {
+      showToast(result.message, "warning");
+      return;
+    }
+    useStats = result;
   }
+
+  timer.stop();
+  currentResults = {
+    id: currentResults?.id || `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    readingStats,
+    useStats,
+    manualScores: new Map()
+  };
+
+  renderInlineFeedback([readingStats, useStats]);
+  renderAttemptResults();
+  persistCurrentAttempt();
+  document.getElementById("resultsMount")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function renderSingleReading(readingId) {
-  const container = document.getElementById("readingContainer");
-  container.innerHTML = "";
+function renderAttemptResults() {
+  const resultsMount = document.getElementById("resultsMount");
+  if (!resultsMount || !currentResults) return;
 
-  const reading = readingsData.find(r => r.id === readingId);
-  if (!reading) return;
-
-  const block = document.createElement("div");
-  block.className = "reading-block";
-
-  const title = document.createElement("h4");
-  title.textContent = reading.title;
-  block.appendChild(title);
-
-  const text = document.createElement("p");
-  text.className = "reading-text";
-  text.textContent = reading.text;
-  block.appendChild(text);
-
-  reading.questions.forEach(q => {
-    const div = document.createElement("div");
-    div.className = "question";
-    div.dataset.id = q.id;
-
-    div.innerHTML = `<p><strong>${q.id}</strong>. ${q.prompt}</p>`;
-
-    if (q.type === "mcq") {
-      Object.entries(q.options).forEach(([k, v]) => {
-        div.innerHTML += `
-          <label>
-            <input type="radio" name="${q.id}" value="${k}"> (${k}) ${v}
-          </label><br>`;
-      });
-    }
-
-    if (q.type === "tf") {
-      ["true", "false"].forEach(v => {
-        div.innerHTML += `
-          <label>
-            <input type="radio" name="${q.id}" value="${v}"> ${v.toUpperCase()}
-          </label><br>`;
-      });
-      div.appendChild(
-        createExpandingTextarea(
-          `${q.id}_justification`,
-          "Copia la frase que justifica tu respuesta"
-        )
-      );
-    }
-
-    if (q.type === "word") {
-      div.innerHTML += `<input type="text" name="${q.id}">`;
-    }
-
-    block.appendChild(div);
+  renderResults(resultsMount, {
+    session: currentSession,
+    readingStats: currentResults.readingStats,
+    useStats: currentResults.useStats,
+    manualScores: currentResults.manualScores,
+    onManualScore: (questionId, score) => {
+      currentResults.manualScores.set(questionId, score);
+      renderAttemptResults();
+      persistCurrentAttempt();
+    },
+    onAction: handleResultAction
   });
-
-  container.appendChild(block);
 }
 
-// ================= USE OF ENGLISH =================
-
-function setupUseOfEnglish() {
-  const container = document.getElementById("useQuestions");
-  container.innerHTML = "";
-  selectedUseGroups = [];
-
-  const select = document.getElementById("chosenUseBlock");
-  select.innerHTML = "";
-
-  if (isChooseAnyUseMode()) {
-    document.getElementById("useBlockChoice").style.display = "none";
-    activeUseBlockId = null;
-
-    const blockDiv = document.createElement("div");
-    blockDiv.className = "use-block-card";
-    blockDiv.dataset.block = "all";
-
-    appendUseQuestions(blockDiv, useData.questions);
-
-    container.appendChild(blockDiv);
+function handleResultAction(action) {
+  if (action === "dashboard") {
+    renderDashboardView();
     return;
   }
 
-  document.getElementById("useBlockChoice").style.display = "block";
-
-  useData.blocks.forEach(b => {
-    const opt = document.createElement("option");
-    opt.value = b.id;
-    opt.textContent = b.label;
-    select.appendChild(opt);
-  });
-
-  activeUseBlockId = useData.blocks[0].id;
-
-  select.onchange = () => {
-    activeUseBlockId = select.value;
-    updateUseBlockVisibility();
-  };
-
-  useData.blocks.forEach(block => {
-    const blockDiv = document.createElement("div");
-    blockDiv.className = "use-block-card";
-    blockDiv.dataset.block = block.id;
-    blockDiv.innerHTML = `<h4>${block.label}</h4>`;
-
-    const questions = useData.questions.filter(q =>
-      block.questionIds.includes(q.id)
-    );
-
-    appendUseQuestions(blockDiv, questions);
-
-    container.appendChild(blockDiv);
-  });
-
-  updateUseBlockVisibility();
-}
-
-function setupUseOfEnglishPracticeAll() {
-  const container = document.getElementById("useQuestions");
-  container.innerHTML = "";
-  selectedUseGroups = [];
-
-  document.getElementById("useBlockChoice").style.display = "none";
-  activeUseBlockId = null;
-
-  const blockDiv = document.createElement("div");
-  blockDiv.className = "use-block-card";
-  blockDiv.dataset.block = "all";
-  appendUseQuestions(blockDiv, useData.questions);
-  container.appendChild(blockDiv);
-}
-
-function appendUseQuestions(parent, questions) {
-  const renderedGroups = new Set();
-
-  questions.forEach(q => {
-    if (q.groupId && !renderedGroups.has(q.groupId)) {
-      renderedGroups.add(q.groupId);
-      parent.appendChild(renderUseGroupTitle(q.groupId));
-    }
-
-    parent.appendChild(renderUseQuestion(q));
-  });
-}
-
-function renderUseGroupTitle(groupId) {
-  const groupTitle = document.createElement("div");
-  groupTitle.className = "use-group-title";
-
-  if (isChooseAnyUseMode()) {
-    groupTitle.appendChild(createUseDeliveryCheckbox(groupId));
-    return groupTitle;
-  }
-
-  groupTitle.textContent = groupId;
-  return groupTitle;
-}
-
-function renderUseQuestion(q) {
-  const div = document.createElement("div");
-  div.className = q.groupId ? "question use-subquestion" : "question";
-  div.dataset.id = q.id;
-
-  const prompt = document.createElement("p");
-  if (isChooseAnyUseMode() && !q.groupId) {
-    prompt.appendChild(createUseDeliveryCheckbox(q.id, "Entregar"));
-    prompt.append(" ");
-  }
-
-  const strong = document.createElement("strong");
-  strong.textContent = q.id;
-  prompt.appendChild(strong);
-  prompt.append(". ");
-  appendUsePromptText(prompt, q);
-  appendUseInstructionText(prompt, q);
-  div.appendChild(prompt);
-
-  if (q.type === "mcq") {
-    Object.entries(q.options).forEach(([k, v]) => {
-      const label = document.createElement("label");
-      const input = document.createElement("input");
-      input.type = "radio";
-      input.name = q.id;
-      input.value = k;
-
-      label.appendChild(input);
-      label.append(` (${k}) ${v}`);
-      div.appendChild(label);
-      div.appendChild(document.createElement("br"));
-    });
-  } else if (!promptHasGap(q.prompt) && !instructionHasCompletionGap(q)) {
-    div.appendChild(createExpandingTextarea(q.id, "Escribe tu respuesta"));
-  } else {
-    const hint = document.createElement("p");
-    hint.className = "inline-gap-hint";
-    hint.textContent = instructionHasCompletionGap(q)
-      ? "Escribe solo lo necesario para completar la frase."
-      : "Escribe tu respuesta en el hueco de la frase.";
-    div.appendChild(hint);
-  }
-
-  return div;
-}
-
-function createUseDeliveryCheckbox(groupId, labelText = `Entregar ${groupId}`) {
-  const label = document.createElement("label");
-  label.className = "use-delivery-choice";
-
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.dataset.useGroup = groupId;
-  checkbox.addEventListener("change", () => updateUseDeliverySelection(checkbox));
-
-  label.appendChild(checkbox);
-  label.append(` ${labelText}`);
-  return label;
-}
-
-function updateUseDeliverySelection(checkbox) {
-  const groupId = checkbox.dataset.useGroup;
-
-  if (checkbox.checked) {
-    selectedUseGroups = selectedUseGroups.filter(id => id !== groupId);
-    selectedUseGroups.push(groupId);
-
-    if (selectedUseGroups.length > 6) {
-      const removedGroupId = selectedUseGroups.shift();
-      const removedCheckbox = document.querySelector(
-        `input[data-use-group="${removedGroupId}"]`
-      );
-      if (removedCheckbox) removedCheckbox.checked = false;
-    }
-  } else {
-    selectedUseGroups = selectedUseGroups.filter(id => id !== groupId);
-  }
-
-  updateUseDeliveryCounter();
-}
-
-function updateUseDeliveryCounter() {
-  const existing = document.getElementById("useDeliveryCounter");
-  if (existing) existing.remove();
-
-  if (!isChooseAnyUseMode()) return;
-
-  const counter = document.createElement("p");
-  counter.id = "useDeliveryCounter";
-  counter.className = "use-delivery-counter";
-  counter.textContent = `Preguntas elegidas para entregar: ${selectedUseGroups.length} / 6`;
-
-  document.getElementById("useQuestions").prepend(counter);
-}
-
-function updateUseBlockVisibility() {
-  document.querySelectorAll("#useQuestions [data-block]").forEach(b => {
-    const disabled = b.dataset.block !== activeUseBlockId;
-    b.querySelectorAll("input, textarea").forEach(i => (i.disabled = disabled));
-    b.style.opacity = disabled ? 0.4 : 1;
-  });
-}
-
-// ================= CORRECTION =================
-
-function clearFeedback() {
-  document.querySelectorAll(".feedback").forEach(f => f.remove());
-  manualUseScores = new Map();
-  latestReadingStats = null;
-  latestUseStats = null;
-}
-
-function addFeedback(div, html, ok) {
-  if (!div) return; // evita que se rompa si algo no existe
-  const f = document.createElement("div");
-  const status = ok === true ? "correct" : ok === false ? "incorrect" : ok || "neutral";
-  f.className = `feedback feedback-${status}`;
-  f.innerHTML = html;
-  div.appendChild(f);
-}
-
-function getQuestionKind(q) {
-  return q.task || q.type || "pregunta";
-}
-
-function getReadingUserAnswer(q, div) {
-  if (q.type === "mcq") {
-    const selected = div.querySelector(`input[name="${q.id}"]:checked`);
-    return selected ? `(${selected.value}) ${q.options?.[selected.value] || ""}`.trim() : null;
-  }
-
-  if (q.type === "tf") {
-    const selected = div.querySelector(`input[name="${q.id}"]:checked`);
-    const justification = div.querySelector(`[name="${q.id}_justification"]`)?.value.trim();
-    return [selected?.value?.toUpperCase(), justification].filter(Boolean).join(" · ") || null;
-  }
-
-  const input = div.querySelector(`[name="${q.id}"]`);
-  return input?.value.trim() || null;
-}
-
-function getReadingCorrectAnswer(q) {
-  if (q.type === "mcq") {
-    return (q.answer || [])
-      .map(letter => `(${letter}) ${q.options?.[letter] || ""}`.trim())
-      .join(" / ") || null;
-  }
-
-  if (q.type === "tf") {
-    return q.answer?.length ? q.answer[0].toString().toUpperCase() : null;
-  }
-
-  return (q.answer || []).join(" / ") || null;
-}
-
-function getUseUserAnswer(q, div) {
-  if (q.type === "mcq") {
-    const selected = div.querySelector(`input[name="${q.id}"]:checked`);
-    return selected ? `(${selected.value}) ${q.options?.[selected.value] || ""}`.trim() : null;
-  }
-
-  const input = div.querySelector(`[name="${q.id}"]`);
-  if (!input) return null;
-  if (!input.value.trim()) return null;
-
-  return instructionHasCompletionGap(q)
-    ? buildInstructionCompletionAnswer(q, input.value)
-    : input.value.trim();
-}
-
-function getUseCorrectAnswer(q) {
-  if (requiresManualUseCorrection(q)) {
-    return q.manualCorrection?.structure || null;
-  }
-
-  if (q.type === "mcq") {
-    return (q.answer || [])
-      .map(letter => `(${letter}) ${q.options?.[letter] || ""}`.trim())
-      .join(" / ") || null;
-  }
-
-  return (q.answers || []).join(" / ") || null;
-}
-
-function createWrongQuestion(section, q, div, options = {}) {
-  const isReading = section === "Reading";
-  return {
-    section,
-    id: q.id,
-    type: getQuestionKind(q),
-    userAnswer: isReading ? getReadingUserAnswer(q, div) : getUseUserAnswer(q, div),
-    correctAnswer: isReading ? getReadingCorrectAnswer(q) : getUseCorrectAnswer(q),
-    manual: Boolean(options.manual)
-  };
-}
-
-function correctExam() {
-  clearFeedback();
-
-  if (examFlow === "practice_reading") {
-    const readingScore = correctReading();
-    renderPracticeReadingScore(readingScore);
-    saveCurrentProgressAttempt();
+  if (action === "retry") {
+    renderCurrentSession(true);
     return;
   }
 
-  if (examFlow === "practice_use") {
-    const useResult = correctUsePracticeAll();
-    renderPracticeUseScore(useResult);
-    saveCurrentProgressAttempt();
-    return;
-  }
-
-  const readingScore = correctReading();
-  const useScore = correctUse();
-  if (useScore === null) return;
-
-  renderFinalScore(readingScore, useScore);
-  refreshManualUseScores();
-  saveCurrentProgressAttempt();
+  handleDashboardAction(action);
 }
 
-// ---------- READING ----------
+function persistCurrentAttempt() {
+  if (!currentResults || !currentSession) return;
 
-function correctReading() {
-  let score = 0;
-  let correctCount = 0;
-  const wrongQuestions = [];
-  const reading = readingsData.find(r => r.id === activeReadingId);
-  if (!reading) return 0;
+  const useStats = applyManualScores(currentResults.useStats, currentResults.manualScores);
+  const totalStats = combineSectionStats([currentResults.readingStats, useStats]);
 
-  reading.questions.forEach(q => {
-    const div = document.querySelector(
-      `#readingContainer .question[data-id="${q.id}"]`
-    );
-    let correct = false;
-    let selectedTfAnswerCorrect = false;
-    let justificationCorrect = false;
-
-    if (q.type === "mcq") {
-      const c = div.querySelector(`input[name="${q.id}"]:checked`);
-      if (c) correct = q.answer.includes(c.value);
-    }
-
-    if (q.type === "word") {
-      const i = div.querySelector(`input[name="${q.id}"]`);
-      if (i) {
-        correct = isTextAccepted(i.value, q.answer || []);
-      }
-    }
-
-    if (q.type === "tf") {
-      const c = div.querySelector(`input[name="${q.id}"]:checked`);
-      const justification = div.querySelector(
-        `[name="${q.id}_justification"]`
-      );
-
-      selectedTfAnswerCorrect = Boolean(c) && q.answer[0] === (c.value === "true");
-      justificationCorrect = isJustificationCorrect(
-        justification?.value || "",
-        q.justification || []
-      );
-      correct = selectedTfAnswerCorrect && justificationCorrect;
-    }
-
-    if (correct) {
-      score += q.points;
-      correctCount += 1;
-      addFeedback(div, "✅ Correcto", true);
-    } else {
-      wrongQuestions.push(createWrongQuestion("Reading", q, div));
-      let html = "❌ Incorrecto<br>";
-      if (q.type === "tf") {
-        if (selectedTfAnswerCorrect && !justificationCorrect) {
-          html += "La respuesta TRUE/FALSE es correcta, pero falta una justificación válida.<br>";
-        }
-        html += `<strong>Respuesta correcta:</strong> ${q.answer[0]
-          .toString()
-          .toUpperCase()}<ul>`;
-        (q.justification || []).forEach(j => {
-          const validTexts = Array.isArray(j.validTexts) && j.validTexts.length
-            ? j.validTexts
-            : [j.text || ""];
-
-          html += `<li>${validTexts.join("<br>o: ")} (líneas ${j.lines.join("-")})</li>`;
-        });
-        html += "</ul>";
-      } else {
-        html += `<strong>Respuesta correcta:</strong> ${(q.answer || []).join(", ")}`;
-      }
-      addFeedback(div, html, false);
-    }
+  saveProgressAttempt({
+    id: currentResults.id,
+    date: new Date().toISOString(),
+    mode: currentSession.modeLabel,
+    targetId: currentSession.exam?.id || currentSession.title,
+    targetName: currentSession.exam?.label || currentSession.title,
+    score: totalStats.score,
+    maxScore: totalStats.maxScore,
+    correctCount: totalStats.correct,
+    failureCount: totalStats.failures,
+    totalQuestions: totalStats.total,
+    percentage: totalStats.percentage,
+    sectionBreakdown: buildSectionBreakdown(currentResults.readingStats, useStats),
+    wrongQuestions: totalStats.wrongQuestions,
+    elapsedSeconds: timer.getElapsedSeconds()
   });
-
-  latestReadingStats = {
-    score,
-    maxScore: 4,
-    correct: correctCount,
-    failures: reading.questions.length - correctCount,
-    total: reading.questions.length,
-    wrongQuestions
-  };
-
-  return score;
 }
 
-// ---------- USE ----------
+function renderMistakesView() {
+  timer.reset();
+  setView("mistakes", "Revisión de fallos");
+  const mistakes = getPendingMistakes(attempts());
 
-function correctUse() {
-  if (isChooseAnyUseMode()) {
-    return correctUseChooseAny();
-  }
+  app.innerHTML = `
+    <section class="screen review-screen">
+      <div class="setup-header">
+        <div>
+          <button class="button button-ghost button-small" type="button" data-action="dashboard">Volver</button>
+          <p class="eyebrow">Revisión inteligente</p>
+          <h1>Banco de fallos</h1>
+          <p>Estos son los errores acumulados en tus intentos recientes. Úsalos para decidir el siguiente bloque de práctica.</p>
+        </div>
+        <button class="button button-secondary" type="button" data-action="clear">Reiniciar progreso</button>
+      </div>
 
-  let score = 0;
-  let correctCount = 0;
-  const wrongQuestions = [];
-  const block = useData.blocks.find(b => b.id === activeUseBlockId);
-  if (!block) return 0;
+      <div class="review-actions">
+        <button class="button button-primary" type="button" data-action="practice_use">Practicar Use of English</button>
+        <button class="button button-secondary" type="button" data-action="practice_reading">Practicar Reading</button>
+        <button class="button button-secondary" type="button" data-action="random">Simulacro aleatorio</button>
+      </div>
 
-  block.questionIds.forEach(qId => {
-    const q = useData.questions.find(x => x.id === qId);
-    if (!q) return;
-
-    const div = document.querySelector(
-      `#useQuestions [data-block="${block.id}"] .question[data-id="${q.id}"]`
-    );
-
-    let correct = false;
-
-    if (q.type === "mcq") {
-      const c = div.querySelector(`input[name="${q.id}"]:checked`);
-      if (c) correct = (q.answer || []).includes(c.value);
-    } else if (requiresManualUseCorrection(q)) {
-      addManualUseFeedback(div, q);
-      wrongQuestions.push(createWrongQuestion("Use of English", q, div, { manual: true }));
-      return;
-    } else {
-      const i = div.querySelector(`[name="${q.id}"]`);
-      if (i) {
-        const validAnswers = Array.isArray(q.answers) ? q.answers : [];
-        const userAnswer = instructionHasCompletionGap(q)
-          ? buildInstructionCompletionAnswer(q, i.value)
-          : i.value;
-
-        correct = isTextAccepted(userAnswer, validAnswers);
-      }
-    }
-
-    if (correct) {
-      score += q.points;
-      correctCount += 1;
-      addFeedback(div, "✅ Correcto", true);
-    } else {
-      wrongQuestions.push(createWrongQuestion("Use of English", q, div));
-      // ✅ AQUÍ ESTÁ LA CORRECCIÓN IMPORTANTE: MCQ usa q.answer, no q.answers
-      let html = "❌ Incorrecto<br>";
-
-      if (q.type === "mcq") {
-        const letters = Array.isArray(q.answer) ? q.answer : [];
-        const pretty = letters
-          .map(k => {
-            const text = q.options?.[k];
-            return text ? `(${k}) ${text}` : `(${k})`;
-          })
-          .join("<br>");
-
-        html += `<strong>Respuesta correcta:</strong><br>${pretty || "(sin respuesta definida)"}`;
-      } else {
-        const validAnswers = Array.isArray(q.answers) ? q.answers : [];
-        html += `<strong>Respuestas correctas:</strong><br>${validAnswers.length ? validAnswers.join("<br>") : "(sin respuesta definida)"
-          }`;
-      }
-
-      addFeedback(div, html, false);
-    }
-  });
-
-  latestUseStats = {
-    score,
-    maxScore: 3,
-    correct: correctCount,
-    failures: block.questionIds.length - correctCount,
-    total: block.questionIds.length,
-    wrongQuestions
-  };
-
-  return score;
-}
-
-function correctUseChooseAny() {
-  if (isChooseAnyUseMode() && selectedUseGroups.length !== 6) {
-    alert("Debes elegir exactamente 6 preguntas de Use of English para entregar.");
-    return null;
-  }
-
-  let score = 0;
-  const groupResults = new Map();
-  const wrongQuestions = [];
-
-  useData.questions.forEach(q => {
-    const div = document.querySelector(
-      `#useQuestions [data-block="all"] .question[data-id="${q.id}"]`
-    );
-    if (!div) return;
-
-    const groupId = q.groupId || q.id.split(".")[0];
-
-    if (isChooseAnyUseMode() && !selectedUseGroups.includes(groupId)) {
-      return;
-    }
-
-    if (!isChooseAnyUseMode() && !isUseQuestionAnswered(div, q)) return;
-
-    if (!groupResults.has(groupId)) {
-      groupResults.set(groupId, []);
-    }
-
-    if (requiresManualUseCorrection(q)) {
-      addManualUseFeedback(div, q);
-      groupResults.get(groupId).push(false);
-      wrongQuestions.push(createWrongQuestion("Use of English", q, div, { manual: true }));
-      return;
-    }
-
-    const correct = isUseAnswerCorrect(div, q);
-    groupResults.get(groupId).push(correct);
-    if (correct) {
-      score += q.points;
-      addFeedback(div, "✅ Correcto", true);
-    } else {
-      wrongQuestions.push(createWrongQuestion("Use of English", q, div));
-      addUseIncorrectFeedback(div, q);
-    }
-  });
-
-  let correctGroups = 0;
-  groupResults.forEach(results => {
-    if (results.length && results.every(Boolean)) correctGroups += 1;
-  });
-
-  latestUseStats = {
-    score,
-    maxScore: 3,
-    correct: correctGroups,
-    failures: selectedUseGroups.length - correctGroups,
-    total: selectedUseGroups.length,
-    wrongQuestions
-  };
-
-  return score;
-}
-
-function correctUsePracticeAll() {
-  const groupResults = new Map();
-  const wrongQuestions = [];
-
-  useData.questions.forEach(q => {
-    const div = document.querySelector(
-      `#useQuestions [data-block="all"] .question[data-id="${q.id}"]`
-    );
-    if (!div) return;
-
-    const groupId = q.groupId || q.id.split(".")[0];
-    if (requiresManualUseCorrection(q)) {
-      addManualUseFeedback(div, q);
-      if (!groupResults.has(groupId)) {
-        groupResults.set(groupId, []);
-      }
-      groupResults.get(groupId).push(false);
-      wrongQuestions.push(createWrongQuestion("Use of English", q, div, { manual: true }));
-      return;
-    }
-
-    const correct = isUseAnswerCorrect(div, q);
-    if (!groupResults.has(groupId)) {
-      groupResults.set(groupId, []);
-    }
-    groupResults.get(groupId).push(correct);
-
-    if (correct) {
-      addFeedback(div, "✅ Correcto", true);
-    } else {
-      wrongQuestions.push(createWrongQuestion("Use of English", q, div));
-      addUseIncorrectFeedback(div, q);
-    }
-  });
-
-  let correctGroups = 0;
-  groupResults.forEach(results => {
-    if (results.every(Boolean)) correctGroups += 1;
-  });
-
-  latestUseStats = {
-    score: correctGroups,
-    maxScore: groupResults.size,
-    correct: correctGroups,
-    failures: groupResults.size - correctGroups,
-    total: groupResults.size,
-    wrongQuestions
-  };
-
-  return {
-    correct: correctGroups,
-    total: groupResults.size
-  };
-}
-
-function isUseQuestionAnswered(div, q) {
-  if (q.type === "mcq") {
-    return Boolean(div.querySelector(`input[name="${q.id}"]:checked`));
-  }
-
-  const i = div.querySelector(`[name="${q.id}"]`);
-  return Boolean(i?.value.trim());
-}
-
-function isUseAnswerCorrect(div, q) {
-  if (q.type === "mcq") {
-    const c = div.querySelector(`input[name="${q.id}"]:checked`);
-    return Boolean(c) && (q.answer || []).includes(c.value);
-  }
-
-  const i = div.querySelector(`[name="${q.id}"]`);
-  if (!i) return false;
-
-  const validAnswers = Array.isArray(q.answers) ? q.answers : [];
-  const userAnswer = instructionHasCompletionGap(q)
-    ? buildInstructionCompletionAnswer(q, i.value)
-    : i.value;
-
-  return isTextAccepted(userAnswer, validAnswers);
-}
-
-function requiresManualUseCorrection(q) {
-  return Boolean(q.manualCorrection);
-}
-
-function addManualUseFeedback(div, q) {
-  const html = `
-    Revisión pendiente: no hay una única respuesta cerrada.<br>
-    Autocorrígete con las indicaciones y marca si tu respuesta debe contar como correcta.<br>
-    <strong>${q.manualCorrection.prompt}</strong><br>
-    <strong>Estructura de criterios:</strong> ${q.manualCorrection.structure}<br>
+      <section class="panel">
+        ${mistakes.length ? renderMistakeList(mistakes) : '<p class="empty-state">No tienes fallos guardados. Termina un intento y aparecerán aquí.</p>'}
+      </section>
+    </section>
   `;
-  addFeedback(div, html, "neutral");
 
-  const feedback = div.querySelector(".feedback:last-child");
-  if (!feedback) return;
-
-  const yesButton = document.createElement("button");
-  yesButton.type = "button";
-  yesButton.textContent = "Sí";
-  yesButton.onclick = () => setManualUseScore(q.id, q.points, feedback);
-
-  const noButton = document.createElement("button");
-  noButton.type = "button";
-  noButton.textContent = "No";
-  noButton.onclick = () => setManualUseScore(q.id, 0, feedback);
-
-  feedback.appendChild(yesButton);
-  feedback.append(" ");
-  feedback.appendChild(noButton);
-}
-
-function setManualUseScore(questionId, score, feedback) {
-  manualUseScores.set(questionId, score);
-  feedback.classList.remove("feedback-neutral", "feedback-correct", "feedback-incorrect");
-  feedback.classList.add(score > 0 ? "feedback-correct" : "feedback-incorrect");
-  refreshManualUseScores();
-  if (examFlow === "practice_use") {
-    renderPracticeUseScore({
-      correct: latestUseStats?.correct || 0,
-      total: latestUseStats?.total || 0
-    });
-  } else if (latestReadingStats && latestUseStats) {
-    renderFinalScore(latestReadingStats.score, latestUseStats.score);
-  }
-  saveCurrentProgressAttempt();
-}
-
-function getManualUseScoreTotal() {
-  let total = 0;
-  manualUseScores.forEach(score => {
-    total += score;
+  app.querySelector('[data-action="dashboard"]').addEventListener("click", renderDashboardView);
+  app.querySelector('[data-action="clear"]').addEventListener("click", () => {
+    clearProgressAttempts();
+    showToast("Progreso reiniciado.", "info");
+    renderMistakesView();
   });
-  return total;
-}
-
-function getManualUseCorrectCount() {
-  let total = 0;
-  manualUseScores.forEach(score => {
-    if (score > 0) total += 1;
+  app.querySelectorAll(".review-actions [data-action]").forEach(button => {
+    button.addEventListener("click", () => handleDashboardAction(button.dataset.action));
   });
-  return total;
 }
 
-function refreshManualUseScores() {
-  if (!manualUseScores.size) return;
-
-  if (examFlow === "practice_use") {
-    const current = Number(document.getElementById("practiceUseCorrect")?.dataset.base || 0);
-    const total = Number(document.getElementById("practiceUseTotal")?.textContent || 12);
-    updatePracticeUseScore(current + getManualUseCorrectCount(), total);
-    return;
-  }
-
-  const useScoreEl = document.getElementById("finalUseScore");
-  const finalScoreEl = document.getElementById("finalTotalScore");
-  if (!useScoreEl || !finalScoreEl) return;
-
-  const baseUseScore = Number(useScoreEl.dataset.base || 0);
-  const readingScore = Number(finalScoreEl.dataset.reading || 0);
-  const useScore = baseUseScore + getManualUseScoreTotal();
-  useScoreEl.textContent = useScore.toFixed(2);
-  finalScoreEl.textContent = (readingScore + useScore).toFixed(2);
-}
-
-function addUseIncorrectFeedback(div, q) {
-  let html = "❌ Incorrecto<br>";
-
-  if (q.type === "mcq") {
-    const letters = Array.isArray(q.answer) ? q.answer : [];
-    const pretty = letters
-      .map(k => {
-        const text = q.options?.[k];
-        return text ? `(${k}) ${text}` : `(${k})`;
-      })
-      .join("<br>");
-
-    html += `<strong>Respuesta correcta:</strong><br>${pretty || "(sin respuesta definida)"}`;
-  } else {
-    const validAnswers = Array.isArray(q.answers) ? q.answers : [];
-    html += `<strong>Respuestas correctas:</strong><br>${validAnswers.length ? validAnswers.join("<br>") : "(sin respuesta definida)"
-      }`;
-  }
-
-  addFeedback(div, html, false);
-}
-
-// ================= FINAL SCORE =================
-
-function getStatsAccuracy(stats) {
-  if (!stats?.total) return 0;
-  return (stats.correct / stats.total) * 100;
-}
-
-function getCombinedStats(sections) {
-  const activeSections = sections.filter(Boolean);
-  const score = activeSections.reduce((sum, section) => sum + section.score, 0);
-  const maxScore = activeSections.reduce((sum, section) => sum + section.maxScore, 0);
-  const correct = activeSections.reduce((sum, section) => sum + section.correct, 0);
-  const total = activeSections.reduce((sum, section) => sum + section.total, 0);
-
-  return {
-    score,
-    maxScore,
-    correct,
-    failures: Math.max(0, total - correct),
-    total,
-    percentage: total > 0 ? (correct / total) * 100 : 0,
-    wrongQuestions: activeSections.flatMap(section => section.wrongQuestions || [])
-  };
-}
-
-function renderSectionResult(label, stats) {
-  if (!stats) return "";
-
+function renderMistakeList(mistakes) {
   return `
-    <div class="result-section-card">
-      <strong>${label}</strong>
-      <span>${stats.score.toFixed(2)} / ${stats.maxScore.toFixed(2)}</span>
-      <small>${stats.correct} aciertos · ${stats.failures} fallos · ${stats.total} preguntas · ${getStatsAccuracy(stats).toFixed(0)}%</small>
-    </div>
-  `;
-}
-
-function renderWrongQuestions(wrongQuestions) {
-  if (!wrongQuestions.length) {
-    return `<p class="result-empty">No hay preguntas falladas registradas.</p>`;
-  }
-
-  return `
-    <ul class="wrong-question-list">
-      ${wrongQuestions.map(question => `
-        <li class="wrong-question-item">
-          <div>
-            <strong>${escapeHtml(question.section)} · ${escapeHtml(question.id)}</strong>
-            <small>${escapeHtml(question.type)}</small>
+    <ul class="wrong-question-list review-list">
+      ${mistakes.map(item => `
+        <li>
+          <div class="wrong-question-head">
+            <strong>${escapeHtml(item.section)} · ${escapeHtml(item.id)}</strong>
+            <span>${escapeHtml(item.type)}</span>
           </div>
-          <p><strong>Tu respuesta:</strong> ${escapeHtml(question.userAnswer || "Sin respuesta")}</p>
-          <p><strong>Respuesta correcta:</strong> ${escapeHtml(question.correctAnswer || "No disponible")}</p>
+          <p><b>Origen:</b> ${escapeHtml(item.targetName || "Intento")} · ${escapeHtml(new Date(item.attemptDate).toLocaleDateString("es"))}</p>
+          <p><b>Enunciado:</b> ${escapeHtml(item.prompt || "No disponible")}</p>
+          <p><b>Tu respuesta:</b> ${escapeHtml(item.userAnswer || "Sin respuesta")}</p>
+          <p><b>Respuesta correcta:</b> ${escapeHtml(item.correctAnswer || "No disponible")}</p>
         </li>
       `).join("")}
     </ul>
   `;
 }
 
-function attachResultActions() {
-  const homeButton = document.getElementById("resultBackHome");
-  if (homeButton) {
-    homeButton.onclick = () => showSection("startSelection");
-  }
-
-  const similarButton = document.getElementById("resultTrySimilar");
-  if (!similarButton) return;
-
-  similarButton.onclick = () => {
-    if (examFlow === "practice_reading") {
-      startNextPracticeReading();
-    } else if (examFlow === "practice_use") {
-      startNextPracticeUse();
-    } else if (examFlow === "random") {
-      startNextRandomExam();
-    } else if (selectedExam) {
-      startExam(selectedExam);
-    }
-  };
-}
-
-function renderActionableResults({ title, totalStats, readingStats = null, useStats = null, noteLabel }) {
-  const div = document.getElementById("finalScore");
-  const wrongQuestions = totalStats.wrongQuestions || [];
-
-  div.innerHTML = `
-    <h3>${title}</h3>
-    <div class="result-summary-grid">
-      <div>
-        <span>${totalStats.score.toFixed(2)} / ${totalStats.maxScore.toFixed(2)}</span>
-        <small>${noteLabel}</small>
-      </div>
-      <div>
-        <span>${totalStats.correct}</span>
-        <small>Aciertos</small>
-      </div>
-      <div>
-        <span>${totalStats.failures}</span>
-        <small>Fallos</small>
-      </div>
-      <div>
-        <span>${totalStats.percentage.toFixed(0)}%</span>
-        <small>Acierto</small>
-      </div>
-    </div>
-    <p class="result-total-line"><strong>Total:</strong> ${totalStats.correct} aciertos · ${totalStats.failures} fallos · ${totalStats.total} preguntas</p>
-    <div class="result-section-grid">
-      ${renderSectionResult("Reading", readingStats)}
-      ${renderSectionResult("Use of English", useStats)}
-    </div>
-    <div class="wrong-question-panel">
-      <h4>Preguntas falladas</h4>
-      ${renderWrongQuestions(wrongQuestions)}
-    </div>
-    <div class="result-actions">
-      <button id="resultBackHome" class="button-secondary" type="button">Volver al inicio</button>
-      <button id="resultTrySimilar" class="button-primary" type="button">Hacer otro intento similar</button>
-    </div>
-  `;
-
-  attachResultActions();
-}
-
-function renderFinalScore(readingScore, useScore) {
-  const useStats = getUseStatsWithManualScores() || latestUseStats;
-  const totalStats = getCombinedStats([latestReadingStats, useStats]);
-  renderActionableResults({
-    title: "Resultados",
-    totalStats,
-    readingStats: latestReadingStats,
-    useStats,
-    noteLabel: "Nota final"
-  });
-
-  const useScoreEl = document.createElement("span");
-  useScoreEl.id = "finalUseScore";
-  useScoreEl.dataset.base = useScore;
-  useScoreEl.hidden = true;
-  const finalScoreEl = document.createElement("span");
-  finalScoreEl.id = "finalTotalScore";
-  finalScoreEl.dataset.reading = readingScore;
-  finalScoreEl.hidden = true;
-  document.getElementById("finalScore").append(useScoreEl, finalScoreEl);
-}
-
-function renderPracticeReadingScore(readingScore) {
-  const totalStats = getCombinedStats([latestReadingStats]);
-  renderActionableResults({
-    title: "Resultados",
-    totalStats,
-    readingStats: latestReadingStats,
-    noteLabel: "Reading"
-  });
-}
-
-function renderPracticeUseScore(useResult) {
-  const useStats = getUseStatsWithManualScores() || latestUseStats;
-  const totalStats = getCombinedStats([useStats]);
-  renderActionableResults({
-    title: "Resultados",
-    totalStats,
-    useStats,
-    noteLabel: "Use of English"
-  });
-
-  const correctEl = document.createElement("span");
-  correctEl.id = "practiceUseCorrect";
-  correctEl.dataset.base = useResult.correct;
-  correctEl.textContent = useResult.correct;
-  correctEl.hidden = true;
-  const totalEl = document.createElement("span");
-  totalEl.id = "practiceUseTotal";
-  totalEl.textContent = useResult.total;
-  totalEl.hidden = true;
-  document.getElementById("finalScore").append(correctEl, totalEl);
-}
-
-function updatePracticeUseScore(correct, total) {
-  const correctEl = document.getElementById("practiceUseCorrect");
-  const totalEl = document.getElementById("practiceUseTotal");
-  if (!correctEl || !totalEl) return;
-
-  correctEl.textContent = correct;
-  totalEl.textContent = total;
-}
+boot();

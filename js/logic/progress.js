@@ -1,25 +1,22 @@
 const PROGRESS_STORAGE_KEY = "englishSelectividadProgressAttempts";
-const MAX_STORED_ATTEMPTS = 50;
+const MAX_STORED_ATTEMPTS = 100;
 
-function toNumber(value, fallback = 0) {
+function storageAvailable() {
+  return typeof localStorage !== "undefined";
+}
+
+export function toNumber(value, fallback = 0) {
   const number = Number(value);
   return Number.isFinite(number) ? number : fallback;
 }
 
-function clampPercent(value) {
+export function clampPercent(value) {
   return Math.max(0, Math.min(100, toNumber(value)));
 }
 
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
 export function loadProgressAttempts() {
+  if (!storageAvailable()) return [];
+
   try {
     const raw = localStorage.getItem(PROGRESS_STORAGE_KEY);
     const attempts = raw ? JSON.parse(raw) : [];
@@ -30,22 +27,12 @@ export function loadProgressAttempts() {
 }
 
 export function saveProgressAttempt(attempt) {
-  const attempts = loadProgressAttempts();
-  const normalizedAttempt = {
-    ...attempt,
-    percentage: clampPercent(attempt.percentage),
-    score: toNumber(attempt.score),
-    maxScore: toNumber(attempt.maxScore),
-    correctCount: toNumber(attempt.correctCount),
-    failureCount: toNumber(attempt.failureCount),
-    totalQuestions: toNumber(attempt.totalQuestions),
-    totalCorrect: toNumber(attempt.totalCorrect ?? attempt.correctCount),
-    totalWrong: toNumber(attempt.totalWrong ?? attempt.failureCount),
-    sectionBreakdown: attempt.sectionBreakdown || null,
-    wrongQuestions: Array.isArray(attempt.wrongQuestions) ? attempt.wrongQuestions : []
-  };
+  if (!storageAvailable()) return [];
 
+  const attempts = loadProgressAttempts();
+  const normalizedAttempt = normalizeAttempt(attempt);
   const existingIndex = attempts.findIndex(item => item.id === normalizedAttempt.id);
+
   if (existingIndex >= 0) {
     attempts[existingIndex] = normalizedAttempt;
   } else {
@@ -60,6 +47,33 @@ export function saveProgressAttempt(attempt) {
   return trimmed;
 }
 
+export function clearProgressAttempts() {
+  if (storageAvailable()) {
+    localStorage.removeItem(PROGRESS_STORAGE_KEY);
+  }
+}
+
+export function normalizeAttempt(attempt) {
+  return {
+    ...attempt,
+    date: attempt.date || new Date().toISOString(),
+    percentage: clampPercent(attempt.percentage),
+    score: toNumber(attempt.score),
+    maxScore: toNumber(attempt.maxScore),
+    correctCount: toNumber(attempt.correctCount),
+    failureCount: toNumber(attempt.failureCount),
+    totalQuestions: toNumber(attempt.totalQuestions),
+    elapsedSeconds: attempt.elapsedSeconds == null ? null : toNumber(attempt.elapsedSeconds),
+    sectionBreakdown: attempt.sectionBreakdown || null,
+    wrongQuestions: Array.isArray(attempt.wrongQuestions) ? attempt.wrongQuestions : []
+  };
+}
+
+export function getAttemptGrade(attempt) {
+  const maxScore = toNumber(attempt?.maxScore);
+  return maxScore > 0 ? (toNumber(attempt.score) / maxScore) * 10 : 0;
+}
+
 export function getProgressSummary(attempts = loadProgressAttempts()) {
   if (!attempts.length) {
     return {
@@ -67,29 +81,194 @@ export function getProgressSummary(attempts = loadProgressAttempts()) {
       averageGrade: 0,
       bestGrade: 0,
       averageAccuracy: 0,
-      lastAttempt: null
+      lastAttempt: null,
+      trend: 0,
+      totalStudySeconds: 0
     };
   }
 
-  const grades = attempts.map(attempt => {
-    const score = toNumber(attempt.score);
-    const maxScore = toNumber(attempt.maxScore);
-    return maxScore > 0 ? (score / maxScore) * 10 : 0;
-  });
-  const averageGrade = grades.reduce((sum, grade) => sum + grade, 0) / grades.length;
-  const bestGrade = Math.max(...grades);
-  const averageAccuracy = attempts.reduce(
-    (sum, attempt) => sum + clampPercent(attempt.percentage),
-    0
-  ) / attempts.length;
+  const grades = attempts.map(getAttemptGrade);
+  const recent = grades.slice(0, 3);
+  const previous = grades.slice(3, 6);
+  const average = values => values.length
+    ? values.reduce((sum, value) => sum + value, 0) / values.length
+    : 0;
 
   return {
     totalAttempts: attempts.length,
-    averageGrade,
-    bestGrade,
-    averageAccuracy,
-    lastAttempt: attempts[0]
+    averageGrade: average(grades),
+    bestGrade: Math.max(...grades),
+    averageAccuracy: average(attempts.map(attempt => clampPercent(attempt.percentage))),
+    lastAttempt: attempts[0],
+    trend: previous.length ? average(recent) - average(previous) : 0,
+    totalStudySeconds: attempts.reduce((sum, attempt) => sum + toNumber(attempt.elapsedSeconds), 0)
   };
+}
+
+export function getSectionAverages(attempts = loadProgressAttempts()) {
+  const sections = {
+    reading: [],
+    useOfEnglish: []
+  };
+
+  attempts.forEach(attempt => {
+    const breakdown = attempt.sectionBreakdown || {};
+    Object.keys(sections).forEach(key => {
+      if (breakdown[key]) {
+        sections[key].push(clampPercent(breakdown[key].percentage));
+      }
+    });
+  });
+
+  return Object.fromEntries(
+    Object.entries(sections).map(([key, values]) => [
+      key,
+      values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0
+    ])
+  );
+}
+
+export function getWrongQuestionInsights(attempts = loadProgressAttempts()) {
+  const counts = new Map();
+
+  attempts.forEach(attempt => {
+    (attempt.wrongQuestions || []).forEach(question => {
+      const key = `${question.section || "General"}:${question.type || "pregunta"}`;
+      const current = counts.get(key) || {
+        section: question.section || "General",
+        type: question.type || "pregunta",
+        count: 0,
+        examples: []
+      };
+      current.count += 1;
+      if (current.examples.length < 3) {
+        current.examples.push(question);
+      }
+      counts.set(key, current);
+    });
+  });
+
+  return Array.from(counts.values()).sort((a, b) => b.count - a.count);
+}
+
+function addGroupedCount(counts, key, item, labelKey) {
+  if (!key) return;
+  const current = counts.get(key) || {
+    label: key,
+    count: 0,
+    examples: []
+  };
+  current.count += 1;
+  if (current.examples.length < 3) current.examples.push(item);
+  counts.set(key, {
+    ...current,
+    [labelKey]: key
+  });
+}
+
+export function getUseTopicInsights(attempts = loadProgressAttempts()) {
+  const counts = new Map();
+
+  attempts.forEach(attempt => {
+    (attempt.wrongQuestions || []).forEach(question => {
+      if (question.section === "Use of English") {
+        addGroupedCount(counts, question.topic || question.type || "Use of English", question, "topic");
+      }
+    });
+  });
+
+  return Array.from(counts.values()).sort((a, b) => b.count - a.count);
+}
+
+export function getReadingSkillInsights(attempts = loadProgressAttempts()) {
+  const counts = new Map();
+
+  attempts.forEach(attempt => {
+    (attempt.wrongQuestions || []).forEach(question => {
+      if (question.section === "Reading") {
+        addGroupedCount(counts, question.skill || "Reading", question, "skill");
+      }
+    });
+  });
+
+  return Array.from(counts.values()).sort((a, b) => b.count - a.count);
+}
+
+export function getPendingMistakes(attempts = loadProgressAttempts()) {
+  return attempts
+    .flatMap(attempt =>
+      (attempt.wrongQuestions || []).map(question => ({
+        ...question,
+        attemptId: attempt.id,
+        attemptDate: attempt.date,
+        targetName: attempt.targetName
+      }))
+    )
+    .slice(0, 40);
+}
+
+export function buildRecommendations(attempts = loadProgressAttempts()) {
+  const summary = getProgressSummary(attempts);
+  const sections = getSectionAverages(attempts);
+  const insights = getWrongQuestionInsights(attempts);
+  const recommendations = [];
+
+  if (!attempts.length) {
+    return [
+      {
+        title: "Haz un diagnóstico inicial",
+        body: "Empieza con un simulacro aleatorio para detectar qué secciones necesitan más trabajo.",
+        action: "random"
+      },
+      {
+        title: "Calienta con Reading",
+        body: "Un reading corto crea una primera medición sin comprometer una sesión larga.",
+        action: "practice_reading"
+      }
+    ];
+  }
+
+  if (sections.reading && sections.reading < 70) {
+    recommendations.push({
+      title: "Refuerza comprensión lectora",
+      body: "Tu media de Reading está por debajo del 70%. Practica true/false con justificación y vocabulario contextual.",
+      action: "practice_reading"
+    });
+  }
+
+  if (sections.useOfEnglish && sections.useOfEnglish < 70) {
+    recommendations.push({
+      title: "Entrena Use of English",
+      body: "Hay margen de mejora en transformaciones y gramática. Haz bloques cortos y revisa las respuestas alternativas.",
+      action: "practice_use"
+    });
+  }
+
+  if (insights.length) {
+    recommendations.push({
+      title: `Revisa ${insights[0].type}`,
+      body: `Es tu patrón de fallo más repetido en ${insights[0].section}. Empieza por los errores guardados.`,
+      action: "mistakes"
+    });
+  }
+
+  if (summary.trend < -0.5) {
+    recommendations.push({
+      title: "Baja la carga un momento",
+      body: "Tu tendencia reciente ha bajado. Prueba una práctica enfocada antes de volver a un examen completo.",
+      action: "practice_use"
+    });
+  }
+
+  if (!recommendations.length) {
+    recommendations.push({
+      title: "Sube a modo simulacro",
+      body: "Tu progreso es estable. Practica un examen completo con timer y condiciones reales.",
+      action: "specific"
+    });
+  }
+
+  return recommendations.slice(0, 3);
 }
 
 export function formatAttemptDate(dateValue) {
@@ -112,48 +291,4 @@ export function formatElapsedTime(seconds) {
   const minutes = Math.floor(totalSeconds / 60);
   const remainingSeconds = totalSeconds % 60;
   return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
-}
-
-export function renderProgress(container, attempts = loadProgressAttempts()) {
-  if (!container) return;
-
-  const summary = getProgressSummary(attempts);
-  const lastAttemptText = summary.lastAttempt
-    ? `${formatAttemptDate(summary.lastAttempt.date)} · ${escapeHtml(summary.lastAttempt.targetName)}`
-    : "Sin intentos";
-
-  const latestAttempts = attempts.slice(0, 6);
-  const listHtml = latestAttempts.length
-    ? latestAttempts.map(attempt => {
-      const elapsed = formatElapsedTime(attempt.elapsedSeconds);
-      const elapsedText = elapsed ? ` · ${elapsed}` : "";
-      const score = toNumber(attempt.score);
-      const maxScore = toNumber(attempt.maxScore);
-      const percentage = clampPercent(attempt.percentage);
-      const correct = toNumber(attempt.correctCount);
-      const failures = toNumber(attempt.failureCount);
-      const total = toNumber(attempt.totalQuestions);
-      return `
-        <li class="progress-attempt">
-          <span>
-            <strong>${escapeHtml(attempt.targetName)}</strong>
-            <small>${escapeHtml(attempt.mode)} · ${formatAttemptDate(attempt.date)}${elapsedText}</small>
-            <small>${correct} aciertos · ${failures} fallos · ${total} preguntas</small>
-          </span>
-          <span>${score.toFixed(2)} / ${maxScore.toFixed(2)} · ${percentage.toFixed(0)}%</span>
-        </li>
-      `;
-    }).join("")
-    : `<li class="progress-empty">Aún no has terminado ningún intento.</li>`;
-
-  container.innerHTML = `
-    <div class="progress-stats">
-      <div><span>${summary.totalAttempts}</span><small>Intentos</small></div>
-      <div><span>${summary.averageGrade.toFixed(2)}</span><small>Nota media</small></div>
-      <div><span>${summary.bestGrade.toFixed(2)}</span><small>Mejor nota</small></div>
-      <div><span>${summary.averageAccuracy.toFixed(0)}%</span><small>Acierto medio</small></div>
-    </div>
-    <p class="progress-last"><strong>Último intento:</strong> ${lastAttemptText}</p>
-    <ul class="progress-list">${listHtml}</ul>
-  `;
 }

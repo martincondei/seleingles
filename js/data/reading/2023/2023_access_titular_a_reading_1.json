@@ -1,0 +1,168 @@
+{
+  "id": "2023_access_titular_a_reading_1",
+  "title": "War Letters",
+  "text": "Sharon Taylor has no firsthand memories of her father. The World War II fighter pilot was shot down over Germany in April 1945, when Taylor was three weeks old. The war ended less than a month later, and the letters that the 22-year-old pilot had exchanged with his wife Mary since they were high school sweethearts stopped coming. Taylor’s father was eventually listed as killed in action, although his body was never recovered. One day, when Taylor was seven years old, she was sipping a hot chocolate while her paternal grandmother shared stories about their fallen hero, crying as she remembered her son. “Nana, I’m going to find him and bring him home.” It was a promise Taylor, now a 77-year-old author and retired professor, would keep. In 2006 she concluded a multi-decade mission to recover her father’s remains and bring them home. She did it guided by clues that she had put together from her parents’ wartime letters — along with help from historians, eyewitnesses, and an excavation team. Now, through a sound and light show at the National World War II Museum in New Orleans, she’s bringing to new generations her parents’ experience and a larger story of war casualties and their families. Taylor shares her story widely, raising awareness of soldiers who never returned from war and emphasizing the importance of recovery efforts. An estimated 81,000 American soldiers’ bodies remain missing, and she wants people to know there are ongoing efforts to locate them. Taylor will never know exactly what her father’s final moments were like. But as she previews the Expressions of America exhibition in New Orleans, she somehow feels that he has come home at last.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "Taylor’s parents...",
+      "options": {
+        "A": "started writing each other during the war",
+        "B": "were in love when they were teenagers",
+        "C": "stopped writing each other during the war",
+        "D": "first met when they were in their twenties"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "Taylor’s search for her father...",
+      "options": {
+        "A": "was kept secret from her grandmother",
+        "B": "led to the discovery of a number of war letters",
+        "C": "was carried out by other pilots",
+        "D": "is something she believes is worth being made public"
+      },
+      "answer": [
+        "D"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "Taylor cannot remember her father well.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Sharon Taylor has no firsthand memories of her father. // (The World War II fighter pilot was shot down over Germany in April 1945,) when Taylor was three weeks old.”",
+          "lines": [
+            1,
+            2
+          ],
+          "validTexts": [
+            "Sharon Taylor has no firsthand memories of her father.",
+            "(The World War II fighter pilot was shot down over Germany in April 1945,) when Taylor was three weeks old.",
+            "when Taylor was three weeks old."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "Her mission was accomplished without any assistance.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“She did it guided by clues that she had put together from her parents’ wartime letters —along with help from historians, eyewitnesses, and an excavation team.”",
+          "lines": [
+            8,
+            9
+          ],
+          "validTexts": [
+            "She did it guided by clues that she had put together from her parents’ wartime letters —along with help from historians, eyewitnesses, and an excavation team."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "Taylor is campaigning to start a search for thousands of missing soldiers.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“An estimated 81,000 American soldiers’ bodies remain missing, and she wants people to know there are ongoing efforts to locate them.”",
+          "lines": [
+            12,
+            13
+          ],
+          "validTexts": [
+            "An estimated 81,000 American soldiers’ bodies remain missing, and she wants people to know there are ongoing efforts to locate them."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "The retired professor eventually discovered the precise details of her father’s death.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“Taylor will never know exactly what her father’s final moments were like.”",
+          "lines": [
+            14
+          ],
+          "validTexts": [
+            "Taylor will never know exactly what her father’s final moments were like."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “lover” (noun)",
+      "answer": [
+        "sweetheart(s)",
+        "sweethearts",
+        "sweetheart"
+      ],
+      "points": 0.25,
+      "line": 3
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “consciousness” (noun)",
+      "answer": [
+        "awareness"
+      ],
+      "points": 0.25,
+      "line": 11
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a piece of evidence that leads one toward the solution of a problem”",
+      "answer": [
+        "clue(s)",
+        "clues",
+        "clue"
+      ],
+      "points": 0.25,
+      "line": 8
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a person who has seen something happen”",
+      "answer": [
+        "eyewitness(es)",
+        "eyewitnesses",
+        "eyewitness"
+      ],
+      "points": 0.25,
+      "line": 9
+    }
+  ]
+}

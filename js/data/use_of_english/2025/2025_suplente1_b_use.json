@@ -50,7 +50,8 @@
         "If only you didn't speak to your classmates like that.",
         "If only you did not speak to your classmates like that."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B2",
@@ -68,7 +69,8 @@
         "Sheryl does not run as fast as Carol.",
         "Sheryl does not run so fast as Carol."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B3",
@@ -79,7 +81,8 @@
       "answers": [
         "If Rose had a less demanding job, she could travel more"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B4",
@@ -90,7 +93,8 @@
       "answers": [
         "Although it was raining, they went to the concert"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Oraciones subordinadas adverbiales"
     },
     {
       "id": "B5",
@@ -105,7 +109,8 @@
         "Recording TikTok videos at school is prohibited",
         "Recording TikTok videos at school is banned"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B6",
@@ -124,7 +129,8 @@
         "Paul said that Mike couldn’t pay him back because he'd forgotten his wallet at home.",
         "Paul said that Mike couldn’t pay him back since he'd forgotten his wallet at home."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B7",
@@ -138,7 +144,8 @@
         "The musical’s being promoted all over the country.",
         "The musical’s being promoted by producers all over the country."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B8",
@@ -150,7 +157,8 @@
         "No matter how much he trains, he never loses weight.",
         "No matter how hard he trains, he never loses weight."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Oraciones subordinadas adverbiales"
     },
     {
       "id": "B9",
@@ -162,7 +170,8 @@
         "How much is that blue cardigan?",
         "How much does that blue cardigan cost?"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B10",
@@ -176,7 +185,8 @@
         "NewFace is a treatment to reduce wrinkles in two weeks",
         "NewFace is a treatment reducing wrinkles in two weeks"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B11",
@@ -190,7 +200,8 @@
         "I am not really interested in abstract art",
         "I'm not really interested in abstract art"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B12",
@@ -204,7 +215,8 @@
         "It’s been ages since I last had a Japanese meal",
         "It has been ages since I last had a Japanese meal"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     }
   ]
 }

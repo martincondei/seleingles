@@ -50,7 +50,8 @@
         "buying"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B17.2",
@@ -62,7 +63,8 @@
         "will be flying"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B18.1",
@@ -78,7 +80,8 @@
         "B"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B18.2",
@@ -94,7 +97,8 @@
         "D"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Preposiciones"
     },
     {
       "id": "B19",
@@ -105,7 +109,8 @@
       "answers": [
         "Will they release Ed Sheeran’s new album soon"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B20",
@@ -116,7 +121,8 @@
       "answers": [
         "Dolphins may be seen in this area if the sea is calm"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B21",
@@ -129,7 +135,8 @@
         "How far is the museum from here",
         "How far from here is the museum"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B22",
@@ -141,7 +148,8 @@
         "Ann’s favourite dish is chicken Tikka Masala, which she buys at the local shop",
         "Ann’s favourite dish, which she buys at the local shop, is chicken Tikka Masala"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B23",
@@ -153,7 +161,8 @@
         "It was such a fascinating podcast that I couldn’t stop listening to it",
         "It was such a fascinating podcast that I could not stop listening to it"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B24",
@@ -166,7 +175,8 @@
       "manualCorrection": {
         "prompt": "¿Tu respuesta cumple esta estructura?",
         "structure": "subject + present simple / present perfect / past simple / past perfect"
-      }
+      },
+      "topic": "Voz pasiva"
     },
     {
       "id": "B25",
@@ -178,7 +188,8 @@
         "I’m not used to speaking in public, but I’m getting better at it",
         "I am not used to speaking in public, but I am getting better at it"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B26",
@@ -193,7 +204,8 @@
         "Can you postpone our meeting, please",
         "Postpone our meeting, please"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B27",
@@ -205,7 +217,8 @@
         "The landlord told Sally that if she had any problems with the heater, she could call him that night",
         "The landlord said to Sally that if she had any problems with the heater, she could call him that night"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B28",
@@ -218,7 +231,8 @@
         "He's likely to miss the established deadline",
         "He has likely to miss the established deadline"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     }
   ]
 }

@@ -1,0 +1,168 @@
+{
+  "id": "2023_reserva_a_reading_1",
+  "title": "Anime: A Global Pop Culture Phenomenon",
+  "text": "The origin of anime can be traced back to the beginning of the 20th century. However, it wasn’t until 1958 that Hiroshi Okawa, president of the Toei Doga production company, decided to turn it into the “Disney of the East.” His efforts were worth it, and anime gradually became a global cultural phenomenon. In order to understand how significant this phenomenon is we can travel back to 2004, when Japan sent trucks to Iraq to help reconstruction. The Japanese feared that the local population would not recognize their flag stamped on the trucks' sides. To avoid this, they decorated the trucks with posters of Captain Tsubasa, a popular anime character. One reason why anime gained such popularity internationally in the 90s was its distinctive style, easily recognizable by its simplified animation and its characters’ disproportionately big eyes. The animation style was basic because reducing the number of frames helped to save money. The second trait, the huge eyes, responds to multiple factors. Big eyes make it easier for animators to express emotions powerfully by concentrating on just one body part. At the same time, audiences are positively drawn to big round eyes, which make characters look innocent and young. Japanese culture also plays a part in anime’s expressive eyes, since the polite thing in Japan is not to show emotions openly through body language but through subtle eye expressions. Anime has stayed hugely successful worldwide because it appeals to a wide range of people of all ages and nationalities who keep loyal to their cartoons for years. The emotional soundtracks and eye-catching colours keep hooking fans today.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, Hiroshi Okawa...",
+      "options": {
+        "A": "founded Toei Doga studios",
+        "B": "designed the first anime characters",
+        "C": "had worked for Disney studios",
+        "D": "made anime internationally known"
+      },
+      "answer": [
+        "D"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, the Japanese used Captain Tsubasa in order to...",
+      "options": {
+        "A": "frighten the Iraqi armed forces",
+        "B": "create a friendlier Japanese flag",
+        "C": "help Iraqis to identify Japanese aid",
+        "D": "promote anime culture in Iraq"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "In the past, anime production tried to imitate Western animation studios.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(However, it wasn’t until 1958 that) Hiroshi Okawa (, president of the Toei Doga production company,) decided to turn it into the ‘Disney of the East.’”",
+          "lines": [
+            1,
+            2
+          ],
+          "validTexts": [
+            "(However, it wasn’t until 1958 that) Hiroshi Okawa (, president of the Toei Doga production company,) decided to turn it into the ‘Disney of the East.’",
+            "Hiroshi Okawa decided to turn it into the ‘Disney of the East.’"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "The simplicity of anime contributed to cutting down production costs.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“The animation style was basic because reducing the number of frames helped to save money.”",
+          "lines": [
+            8,
+            9
+          ],
+          "validTexts": [
+            "The animation style was basic because reducing the number of frames helped to save money."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "Anime’s peculiar eyes make characters less likeable to the public.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“At the same time, audiences are positively drawn to big round eyes (, which make characters look innocent and young).”",
+          "lines": [
+            10,
+            11
+          ],
+          "validTexts": [
+            "At the same time, audiences are positively drawn to big round eyes (, which make characters look innocent and young).",
+            "At the same time, audiences are positively drawn to big round eyes ."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "Anime remains so massively popular because its fans are great followers.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Anime has stayed hugely successful worldwide because it appeals to a wide range of people (of all ages and nationalities) who keep loyal to their cartoons for years.”",
+          "lines": [
+            13,
+            14
+          ],
+          "validTexts": [
+            "Anime has stayed hugely successful worldwide because it appeals to a wide range of people (of all ages and nationalities) who keep loyal to their cartoons for years.",
+            "Anime has stayed hugely successful worldwide because it appeals to a wide range of people who keep loyal to their cartoons for years."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “firm” (noun)",
+      "answer": [
+        "company"
+      ],
+      "points": 0.25,
+      "line": 2
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE OPPOSITE FOR: “lose” (verb)",
+      "answer": [
+        "gain(ed)",
+        "gained",
+        "gain"
+      ],
+      "points": 0.25,
+      "line": 7
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a piece of cloth with distinctive colors used as an emblem”",
+      "answer": [
+        "flag"
+      ],
+      "points": 0.25,
+      "line": 5
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “the music that is recorded for a film”",
+      "answer": [
+        "soundtrack(s)",
+        "soundtracks",
+        "soundtrack"
+      ],
+      "points": 0.25,
+      "line": 14
+    }
+  ]
+}

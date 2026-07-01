@@ -51,7 +51,8 @@
         "have waited"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B17.2",
@@ -63,7 +64,8 @@
         "exercise"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B18.1",
@@ -79,7 +81,8 @@
         "C"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B18.2",
@@ -95,7 +98,8 @@
         "B"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Preposiciones"
     },
     {
       "id": "B19",
@@ -106,7 +110,8 @@
       "answers": [
         "Some passengers saw the escaped criminal at the train station yesterday"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B20",
@@ -120,7 +125,8 @@
         "It has said that Shakira is the best artist in South America",
         "Shakira is said to be the best artist in South America"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B21",
@@ -133,7 +139,8 @@
         "How often did Sonia use to drive to London",
         "How many times did Sonia use to drive to London"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B22",
@@ -146,7 +153,8 @@
         "Macbeth is a powerful play that I read last month",
         "Macbeth is a powerful play which I read last month"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B23",
@@ -159,7 +167,8 @@
         "Due to the fact that the weather was cold, everybody stayed indoors",
         "Due to the weather being cold, everybody stayed indoors"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B24",
@@ -172,7 +181,8 @@
       "manualCorrection": {
         "prompt": "¿Tu respuesta cumple esta estructura?",
         "structure": "subject + will / can / may + infinitive"
-      }
+      },
+      "topic": "Condicionales"
     },
     {
       "id": "B25",
@@ -183,7 +193,8 @@
       "answers": [
         "Every student must call their parents right away"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B26",
@@ -195,7 +206,8 @@
         "I’m not feeling well right now",
         "I am not feeling well right now"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B27",
@@ -207,7 +219,8 @@
         "She offered to get me a drink",
         "She offered me a drink"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B28",
@@ -222,7 +235,8 @@
         "It has a pity they won’t travel with us",
         "It's a pity they will not travel with us"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     }
   ]
 }

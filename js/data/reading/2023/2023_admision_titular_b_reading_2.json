@@ -1,0 +1,162 @@
+{
+  "id": "2023_admision_titular_b_reading_2",
+  "title": "Buzzing For Life",
+  "text": "More than 50 years after Rachel Carson’s illuminating study of pesticides in Silent Spring, we’re still dealing with chemicals and their effects on ecosystems. The latest perpetrator: sulfoxaflor, a bug and plant killer recently reapproved by the Environmental Protection Agency. The latest victim: bees. We’re losing billions of bees each year due to complex factors like decreasing agricultural diversity, habitat loss and climate change. However, one threat to bees remains under our control: pesticides. While pesticides are designed to kill pests and insects that damage crops, they also have unintended consequences like eradicating entire harmless species. These include bees, which are essential for harvests. Besides vegetables and fruit trees, bees fertilize other crops that don’t instantly come to mind when we think of bees —cotton, coffee, tea and chocolate. Moreover, there are whole industries that produce various beeswax and honey-based goods. Together, they are multibillion-dollar industries whose collapse could seriously impact on the economy by putting tens of thousands out of work. Bees alone contribute $15 billion annually to U.S. agriculture, and pollinators in general contribute $24 billion to the country’s economy. Moreover, since the U.S. is the largest food exporter in the world and as the global population keeps rising, bees’ survival is essential not only for the U.S. but also for fighting world hunger. Globally, it’s estimated that pollinators, including bees, affect one-third of the world’s food supply. Bees have evolved into mega-pollinators over millions of years, and plants have adapted to incorporate them into their life cycle. If bees disappeared quickly, plants wouldn’t have time to adjust. Many plant species would simply die off, including not only crops but also flowers and trees, which also need pollinators.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, the use of pesticides...",
+      "options": {
+        "A": "is a direct consequence of climate change",
+        "B": "only affects bees",
+        "C": "may result in job losses",
+        "D": "has become bee friendly"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, the decline in bee population...",
+      "options": {
+        "A": "is now being reported by farmers",
+        "B": "may reduce food stocks all over the world",
+        "C": "is entirely due to the use of pesticides",
+        "D": "has changed farming methods"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "The U.S. Environmental Protection Agency has announced an upcoming ban on the use of sulfoxaflor.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“The latest perpetrator: sulfoxaflor, a bug and plant killer recently reapproved by the Environmental Protection Agency.”",
+          "lines": [
+            2,
+            3
+          ],
+          "validTexts": [
+            "The latest perpetrator: sulfoxaflor, a bug and plant killer recently reapproved by the Environmental Protection Agency."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "Innocuous bugs can also be exterminated by pesticides.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(While pesticides are designed to kill pests and insects that damage crops,) they also have unintended consequences like eradicating entire harmless species.”",
+          "lines": [
+            6
+          ],
+          "validTexts": [
+            "(While pesticides are designed to kill pests and insects that damage crops,) they also have unintended consequences like eradicating entire harmless species.",
+            "they also have unintended consequences like eradicating entire harmless species."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "Bee pollination can affect non-food crops.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(Besides vegetables and fruit trees,) bees fertilize other crops that don’t instantly come to mind when we think of bees —cotton (, coffee, tea and chocolate).”",
+          "lines": [
+            8
+          ],
+          "validTexts": [
+            "(Besides vegetables and fruit trees,) bees fertilize other crops that don’t instantly come to mind when we think of bees —cotton (, coffee, tea and chocolate).",
+            "bees fertilize other crops that don’t instantly come to mind when we think of bees —cotton ."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "If bees became extinct, plants would survive by adapting to other types of pollinators.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“If bees disappeared quickly, plants would not have time to adjust. // Many plant species would simply die off (, including not only crops but also flowers and trees, which also need pollinators).”",
+          "lines": [
+            16
+          ],
+          "validTexts": [
+            "If bees disappeared quickly, plants would not have time to adjust.",
+            "Many plant species would simply die off (, including not only crops but also flowers and trees, which also need pollinators).",
+            "Many plant species would simply die off ."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE OPPOSITE FOR: “damaging” (adjective)",
+      "answer": [
+        "harmless"
+      ],
+      "points": 0.25,
+      "line": 6
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “starvation” (noun)",
+      "answer": [
+        "hunger"
+      ],
+      "points": 0.25,
+      "line": 13
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “the sudden failure of an entire system, organization or business”",
+      "answer": [
+        "collapse"
+      ],
+      "points": 0.25,
+      "line": 10
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a continuation of life despite difficult conditions”",
+      "answer": [
+        "survival"
+      ],
+      "points": 0.25,
+      "line": 12
+    }
+  ]
+}

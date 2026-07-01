@@ -1,0 +1,166 @@
+{
+  "id": "2023_suplente_b_reading_2",
+  "title": "No More Mondays",
+  "text": "For some US schools, the pandemic created an opportunity to try new things. One of them was to make four-day school weeks the norm. As teachers’ salaries cannot be raised, shortening the school week is a bonus which has allowed administrators to retain and attract experienced teachers. Besides, a shorter school week may alleviate some of the workload on teachers and improve their mental health. Schools can also save money. However, since teachers are not receiving any pay cuts, savings are typically only between zero and three percent of the schools’ budget. Currently, more than 1,600 schools across 24 US states have a four-day school week, and the trend is growing, giving students and teachers either Fridays or Mondays off. To make up for the time missed, the new model’s school day is, on average, about an hour longer than the traditional one. Superintendents in districts which have transitioned to four-day weeks say that the vast majority of teachers, students, administrators and parents actually love the model, an assertion backed by research and surveys. It is a fact that absenteeism and discipline have seen a marked improvement in most of these districts. As regards students’ academic performance, results are varied. For example, students in Colorado had higher scores in Maths and English, whereas students in Oregon got poorer results. Still, graduation rates, particularly among Latino students, have increased since the model began. The four-day week is still limited to small, rural schools in US states where travel distances are greater and hiring qualified educators is a challenge. Current research is giving rise to more innovative ways of schooling which work better for teachers, students and families.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, the four-day schedule has helped to...",
+      "options": {
+        "A": "raise teachers’ salaries",
+        "B": "keep and recruit teachers",
+        "C": "reduce the number of teachers",
+        "D": "improve student-teacher ratios"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, ...",
+      "options": {
+        "A": "more students complete their studies",
+        "B": "academic achievement has improved everywhere",
+        "C": "families disapprove of the transition",
+        "D": "the new model will soon be implemented all over the country"
+      },
+      "answer": [
+        "A"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "The four-day school week could help prevent teachers’ stress.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Besides, a shorter school week may alleviate some of the workload on teachers and improve their mental health.”",
+          "lines": [
+            3,
+            4
+          ],
+          "validTexts": [
+            "Besides, a shorter school week may alleviate some of the workload on teachers and improve their mental health."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "Shortening the school week is reducing costs substantially.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“(However, since teachers are not receiving any pay cuts,) savings are typically only between zero and three percent of the schools’ budget.”",
+          "lines": [
+            4,
+            5
+          ],
+          "validTexts": [
+            "(However, since teachers are not receiving any pay cuts,) savings are typically only between zero and three percent of the schools’ budget.",
+            "savings are typically only between zero and three percent of the schools’ budget."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "The length of the school day has remained unchanged.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“To make up for the time missed, the new model’s school day is, on average, about an hour longer than the traditional one.”",
+          "lines": [
+            7,
+            8
+          ],
+          "validTexts": [
+            "To make up for the time missed, the new model’s school day is, on average, about an hour longer than the traditional one."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "The new model is emerging in urban school districts.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“The four-day week is still limited to small, rural schools in US states (where travel distances are greater and hiring qualified educators is a challenge.)”",
+          "lines": [
+            15
+          ],
+          "validTexts": [
+            "The four-day week is still limited to small, rural schools in US states (where travel distances are greater and hiring qualified educators is a challenge.)",
+            "The four-day week is still limited to small, rural schools in US states"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “rule” (noun)",
+      "answer": [
+        "norm"
+      ],
+      "points": 0.25,
+      "line": 2
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “support” (verb)",
+      "answer": [
+        "back(ed)",
+        "backed",
+        "back"
+      ],
+      "points": 0.25,
+      "line": 10
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “an examination of opinions made by asking people questions”",
+      "answer": [
+        "survey(s)",
+        "surveys",
+        "survey"
+      ],
+      "points": 0.25,
+      "line": 10
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a prevailing tendency or a current style”",
+      "answer": [
+        "trend"
+      ],
+      "points": 0.25,
+      "line": 6
+    }
+  ]
+}

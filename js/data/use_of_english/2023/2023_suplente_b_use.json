@@ -1,0 +1,230 @@
+{
+  "id": "2023_suplente_b_use",
+  "year": 2023,
+  "title": "Use of English – 2023 – Suplente B",
+  "points": {
+    "total": 3,
+    "perQuestion": 0.5
+  },
+  "hasBlocks": true,
+  "blockRules": {
+    "chooseAny": true,
+    "questionsToAnswer": 6
+  },
+  "blocks": [
+    {
+      "id": "block_1",
+      "label": "Bloque 1",
+      "questionIds": [
+        "B17.1",
+        "B17.2",
+        "B19",
+        "B21",
+        "B23",
+        "B25",
+        "B27"
+      ]
+    },
+    {
+      "id": "block_2",
+      "label": "Bloque 2",
+      "questionIds": [
+        "B18.1",
+        "B18.2",
+        "B20",
+        "B22",
+        "B24",
+        "B26",
+        "B28"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "B17.1",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "The doctor convinced me... so much fat.",
+      "instruction": "(not eat)",
+      "answers": [
+        "not to eat"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B17.2",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "When you get to the hotel, we... in the lobby.",
+      "instruction": "(wait)",
+      "answers": [
+        "will be waiting"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B18.1",
+      "type": "mcq",
+      "prompt": "Be careful, you... hurt yourself!",
+      "options": {
+        "A": "have to",
+        "B": "should",
+        "C": "might",
+        "D": "must"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B18.2",
+      "type": "mcq",
+      "prompt": "They gave us the wrong room... mistake.",
+      "options": {
+        "A": "by",
+        "B": "on",
+        "C": "at",
+        "D": "for"
+      },
+      "answer": [
+        "A"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Preposiciones"
+    },
+    {
+      "id": "B19",
+      "type": "text",
+      "task": "active_voice",
+      "prompt": "Several foreign languages are taught in this school.",
+      "instruction": "Turn into the active voice.",
+      "answers": [
+        "We / They teach several foreign languages in this school"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B20",
+      "type": "text",
+      "task": "passive",
+      "prompt": "Today someone sent this interesting article to everyone in the group.",
+      "instruction": "Turn into the passive voice.",
+      "answers": [
+        "Today this interesting article was sent to everyone in the group",
+        "Today everyone in the group was sent this interesting article"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B21",
+      "type": "text",
+      "task": "wh_question",
+      "prompt": "Nicole’s parents heard those rumours from their neighbours.",
+      "instruction": "Give a question for the underlined words.",
+      "answers": [
+        "Who did Nicole’s parents hear those rumours from?",
+        "From whom did Nicole’s parents hear those rumours?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B22",
+      "type": "text",
+      "task": "relative",
+      "prompt": "The new language assistant has a lovely Irish accent. I immediately took notice of it.",
+      "instruction": "Join using a relative.",
+      "answers": [
+        "The new language assistant has a lovely Irish accent, which I immediately took notice of",
+        "The new language assistant has a lovely Irish accent, of which I immediately took notice"
+      ],
+      "points": 0.5,
+      "topic": "Relative Clauses"
+    },
+    {
+      "id": "B23",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "The night was so dark that we couldn’t see a thing.",
+      "instruction": "It was...",
+      "answers": [
+        "It was such a dark night that we couldn’t see a thing"
+      ],
+      "points": 0.5,
+      "topic": "Verbos modales"
+    },
+    {
+      "id": "B24",
+      "type": "text",
+      "task": "conditional",
+      "prompt": "We would have left the party...",
+      "instruction": "Complete the sentence.",
+      "answers": [],
+      "points": 0.5,
+      "manualCorrection": {
+        "prompt": "¿Tu respuesta cumple esta estructura?",
+        "structure": "if + subject + had + past participle"
+      },
+      "topic": "Condicionales"
+    },
+    {
+      "id": "B25",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "I last saw him in 2019.",
+      "instruction": "I haven’t...",
+      "answers": [
+        "I haven’t seen him since 2019 / for four years"
+      ],
+      "points": 0.5,
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B26",
+      "type": "text",
+      "task": "error_correction",
+      "prompt": "Most people is used to check their email daily.",
+      "instruction": "Find the mistakes and rewrite correctly.",
+      "answers": [
+        "Most people are used to checking their email daily"
+      ],
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B27",
+      "type": "text",
+      "task": "reported_speech",
+      "prompt": "‘What was the weather like during your holiday abroad?’ Alison asked me.",
+      "instruction": "Turn into reported speech.",
+      "answers": [
+        "Alison asked (me) what the weather was like / had been like during my / our holiday abroad",
+        "Alison asked what the weather was like / had been like during my / our holiday abroad"
+      ],
+      "points": 0.5,
+      "topic": "Reported Speech"
+    },
+    {
+      "id": "B28",
+      "type": "text",
+      "task": "word_order",
+      "prompt": "Use the words in the boxes to make a meaningful sentence. Use all and only the words in the boxes without changing their form.",
+      "instruction": "Words: was / arrive / time / he / in / happy / appointment / to / the / for",
+      "answers": [
+        "He was happy to arrive in time for the appointment"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    }
+  ]
+}

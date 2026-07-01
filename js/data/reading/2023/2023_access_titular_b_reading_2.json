@@ -1,0 +1,160 @@
+{
+  "id": "2023_access_titular_b_reading_2",
+  "title": "The History Of Jeans",
+  "text": "The word jeans started out in the 1800s, in reference to a cotton cloth used for trousers. Blue jeans, now also called denim, were originally made from this fabric and manufactured in the French town of Nîmes. By the 20th century, jeans was the term for denim informal trousers. The most recognizable, classic jeans were patented in 1873 by Jacob Davis, a tailor, and Levi Strauss, owner of a fabric house in San Francisco. Strauss and Davis initially made jeans in two types of fabric, brown cotton and blue denim, but the creation of the denim 501 style in 1890 helped the latter fabric take off. Hollywood helped romanticize blue jeans in the 1920s and 1930s by putting the trousers on handsome cowboy types played by actors John Wayne and Gary Cooper. This glamorous new image appealed to consumers who sought casual leisurewear for the weekends and holidays. Publicity photos of famous actresses like Ginger Rogers and Carole Lombard wearing jeans helped convince women that the style was for them too. In the 1930s, Vogue gave their approval, calling jeans “Western chic”. Yet, it wasn’t until the 1950s that jeans came to be associated with rebellious youth. Hippies wore jeans in the 1960s and early 1970s as a way to show support for the working class, while feminists and women’s rights activists chose blue jeans as a way to demonstrate gender equality. “I have often said that I wish I had invented blue jeans,” Yves Saint Laurent told New York Magazine in November 1983. “They have expression, modesty, sex appeal, simplicity... all that I hope for in my clothes.”",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, the word jeans originally referred to...",
+      "options": {
+        "A": "informal trousers",
+        "B": "cowboys and the Far West",
+        "C": "a kind of fabric",
+        "D": "the French town of Nîmes"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "Blue jeans began to be desirable in the first half of the 20th century because...",
+      "options": {
+        "A": "Levi Strauss advertised them",
+        "B": "cinema icons made them look stylish",
+        "C": "hippies used to wear them",
+        "D": "New York Magazine praised them"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "According to the text, jeans have always been the same color.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“(Strauss and Davis initially made jeans in two types of fabric,) brown cotton and blue denim (, but the creation of the denim 501 style in 1890 helped the latter fabric take off.)”",
+          "lines": [
+            5
+          ],
+          "validTexts": [
+            "(Strauss and Davis initially made jeans in two types of fabric,) brown cotton and blue denim (, but the creation of the denim 501 style in 1890 helped the latter fabric take off.)",
+            "brown cotton and blue denim"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "Female film stars contributed to making jeans trendy among women.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Publicity photos of famous actresses like Ginger Rogers and Carole Lombard wearing jeans helped convince women that the style was for them too.”",
+          "lines": [
+            9,
+            10
+          ],
+          "validTexts": [
+            "Publicity photos of famous actresses like Ginger Rogers and Carole Lombard wearing jeans helped convince women that the style was for them too."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "Jeans became a symbol of young people’s non-conformism.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Yet, it wasn’t until the 1950s that jeans came to be associated with rebellious youth.”",
+          "lines": [
+            11
+          ],
+          "validTexts": [
+            "Yet, it wasn’t until the 1950s that jeans came to be associated with rebellious youth."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "Yves Saint Laurent claimed to be the first blue jeans designer.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“‘(I have often said that) I wish I had invented blue jeans,’ (Yves Saint Laurent told New York Magazine in November 1983.)”",
+          "lines": [
+            14
+          ],
+          "validTexts": [
+            "‘(I have often said that) I wish I had invented blue jeans,’ (Yves Saint Laurent told New York Magazine in November 1983.)",
+            "‘ I wish I had invented blue jeans,’"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “look for” (verb)",
+      "answer": [
+        "sought / seek",
+        "sought",
+        "seek"
+      ],
+      "points": 0.25,
+      "line": 8
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “persuade” (verb)",
+      "answer": [
+        "convince"
+      ],
+      "points": 0.25,
+      "line": 10
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “informal clothing which you wear when you are not working” leisurewear",
+      "answer": [],
+      "points": 0.25,
+      "line": 8
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “the belief that someone or something is good or acceptable”",
+      "answer": [
+        "approval"
+      ],
+      "points": 0.25,
+      "line": 10
+    }
+  ]
+}

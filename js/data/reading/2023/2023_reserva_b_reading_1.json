@@ -1,0 +1,161 @@
+{
+  "id": "2023_reserva_b_reading_1",
+  "title": "The History Of Tattoos",
+  "text": "In 1991 two Germans hiking in the Alps found by chance what they initially believed to be a modern corpse frozen in the ice. Later, authorities discovered that it was anything but modern. The mummy, nicknamed Ötzi after the valley where it lay, had survived in the ice for 5,300 years. Mystery surrounds the exact circumstances of Ötzi’s death although data suggest a violent end. However, this isn’t the only secret Ötzi hides. He has over fifty lines and crosses tattooed onto his body —the earliest known evidence of tattooing in the world. The locations of the markings are consistent with traditional Chinese acupuncture points. So, Ötzi’s tattoos probably played a therapeutic role. Before Ötzi, the first conclusive evidence of tattoos came from a handful of Egyptian mummies dating back to the construction of the great pyramids, over 4,000 years ago. Historical texts reveal that tattooing has been practiced by almost every human culture. For instance, the ancient Greeks used tattoos to communicate among spies. Later, the Romans marked criminals and slaves with tattoos. During the crusades, Europeans tattooed a cross on their hands or arms to show that they had participated in the war and indicate their desire for a Christian burial. The popularity of tattoos has risen and fallen over time. Currently, the practice is booming. The reasons for getting tattoos vary: religion, status or artistic expression. Now, a new one can be added: a webpage designer recently sold his forehead as advertising space on eBay. He got $37,000 in return for having a pharmaceutical brand logo tattooed for one month. If Ötzi weren’t in deep freeze at a museum, I’m sure he’d be rolling in his grave.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, tattooing...",
+      "options": {
+        "A": "is done for different purposes",
+        "B": "has always been trendy",
+        "C": "gave rise to acupuncture",
+        "D": "is not documented in Ancient Egypt"
+      },
+      "answer": [
+        "A"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, eBay...",
+      "options": {
+        "A": "has hired a website designer to advertise tattoos",
+        "B": "has put Ötzi’s body up for sale",
+        "C": "has made it possible to use a body part for publicity",
+        "D": "is selling pharmaceutical products to make tattoos"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "Ötzi’s remains were located after a thorough and systematic search.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“In 1991 two Germans hiking in the Alps found by chance what they initially believed to be a modern corpse frozen in the ice.”",
+          "lines": [
+            1
+          ],
+          "validTexts": [
+            "In 1991 two Germans hiking in the Alps found by chance what they initially believed to be a modern corpse frozen in the ice."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "Ötzi’s tattoos might have been related to health.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "So, Ötzi’s tattoos probably played a therapeutic role.",
+          "lines": [
+            5,
+            5,
+            6
+          ],
+          "validTexts": [
+            "So, Ötzi’s tattoos probably played a therapeutic role."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "In the past, being tattooed was not always a matter of personal preference.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Later, the Romans marked criminals and slaves with tattoos.”",
+          "lines": [
+            9,
+            10
+          ],
+          "validTexts": [
+            "Later, the Romans marked criminals and slaves with tattoos."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "Ötzi would approve of the webpage designer’s actions.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“If Ötzi weren’t in deep freeze at a museum, I’m sure he’d be rolling in his grave.”",
+          "lines": [
+            14,
+            15
+          ],
+          "validTexts": [
+            "If Ötzi weren’t in deep freeze at a museum, I’m sure he’d be rolling in his grave."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “differ” (verb)",
+      "answer": [
+        "vary"
+      ],
+      "points": 0.25,
+      "line": 12
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “wish” (noun)",
+      "answer": [
+        "desire"
+      ],
+      "points": 0.25,
+      "line": 11
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a long way down from the surface”",
+      "answer": [
+        "deep"
+      ],
+      "points": 0.25,
+      "line": 14
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a trademark or distinctive name identifying a product or company”",
+      "answer": [
+        "brand"
+      ],
+      "points": 0.25,
+      "line": 14
+    }
+  ]
+}

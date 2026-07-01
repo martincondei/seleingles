@@ -1,0 +1,229 @@
+{
+  "id": "2023_reserva_b_use",
+  "year": 2023,
+  "title": "Use of English – 2023 – Reserva B",
+  "points": {
+    "total": 3,
+    "perQuestion": 0.5
+  },
+  "hasBlocks": true,
+  "blockRules": {
+    "chooseAny": true,
+    "questionsToAnswer": 6
+  },
+  "blocks": [
+    {
+      "id": "block_1",
+      "label": "Bloque 1",
+      "questionIds": [
+        "B17.1",
+        "B17.2",
+        "B19",
+        "B21",
+        "B23",
+        "B25",
+        "B27"
+      ]
+    },
+    {
+      "id": "block_2",
+      "label": "Bloque 2",
+      "questionIds": [
+        "B18.1",
+        "B18.2",
+        "B20",
+        "B22",
+        "B24",
+        "B26",
+        "B28"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "B17.1",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "She is so funny! She always makes me...",
+      "instruction": "(laugh)",
+      "answers": [
+        "laugh"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B17.2",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "I wish I... at him yesterday.",
+      "instruction": "(not shout)",
+      "answers": [
+        "hadn’t shouted"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B18.1",
+      "type": "mcq",
+      "prompt": "The students will benefit... grants to study abroad.",
+      "options": {
+        "A": "at",
+        "B": "from",
+        "C": "of",
+        "D": "for"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Preposiciones"
+    },
+    {
+      "id": "B18.2",
+      "type": "mcq",
+      "prompt": "He... an old friend at the shopping centre.",
+      "options": {
+        "A": "came up",
+        "B": "came into",
+        "C": "ran into",
+        "D": "ran off"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B19",
+      "type": "text",
+      "task": "active_voice",
+      "prompt": "Do you know that Martha was offered the position of chief officer?",
+      "instruction": "Turn into the active voice.",
+      "answers": [
+        "Do you know that they / the firm offered Martha the position of chief officer?"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B20",
+      "type": "text",
+      "task": "passive",
+      "prompt": "They must sweep the floor every day after work.",
+      "instruction": "Turn into the passive voice.",
+      "answers": [
+        "The floor must be swept every day after work"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B21",
+      "type": "text",
+      "task": "wh_question",
+      "prompt": "Peter’s daughter won a song contest.",
+      "instruction": "Give a question for the underlined words.",
+      "answers": [
+        "Whose daughter won a song contest?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B22",
+      "type": "text",
+      "task": "relative",
+      "prompt": "That is the flowerpot. I put the key under that pot.",
+      "instruction": "Join using a relative.",
+      "answers": [
+        "That is the flowerpot under which I put the key",
+        "That is the flowerpot (which) I put the key under",
+        "That is the flowerpot I put the key under"
+      ],
+      "points": 0.5,
+      "topic": "Relative Clauses"
+    },
+    {
+      "id": "B23",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "The mechanic is fixing my car right now.",
+      "instruction": "I am...",
+      "answers": [
+        "I am having / getting my car fixed right now (by a mechanic)",
+        "I am having / getting my car fixed right now"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B24",
+      "type": "text",
+      "task": "conditional",
+      "prompt": "The harder you work, ...",
+      "instruction": "Complete the sentence.",
+      "answers": [],
+      "points": 0.5,
+      "manualCorrection": {
+        "prompt": "¿Tu respuesta cumple esta estructura?",
+        "structure": "the + comparative adjective / adverb + subject + verb"
+      },
+      "topic": "Condicionales"
+    },
+    {
+      "id": "B25",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "It’s impossible that you saw John yesterday because he was in London.",
+      "instruction": "You...",
+      "answers": [
+        "You can’t have seen John yesterday because he was in London"
+      ],
+      "points": 0.5,
+      "topic": "Verbos modales"
+    },
+    {
+      "id": "B26",
+      "type": "text",
+      "task": "error_correction",
+      "prompt": "Paul and Laura went back to home after finish the report.",
+      "instruction": "Find the mistakes and rewrite correctly.",
+      "answers": [
+        "Paul and Laura went back home after finishing the report"
+      ],
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B27",
+      "type": "text",
+      "task": "reported_speech",
+      "prompt": "‘Did Ms. Warren take her watch to the jeweller’s yesterday?’ the porter said.",
+      "instruction": "Turn into reported speech.",
+      "answers": [
+        "The porter asked if / whether Ms. Warren had taken her watch to the jeweller’s the day before / the previous day"
+      ],
+      "points": 0.5,
+      "topic": "Reported Speech"
+    },
+    {
+      "id": "B28",
+      "type": "text",
+      "task": "word_order",
+      "prompt": "Use the words in the boxes to make a meaningful sentence. Use all and only the words in the boxes without changing their form.",
+      "instruction": "Words: a / the / them / let / team / fight / without / opposing / win",
+      "answers": [
+        "The opposing team let them win without a fight"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    }
+  ]
+}

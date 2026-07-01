@@ -50,7 +50,8 @@
         "waking up"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B17.2",
@@ -62,7 +63,8 @@
         "has just put off"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B18.1",
@@ -78,7 +80,8 @@
         "B"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B18.2",
@@ -94,7 +97,8 @@
         "A"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Preposiciones"
     },
     {
       "id": "B19",
@@ -105,7 +109,8 @@
       "answers": [
         "Did they build this cathedral in the 17th century"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B20",
@@ -117,7 +122,8 @@
         "The building isn’t being cleaned at the moment",
         "The building is not being cleaned at the moment"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B21",
@@ -130,7 +136,8 @@
         "How long have you been living in Dublin",
         "How long have I been living in Dublin"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B22",
@@ -143,7 +150,8 @@
         "During the prom, James met Sheryl, who he immediately fell in love with",
         "During the prom, James met Sheryl, with whom he immediately fell in love"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B23",
@@ -155,7 +163,8 @@
         "Ken got his car repaired yesterday",
         "Ken had his car repaired yesterday"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B24",
@@ -168,7 +177,8 @@
       "manualCorrection": {
         "prompt": "¿Tu respuesta cumple esta estructura?",
         "structure": "subject + would / could / might + have + past participle // mixed conditional"
-      }
+      },
+      "topic": "Condicionales"
     },
     {
       "id": "B25",
@@ -180,7 +190,8 @@
         "I don’t know where he went on holiday last summer",
         "I do not know where he went on holiday last summer"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B26",
@@ -192,7 +203,8 @@
         "You should take more exercise",
         "You ought to take more exercise"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B27",
@@ -206,7 +218,8 @@
         "They said that they were moving to a new apartment the following month",
         "They said that they were moving to a new apartment the month after"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B28",
@@ -217,7 +230,8 @@
       "answers": [
         "Would you mind waiting for me in the car"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     }
   ]
 }

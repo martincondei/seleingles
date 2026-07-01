@@ -1,0 +1,165 @@
+{
+  "id": "2023_access_titular_a_reading_2",
+  "title": "Is World Heritage In Danger?",
+  "text": "In 2016 the city government of Vienna announced that a public-private partnership would build a new ice-skating rink just outside the city’s century-old concert hall. Anyone visiting the place where Beethoven and Mozart met will notice two things immediately. First, the core of Vienna is an architectural fantasy of baroque palaces, immaculate courtyards, and a neo-Gothic city hall. Second, Austrians love winter sports, and ice-skating is as typically Viennese as symphonies and sausages. Therefore, the idea of a permanent ice rink would not have been expected to cause controversy. However, the UNESCO World Heritage Committee decreed that the rink would undermine the “outstanding universal value” of central Vienna. Since 2001, Vienna’s city center has been a World Heritage site, that is, one of the organization’s 1,154 unique landmarks around the globe. Since announcing its objection to the rink, the World Heritage Committee has kept Vienna on its “in danger” list, joining fifty other sites, from the ancient villages of Syria to Everglades National Park in Florida. If the city fails to address the committee’s concerns satisfactorily, it risks being permanently “de-listed” as a UNESCO landmark. UNESCO has recently had to confront a newer enemy: climate change. Here the organisation’s resources to tackle the problem are limited too. Last year, UNESCO was forced to threaten Australia with placing its legendary Great Barrier Reef on the “in danger” list if its government did not work hard enough to reduce its greenhouse gas emissions. Even though the World Heritage program may be imperfect and at times powerless, it remains relevant because of its main philosophy: the world’s diverse treasures require protection, since they cannot protect themselves.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, the Viennese...",
+      "options": {
+        "A": "are against the city council’s plans",
+        "B": "are very fond of ice-skating",
+        "C": "don’t care about UNESCO’s warning",
+        "D": "are worried about climate change"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, ...",
+      "options": {
+        "A": "both Vienna’s and Australia’s sites are environmentally threatened",
+        "B": "Vienna’s council has just given up on the rink project",
+        "C": "Vienna’s status as a World Heritage site is at risk",
+        "D": "fifty sites have already lost their World Heritage status"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "It was believed that the Viennese would support the ice-skating rink project.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(Therefore,) the idea of a permanent ice rink would not have been expected to cause controversy.”",
+          "lines": [
+            5,
+            6
+          ],
+          "validTexts": [
+            "(Therefore,) the idea of a permanent ice rink would not have been expected to cause controversy.",
+            "the idea of a permanent ice rink would not have been expected to cause controversy."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "Vienna needn’t abandon the rink project to keep its World Heritage status.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "de-listed",
+          "lines": [
+            10,
+            11
+          ],
+          "validTexts": [
+            "de-listed"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "UNESCO has lately begun to address the impact of environmental issues.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“UNESCO has recently had to confront a newer enemy: climate change.”",
+          "lines": [
+            12
+          ],
+          "validTexts": [
+            "UNESCO has recently had to confront a newer enemy: climate change."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "The UNESCO program cannot always achieve its goals.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Even though the World Heritage program may be imperfect and at times powerless (, it remains relevant because of its main philosophy.)”",
+          "lines": [
+            15
+          ],
+          "validTexts": [
+            "Even though the World Heritage program may be imperfect and at times powerless (, it remains relevant because of its main philosophy.)",
+            "Even though the World Heritage program may be imperfect and at times powerless"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE OPPOSITE FOR: “approval” (noun)",
+      "answer": [
+        "objection"
+      ],
+      "points": 0.25,
+      "line": 9
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE OPPOSITE FOR: “succeed” (verb)",
+      "answer": [
+        "fail(s)",
+        "fails",
+        "fail"
+      ],
+      "points": 0.25,
+      "line": 10
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “to state one’s intention to take hostile action against someone”",
+      "answer": [
+        "threaten"
+      ],
+      "points": 0.25,
+      "line": 13
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “something considered especially valuable, like a precious possession”",
+      "answer": [
+        "treasure(s)",
+        "treasures",
+        "treasure"
+      ],
+      "points": 0.25,
+      "line": 16
+    }
+  ]
+}

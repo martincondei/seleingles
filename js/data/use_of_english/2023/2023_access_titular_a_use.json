@@ -1,0 +1,229 @@
+{
+  "id": "2023_access_titular_a_use",
+  "year": 2023,
+  "title": "Use of English – 2023 – Acceso Titular A",
+  "points": {
+    "total": 3,
+    "perQuestion": 0.5
+  },
+  "hasBlocks": true,
+  "blockRules": {
+    "chooseAny": true,
+    "questionsToAnswer": 6
+  },
+  "blocks": [
+    {
+      "id": "block_1",
+      "label": "Bloque 1",
+      "questionIds": [
+        "B17.1",
+        "B17.2",
+        "B19",
+        "B21",
+        "B23",
+        "B25",
+        "B27"
+      ]
+    },
+    {
+      "id": "block_2",
+      "label": "Bloque 2",
+      "questionIds": [
+        "B18.1",
+        "B18.2",
+        "B20",
+        "B22",
+        "B24",
+        "B26",
+        "B28"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "B17.1",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "You should... him more nicely when he visited you. Now he’s upset.",
+      "instruction": "(treat)",
+      "answers": [
+        "have treated"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B17.2",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "By the time we get married next summer, we... for two years.",
+      "instruction": "(be engaged)",
+      "answers": [
+        "will have been engaged"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B18.1",
+      "type": "mcq",
+      "prompt": "Can I... your charger? My phone battery has died.",
+      "options": {
+        "A": "lend",
+        "B": "own",
+        "C": "borrow",
+        "D": "let"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B18.2",
+      "type": "mcq",
+      "prompt": "He escaped by digging a hole... the wall.",
+      "options": {
+        "A": "through",
+        "B": "out",
+        "C": "thorough",
+        "D": "around"
+      },
+      "answer": [
+        "A"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Preposiciones"
+    },
+    {
+      "id": "B19",
+      "type": "text",
+      "task": "active_voice",
+      "prompt": "The rumour was being spread by all the media outlets.",
+      "instruction": "Turn into the active voice.",
+      "answers": [
+        "All the media outlets were spreading the rumour"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B20",
+      "type": "text",
+      "task": "passive",
+      "prompt": "We ask students to mute their phones while in class.",
+      "instruction": "Turn into the passive voice.",
+      "answers": [
+        "Students are asked to mute their phones while in class"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B21",
+      "type": "text",
+      "task": "wh_question",
+      "prompt": "Cecilia is pretty, short and has big blue eyes.",
+      "instruction": "Give a question for the underlined words.",
+      "answers": [
+        "What is Cecilia like?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B22",
+      "type": "text",
+      "task": "relative",
+      "prompt": "This is the hospital. Your sister was born here.",
+      "instruction": "Join using a relative.",
+      "answers": [
+        "This is the hospital where / in which your sister was born",
+        "This is the hospital (which / that) your sister was born in",
+        "This is the hospital your sister was born in"
+      ],
+      "points": 0.5,
+      "topic": "Relative Clauses"
+    },
+    {
+      "id": "B23",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "It wasn’t necessary for you to work late last night.",
+      "instruction": "You needn’t...",
+      "answers": [
+        "You needn’t have worked late last night"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B24",
+      "type": "text",
+      "task": "conditional",
+      "prompt": "If I had known you were busy, ...",
+      "instruction": "Complete the sentence.",
+      "answers": [],
+      "points": 0.5,
+      "manualCorrection": {
+        "prompt": "¿Tu respuesta cumple esta estructura?",
+        "structure": "subject + would (not) have + participle"
+      },
+      "topic": "Condicionales"
+    },
+    {
+      "id": "B25",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "When did they buy their new sports car?",
+      "instruction": "How long...?",
+      "answers": [
+        "How long have they had their new sports car?"
+      ],
+      "points": 0.5,
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B26",
+      "type": "text",
+      "task": "error_correction",
+      "prompt": "Can you please put all this books in the shelf above?",
+      "instruction": "Find the mistakes and rewrite correctly.",
+      "answers": [
+        "Can you please put all these books on the shelf above?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B27",
+      "type": "text",
+      "task": "direct_speech",
+      "prompt": "The manager told me to discuss my idea with the senior clerk.",
+      "instruction": "Turn into direct speech.",
+      "answers": [
+        "Discuss your idea with the senior clerk (, please),” the manager asked / told me",
+        "Discuss your idea with the senior clerk ,” the manager asked / told me"
+      ],
+      "points": 0.5,
+      "topic": "Reported Speech"
+    },
+    {
+      "id": "B28",
+      "type": "text",
+      "task": "word_order",
+      "prompt": "Use the words in the boxes to make a meaningful sentence. Use all and only the words in the boxes without changing their form.",
+      "instruction": "Words: back / it / to / time / home / think / is / I / go",
+      "answers": [
+        "I think it is time to go back home"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    }
+  ]
+}

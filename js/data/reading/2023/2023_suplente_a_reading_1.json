@@ -1,0 +1,152 @@
+{
+  "id": "2023_suplente_a_reading_1",
+  "title": "Something Borrowed, Something Blue...",
+  "text": "Last August, a 911 operator came to the rescue of a desperate bride, but not in the way you would expect. A bride named Amanda had her wedding dress stolen on the morning of her nuptials! She had been packing her car when, upon returning from a quick trip to the house, she discovered the dress had gone missing. Panicking, she called 911 to report the theft. Candice, the 911 dispatcher answering the call, couldn’t help but sympathize with Amanda. She said that all she kept thinking was “I have a wedding gown. Maybe she could wear that. Here we go, let’s see if she wants it.” On an impulse, Candice asked her supervisor if she could offer the bride her dress. Of course, she had no idea if the dress would fit, much less if Amanda would even want to give it a try. Luckily, her supervisor agreed and let her do it. Though grateful for the offer, the traumatized bride asked to see a picture of the gown first. Candice completely understood. She texted the police officer on the scene a picture of the gown and, thankfully, Amanda loved it. The operator then asked her husband to pick up the dress, which was in her parents’ attic. After overcoming a series of obstacles, including discovering that he had taken the wrong keys, Candice’s husband successfully delivered the dress to the bride in time, and the wedding went off without any further incidents. Some days later, newlywed Amanda surprised Candice at her office to return her dress. She wanted to say a personal and heartfelt thank you to the woman that she believes saved her wedding.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, the person who took Candice’s gown to the bride was...",
+      "options": {
+        "A": "Candice herself",
+        "B": "the police officer on the scene",
+        "C": "Candice’s husband",
+        "D": "Candice’s supervisor"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, ...",
+      "options": {
+        "A": "desperate Amanda didn’t accept the offer immediately",
+        "B": "Candice attended the wedding ceremony",
+        "C": "Candice’s husband forgot to take the keys",
+        "D": "the wedding gown needed some minor alterations"
+      },
+      "answer": [
+        "A"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "Amanda left her wedding dress unsupervised.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(She had been packing her car when,) upon returning from a quick trip to the house, she discovered the dress had gone missing.”",
+          "lines": [
+            2,
+            3
+          ],
+          "validTexts": [
+            "(She had been packing her car when,) upon returning from a quick trip to the house, she discovered the dress had gone missing.",
+            "upon returning from a quick trip to the house, she discovered the dress had gone missing."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "Candice’s manager disapproved of her kind gesture.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "Luckily, her supervisor agreed and let her do it.",
+          "lines": [
+            7
+          ],
+          "validTexts": [
+            "Luckily, her supervisor agreed and let her do it."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "Apart from the dress incident, there were no other impediments to the ceremony.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(Candice’s husband successfully delivered the dress to the bride in time,) and the wedding went off without any further incidents.”",
+          "lines": [
+            12
+          ],
+          "validTexts": [
+            "(Candice’s husband successfully delivered the dress to the bride in time,) and the wedding went off without any further incidents.",
+            "and the wedding went off without any further incidents."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "Amanda and Candice never met each other.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“Some days later, newlywed Amanda surprised Candice at her office to return her dress.”",
+          "lines": [
+            13
+          ],
+          "validTexts": [
+            "Some days later, newlywed Amanda surprised Candice at her office to return her dress."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “perhaps” (adverb) maybe",
+      "answer": [],
+      "points": 0.25,
+      "line": 5
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “sincere” (adjective) heartfelt",
+      "answer": [],
+      "points": 0.25,
+      "line": 14
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “to be of the right size” fit",
+      "answer": [],
+      "points": 0.25,
+      "line": 7
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “to understand and care about someone’s problem” sympathize",
+      "answer": [],
+      "points": 0.25,
+      "line": 4
+    }
+  ]
+}

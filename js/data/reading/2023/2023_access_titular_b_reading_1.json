@@ -1,0 +1,163 @@
+{
+  "id": "2023_access_titular_b_reading_1",
+  "title": "Staying Active In Later Life",
+  "text": "A healthy lifestyle matters at all ages but probably more as we get older. However, many old people feel that they have reached an age when exercise is too tiring, and that it is too late to worry about dietary problems. Nevertheless, those who are active into older age see a reduced risk of developing heart disease, obesity or diabetes. Doctors recommend that old people should quit smoking, eat a healthy diet and practise some light activity, such as daily walking, to improve their quality of life. Paul, an 82-year-old Englishman who has lived in southern Spain for 40 years, believes it is imperative to fight obesity with a healthy diet and regular exercise: “The only time I go to a fast-food restaurant is when I am in England visiting my grandchildren.” Additionally, he has never smoked and rarely eats meat, adhering to a diet of fish, lentils and salad instead. Paul has two young grandchildren who do not fully understand the importance of healthy habits. Concerned about their wellbeing, he says, “it’s complicated to tell my grandchildren not to eat junk food or explain to them the importance of exercise, but fortunately my daughter exercises a lot, so maybe they will follow our example.” Himself a very active man, Paul is no stranger to physical exercise: “I began boxing in my youth, and then I was the proud owner of a rather successful fitness centre in Birkenhead for over 30 years,” he states. “Now I keep myself fit working out at home, in my little basement gym. I also walk twelve kilometres along the beach every other day, and use the exercise apparatus installed close to the beach.”",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, many older people...",
+      "options": {
+        "A": "are eager to go on a diet",
+        "B": "cannot exercise due to heart disease, obesity and diabetes",
+        "C": "find physical activity exhausting",
+        "D": "develop serious illnesses after doing regular exercise"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, Paul...",
+      "options": {
+        "A": "has lived in Spain most of his life",
+        "B": "hopes his grandkids may eventually lead a healthy life",
+        "C": "has inspired his whole family to be very sporty",
+        "D": "had to take up sport following the doctor’s orders"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "Elderly people are encouraged to follow a gentle exercise plan.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Doctors recommend that old people should (quit smoking, eat a healthy diet and) practise some light activity, such as daily walking (, to improve their quality of life.)”",
+          "lines": [
+            3,
+            4
+          ],
+          "validTexts": [
+            "Doctors recommend that old people should (quit smoking, eat a healthy diet and) practise some light activity, such as daily walking (, to improve their quality of life.)",
+            "Doctors recommend that old people should practise some light activity, such as daily walking"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "Paul has switched to a vegetarian diet.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“(Additionally,) he (has never smoked and) rarely eats meat, // adhering to a diet of fish, lentils and salad instead.”",
+          "lines": [
+            7
+          ],
+          "validTexts": [
+            "(Additionally,) he (has never smoked and) rarely eats meat,",
+            "he rarely eats meat,",
+            "adhering to a diet of fish, lentils and salad instead."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "Paul started working out in his old age.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“(Himself a very active man,) Paul is no stranger to physical exercise: ‘I began boxing in my youth (, and then I was the proud owner of a rather successful fitness centre in Birkenhead for over 30 years.)’”",
+          "lines": [
+            11
+          ],
+          "validTexts": [
+            "(Himself a very active man,) Paul is no stranger to physical exercise: ‘I began boxing in my youth (, and then I was the proud owner of a rather successful fitness centre in Birkenhead for over 30 years.)’",
+            "Paul is no stranger to physical exercise: ‘I began boxing in my youth ’"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "Paul always exercises outdoors.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "‘Now I keep myself fit working out at home, in my little basement gym.’",
+          "lines": [
+            12,
+            13
+          ],
+          "validTexts": [
+            "‘Now I keep myself fit working out at home, in my little basement gym.’"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “trash” (noun)",
+      "answer": [
+        "junk"
+      ],
+      "points": 0.25,
+      "line": 9
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “infrequently” (adverb)",
+      "answer": [
+        "rarely"
+      ],
+      "points": 0.25,
+      "line": 7
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “feeling satisfaction for something done or achieved”",
+      "answer": [
+        "proud"
+      ],
+      "points": 0.25,
+      "line": 11
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “to stop doing something”",
+      "answer": [
+        "quit"
+      ],
+      "points": 0.25,
+      "line": 3
+    }
+  ]
+}

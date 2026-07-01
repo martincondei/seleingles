@@ -50,7 +50,8 @@
         "say"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B17.2",
@@ -62,7 +63,8 @@
         "will be studying"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B18.1",
@@ -78,7 +80,8 @@
         "B"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Preposiciones"
     },
     {
       "id": "B18.2",
@@ -94,7 +97,8 @@
         "A"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B19",
@@ -106,7 +110,8 @@
         "People say that the Prime Minister is preparing a statement",
         "They say that the Prime Minister is preparing a statement"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B20",
@@ -117,7 +122,8 @@
       "answers": [
         "My mobile phone must have been dropped in the pool"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B21",
@@ -132,7 +138,8 @@
         "Where would you rather go to tonight",
         "Where would I rather go to tonight"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B22",
@@ -146,7 +153,8 @@
         "I will never forget my daughter’s graduation day, in which she gave a moving speech",
         "I'll never forget my daughter’s graduation day, in which she gave a moving speech"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B23",
@@ -162,7 +170,8 @@
         "It was the longest book that I'd ever read",
         "It was the longest book that I would ever read"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B24",
@@ -175,7 +184,8 @@
       "manualCorrection": {
         "prompt": "¿Tu respuesta cumple esta estructura?",
         "structure": "subject + would / could / might + have + past participle // mixed conditional"
-      }
+      },
+      "topic": "Condicionales"
     },
     {
       "id": "B25",
@@ -187,7 +197,8 @@
         "I am looking forward to going to Australia, which is my favorite country in the whole world",
         "I'm looking forward to going to Australia, which is my favorite country in the whole world"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B26",
@@ -199,7 +210,8 @@
         "Sarah said, I lost my keys last night",
         "Sarah said, I lost my keys yesterday night"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B27",
@@ -217,7 +229,8 @@
         "They said to us that they wouldn’t be able to attend our party that day",
         "They said to us that they would not be able to attend our party that day"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B28",
@@ -228,7 +241,8 @@
       "answers": [
         "How about inviting her to dinner tomorrow evening"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     }
   ]
 }

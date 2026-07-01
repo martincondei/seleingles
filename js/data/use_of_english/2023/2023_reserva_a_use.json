@@ -1,0 +1,234 @@
+{
+  "id": "2023_reserva_a_use",
+  "year": 2023,
+  "title": "Use of English – 2023 – Reserva A",
+  "points": {
+    "total": 3,
+    "perQuestion": 0.5
+  },
+  "hasBlocks": true,
+  "blockRules": {
+    "chooseAny": true,
+    "questionsToAnswer": 6
+  },
+  "blocks": [
+    {
+      "id": "block_1",
+      "label": "Bloque 1",
+      "questionIds": [
+        "B17.1",
+        "B17.2",
+        "B19",
+        "B21",
+        "B23",
+        "B25",
+        "B27"
+      ]
+    },
+    {
+      "id": "block_2",
+      "label": "Bloque 2",
+      "questionIds": [
+        "B18.1",
+        "B18.2",
+        "B20",
+        "B22",
+        "B24",
+        "B26",
+        "B28"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "B17.1",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "Remember... your passport with you to confirm your identity.",
+      "instruction": "(bring)",
+      "answers": [
+        "to bring"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B17.2",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "Look at those monkeys! I... a picture before they run away!",
+      "instruction": "(take)",
+      "answers": [
+        "will take",
+        "’ll take"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B18.1",
+      "type": "mcq",
+      "prompt": "Since the lift was out of order I... use the stairs.",
+      "options": {
+        "A": "ought to",
+        "B": "had to",
+        "C": "could",
+        "D": "must"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B18.2",
+      "type": "mcq",
+      "prompt": "Please, take your umbrella... it rains.",
+      "options": {
+        "A": "in case",
+        "B": "as much as",
+        "C": "as long as",
+        "D": "in case of"
+      },
+      "answer": [
+        "A"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B19",
+      "type": "text",
+      "task": "active_voice",
+      "prompt": "The Cabinet has already been reorganised by the Prime Minister.",
+      "instruction": "Turn into the active voice.",
+      "answers": [
+        "The Prime Minister has already reorganised the Cabinet"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B20",
+      "type": "text",
+      "task": "passive",
+      "prompt": "Scientists have to conduct a new study to evaluate the situation after the volcano’s eruption.",
+      "instruction": "Turn into the passive voice.",
+      "answers": [
+        "A new study to evaluate the situation after the volcano’s eruption has to be conducted",
+        "A new study has to be conducted to evaluate the situation after the volcano’s eruption"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B21",
+      "type": "text",
+      "task": "wh_question",
+      "prompt": "She’s been in charge for a couple of years.",
+      "instruction": "Give a question for the underlined words.",
+      "answers": [
+        "(For) How long has she been in charge?",
+        "How long has she been in charge?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B22",
+      "type": "text",
+      "task": "relative",
+      "prompt": "The knife had a really sharp blade. I got cut with it.",
+      "instruction": "Join using a relative.",
+      "answers": [
+        "The knife with which I got cut had a really sharp blade",
+        "I got cut with the knife(,) which had a really sharp blade",
+        "I got cut with the knife which had a really sharp blade"
+      ],
+      "points": 0.5,
+      "topic": "Relative Clauses"
+    },
+    {
+      "id": "B23",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "This coat is too heavy to be worn all day long.",
+      "instruction": "This coat isn’t...",
+      "answers": [
+        "This coat isn’t light enough to be worn all day long"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B24",
+      "type": "text",
+      "task": "conditional",
+      "prompt": "... , provided that you help me.",
+      "instruction": "Complete the sentence.",
+      "answers": [],
+      "points": 0.5,
+      "manualCorrection": {
+        "prompt": "¿Tu respuesta cumple esta estructura?",
+        "structure": "Subject + will + infinitive"
+      },
+      "topic": "Condicionales"
+    },
+    {
+      "id": "B25",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "Despite my complaint, I did not get a pay rise.",
+      "instruction": "Although...",
+      "answers": [
+        "Although I complained / had complained, I did not get a pay rise"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B26",
+      "type": "text",
+      "task": "error_correction",
+      "prompt": "In addition with making his bed, my little brother always helps me with many others household chores.",
+      "instruction": "Find the mistakes and rewrite correctly.",
+      "answers": [
+        "In addition to making his bed, my little brother always helps me with many other household chores"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B27",
+      "type": "text",
+      "task": "direct_speech",
+      "prompt": "The coach asked us why we had lost focus during the previous day’s match.",
+      "instruction": "Turn into direct speech.",
+      "answers": [
+        "Why did you lose focus during yesterday’s match?” the coach asked (us) / told us",
+        "Why did you lose focus during yesterday’s match?” the coach asked / told us",
+        "The coach said (to us) / told us / asked (us), “Why did you lose focus during yesterday’s match?",
+        "The coach said / told us / asked , “Why did you lose focus during yesterday’s match?"
+      ],
+      "points": 0.5,
+      "topic": "Reported Speech"
+    },
+    {
+      "id": "B28",
+      "type": "text",
+      "task": "word_order",
+      "prompt": "Use the words in the boxes to make a meaningful sentence. Use all and only the words in the boxes without changing their form.",
+      "instruction": "Words: will / my / by / done / I / get / professional / a / nails",
+      "answers": [
+        "I will get my nails done by a professional"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    }
+  ]
+}

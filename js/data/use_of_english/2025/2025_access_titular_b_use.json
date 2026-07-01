@@ -50,7 +50,8 @@
         "The most interesting city I have ever been to is London.",
         "The most interesting city I've ever been to is London."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B2",
@@ -62,7 +63,8 @@
         "Unless he wears a hat, he will get sunburned",
         "Unless he wears a hat, he'll get sunburned"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B3",
@@ -78,7 +80,8 @@
         "In spite of his good job, he was not happy.",
         "In spite of his good job, he wasn't happy."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B4",
@@ -100,7 +103,8 @@
         "You do not need to speak foreign languages for this job.",
         "You don't need to speak foreign languages for this job."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B5",
@@ -112,7 +116,8 @@
         "Dancing flamenco makes me feel happy.",
         "Dancing flamenco makes me happy."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B6",
@@ -124,7 +129,8 @@
         "They are showing Vince's photographs at the exhibition.",
         "They're showing Vince's photographs at the exhibition."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B7",
@@ -136,7 +142,8 @@
         "You had better eat healthier food.",
         "You'd better eat healthier food."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B8",
@@ -150,7 +157,8 @@
         "It was such an expensive engagement ring that the groom could not buy it.",
         "It was such an expensive engagement ring that the groom couldn't buy it."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B9",
@@ -163,7 +171,8 @@
         "2021 was the year when I was promoted.",
         "2021 was the year that I was promoted."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B10",
@@ -175,7 +184,8 @@
         "‘Can I borrow $50 until next Friday?’ my brother asked me.",
         "‘Can you lend me $50 until next Friday?’ my brother asked me."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B11",
@@ -189,7 +199,8 @@
         "By the end of the year, my parents will have been married for twenty-five years.",
         "By the end of the year, my parents'll have been married for twenty-five years."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B12",
@@ -215,7 +226,8 @@
         "It is a pity you didn't meet my Erasmus mates.",
         "It's a pity you didn't meet my Erasmus mates."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     }
   ]
 }

@@ -1,0 +1,163 @@
+{
+  "id": "2023_reserva_a_reading_2",
+  "title": "This Job Is A Piece Of Cake!",
+  "text": "It turns out you might be able to eat candy for a living and make thousands in the process. Canada’s Candy Funhouse is hiring a chief candy officer, according to a recent job posting. “Do you love candy and chocolate? Are you passionate about sweet treats and exploring unreleased and existing products? If so, this is the perfect position for you!” the description reads. The Ontario-based company says the position pays 100,000 Canadian dollars annually. The job can be remote or based in its Canada or New Jersey offices. The chief candy officer will serve as head taste tester and try over 3,500 products monthly. Besides eating about 113 pieces of candy a day, the chief candy officer will lead the company’s candy strategy, run candy board meetings and have a say in which products Candy Funhouse will release into the market. Applicants can be as young as 5 years old and must reside in North America. “All you need is a passion for candy and pop culture, and obviously a sweet tooth!” According to the job description, the chief candy officer will also undergo “extensive palate training,” which will be provided by the company. No previous experience is necessary. So far, nearly 6,500 people have applied for the job. Inquiries on the job are so numerous that the company has admitted that its usual response time is delayed. The position no doubt involves excessive consumption of sugar, which the World Health Organization recommends limiting to 10% of the daily calorie intake. Too much sugar can increase the risk of Type-2 diabetes and heart disease. At least, the job posting specifies that the position comes with an “extensive dental plan.”",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, candidates...",
+      "options": {
+        "A": "cannot be minors",
+        "B": "must have a dental insurance plan",
+        "C": "should be open to trying new products",
+        "D": "should have worked for a sweets company"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, the new candy officer...",
+      "options": {
+        "A": "needn’t like sweets to do the job",
+        "B": "won’t get dental check-ups",
+        "C": "will receive specialized instruction",
+        "D": "must be healthy"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "In this position, you will have the chance to work from home.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“The job can be remote or based in its Canada or New Jersey offices.”",
+          "lines": [
+            5
+          ],
+          "validTexts": [
+            "The job can be remote or based in its Canada or New Jersey offices."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "The appointed person will not take part in decision making.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“(Besides eating about 113 pieces of candy a day,) the chief candy officer will lead the company’s candy strategy, // run candy board meetings // and have a say in which products Candy Funhouse will release into the market.”",
+          "lines": [
+            7,
+            8
+          ],
+          "validTexts": [
+            "(Besides eating about 113 pieces of candy a day,) the chief candy officer will lead the company’s candy strategy,",
+            "the chief candy officer will lead the company’s candy strategy,",
+            "run candy board meetings",
+            "and have a say in which products Candy Funhouse will release into the market."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "The company is receiving more requests for information than they can handle in time.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Inquiries on the job are so numerous that the company has admitted that its usual response time is delayed.”",
+          "lines": [
+            12,
+            13
+          ],
+          "validTexts": [
+            "Inquiries on the job are so numerous that the company has admitted that its usual response time is delayed."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "The job requirements are unhealthy according to medical standards.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“The position no doubt involves excessive consumption of sugar, which the World Health Organization recommends limiting to 10% of the daily calorie intake.”",
+          "lines": [
+            14,
+            15
+          ],
+          "validTexts": [
+            "The position no doubt involves excessive consumption of sugar, which the World Health Organization recommends limiting to 10% of the daily calorie intake."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE OPPOSITE FOR: “fire” (verb)",
+      "answer": [
+        "hire / hiring",
+        "hire",
+        "hiring"
+      ],
+      "points": 0.25,
+      "line": 1
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “launch” (verb)",
+      "answer": [
+        "release"
+      ],
+      "points": 0.25,
+      "line": 8
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a plan of action intended to accomplish a specific goal” strategy",
+      "answer": [],
+      "points": 0.25,
+      "line": 7
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a situation involving exposure to danger”",
+      "answer": [
+        "risk"
+      ],
+      "points": 0.25,
+      "line": 15
+    }
+  ]
+}

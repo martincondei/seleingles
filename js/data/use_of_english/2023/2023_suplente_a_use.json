@@ -1,0 +1,230 @@
+{
+  "id": "2023_suplente_a_use",
+  "year": 2023,
+  "title": "Use of English – 2023 – Suplente A",
+  "points": {
+    "total": 3,
+    "perQuestion": 0.5
+  },
+  "hasBlocks": true,
+  "blockRules": {
+    "chooseAny": true,
+    "questionsToAnswer": 6
+  },
+  "blocks": [
+    {
+      "id": "block_1",
+      "label": "Bloque 1",
+      "questionIds": [
+        "B17.1",
+        "B17.2",
+        "B19",
+        "B21",
+        "B23",
+        "B25",
+        "B27"
+      ]
+    },
+    {
+      "id": "block_2",
+      "label": "Bloque 2",
+      "questionIds": [
+        "B18.1",
+        "B18.2",
+        "B20",
+        "B22",
+        "B24",
+        "B26",
+        "B28"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "B17.1",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "Susan gave up... five years ago.",
+      "instruction": "(jog)",
+      "answers": [
+        "jogging"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B17.2",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "No, the word stunning... that!",
+      "instruction": "(not mean)",
+      "answers": [
+        "does not / doesn’t mean",
+        "does not",
+        "doesn’t mean"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B18.1",
+      "type": "mcq",
+      "prompt": "... people sing country music in Spain.",
+      "options": {
+        "A": "A lot",
+        "B": "Few",
+        "C": "Much",
+        "D": "Little"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B18.2",
+      "type": "mcq",
+      "prompt": "My brother is coming to pick me... at the bus station.",
+      "options": {
+        "A": "after",
+        "B": "up",
+        "C": "in",
+        "D": "on"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Preposiciones"
+    },
+    {
+      "id": "B19",
+      "type": "text",
+      "task": "active_voice",
+      "prompt": "When her parents passed away, she was brought up by a foster family.",
+      "instruction": "Turn into the active voice.",
+      "answers": [
+        "When her parents passed away, a foster family brought her up"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B20",
+      "type": "text",
+      "task": "passive",
+      "prompt": "Did they make these high-end clothes in Spain in the 1990s?",
+      "instruction": "Turn into the passive voice.",
+      "answers": [
+        "Were these high-end clothes made in Spain in the 1990s?"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B21",
+      "type": "text",
+      "task": "wh_question",
+      "prompt": "They used to go to the cinema every two weeks.",
+      "instruction": "Give a question for the underlined words.",
+      "answers": [
+        "How often did they use to go to the cinema?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B22",
+      "type": "text",
+      "task": "relative",
+      "prompt": "Mary has got a new boyfriend. His mother is a very well-known writer.",
+      "instruction": "Join using a relative.",
+      "answers": [
+        "Mary has got a new boyfriend whose mother is a very well-known writer"
+      ],
+      "points": 0.5,
+      "topic": "Relative Clauses"
+    },
+    {
+      "id": "B23",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "We suggest that we make a move today.",
+      "instruction": "What about...?",
+      "answers": [
+        "What about making a move today?"
+      ],
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B24",
+      "type": "text",
+      "task": "conditional",
+      "prompt": "If she dares to do that again, ...",
+      "instruction": "Complete the sentence.",
+      "answers": [],
+      "points": 0.5,
+      "manualCorrection": {
+        "prompt": "¿Tu respuesta cumple esta estructura?",
+        "structure": "subject + will + infinitive"
+      },
+      "topic": "Condicionales"
+    },
+    {
+      "id": "B25",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "First, Sophie warmed up for ten minutes. Then, she worked out for two hours.",
+      "instruction": "After...",
+      "answers": [
+        "After warming up for ten minutes, Sophie worked out for two hours",
+        "After she / Sophie (had) warmed up for ten minutes, she / Sophie worked out for two hours",
+        "After she / Sophie warmed up for ten minutes, she / Sophie worked out for two hours"
+      ],
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B26",
+      "type": "text",
+      "task": "error_correction",
+      "prompt": "A friend of us has worked like a hairdresser in the past, but he wouldn’t like to do it again.",
+      "instruction": "Find the mistakes and rewrite correctly.",
+      "answers": [
+        "A friend of ours has worked as a hairdresser in the past, but he wouldn’t like to do it again"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B27",
+      "type": "text",
+      "task": "reported_speech",
+      "prompt": "‘We won’t meet our new literature teacher tomorrow,’ the students said.",
+      "instruction": "Turn into reported speech.",
+      "answers": [
+        "The students said that they wouldn’t meet their new literature teacher the following day / the next day / the day after"
+      ],
+      "points": 0.5,
+      "topic": "Reported Speech"
+    },
+    {
+      "id": "B28",
+      "type": "text",
+      "task": "word_order",
+      "prompt": "Use the words in the boxes to make a meaningful sentence. Use all and only the words in the boxes without changing their form.",
+      "instruction": "Words: did / long / for / you / come / wait / the / train / to / how",
+      "answers": [
+        "How long did you wait for the train to come?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "id": "2023_admision_titular_a_reading_2",
+  "title": "Can Dogs Talk?",
+  "text": "Throughout human history, storytellers and scientists alike have wondered what it would be like if we could talk to animals, and what animals would say if they could talk back. And some people, both fictional (Dr. Dolittle) and real (Francine Patterson, who taught sign language to gorillas), have tried to bridge our communicative gaps. Dogs certainly have ways to interact with us —they scratch at the door when they want to go out or they make puppy-dog eyes at us to beg for a bite of whatever we’re eating. But instead of learning their language, humans want them to learn ours. First came Christina Smith, a speech-language pathologist, who taught her dog Stella to express herself using alternative communication devices. Smith inspired Alexis Devine to teach her dog Bunny how to use buttons to communicate. “I didn’t really know what I was doing,” says Devine, speaking from home while her famous dog sleeps on the couch nearby. She modeled the buttons for Bunny, starting with one meaning ‘outside’, which eventually worked for the dog. When Bunny pressed it on her own for the first time, “her ears flipped up and she seemed so proud of herself,” Devine says. “If she can understand one button, then she can understand them all,” she adds. When professor Federico Rossano, who studies dogs and primates within the field of cognitive science at the University of California, saw the Bunny and Stella videos, his reaction was entirely skeptical. Despite that, he considers that whether or not they can learn to talk, the dogs will inevitably develop close bonds with their owners because of the many hours of training. And maybe that’s a reward in itself.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, humans...",
+      "options": {
+        "A": "can hold a conversation with animals",
+        "B": "wish they could communicate with animals",
+        "C": "could never interact with animals through sign language",
+        "D": "can be understood just by dogs and primates"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, Bunny was happy when...",
+      "options": {
+        "A": "her owner showed her the buttons",
+        "B": "she understood all the buttons",
+        "C": "she barked to Alexis",
+        "D": "she managed to push the right button by herself"
+      },
+      "answer": [
+        "D"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "Dogs know how to express that they want to be fed.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(Dogs certainly have ways to interact with us —they scratch at the door when they want to go out or) they make puppy-dog eyes at us to beg for a bite of whatever we’re eating.”",
+          "lines": [
+            4,
+            5
+          ],
+          "validTexts": [
+            "(Dogs certainly have ways to interact with us —they scratch at the door when they want to go out or) they make puppy-dog eyes at us to beg for a bite of whatever we’re eating.",
+            "they make puppy-dog eyes at us to beg for a bite of whatever we’re eating."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "Alexis Devine came up with the idea of the experiment all by herself.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“Smith inspired Alexis Devine to teach her dog Bunny how to use buttons to communicate.”",
+          "lines": [
+            7
+          ],
+          "validTexts": [
+            "Smith inspired Alexis Devine to teach her dog Bunny how to use buttons to communicate."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "After watching the videos, professor Rossano was convinced that the dogs could actually talk.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“When professor Federico Rossano (, who studies dogs and primates within the field of cognitive science at the University of California,) saw the Bunny and Stella videos, his reaction was entirely skeptical.”",
+          "lines": [
+            13
+          ],
+          "validTexts": [
+            "When professor Federico Rossano (, who studies dogs and primates within the field of cognitive science at the University of California,) saw the Bunny and Stella videos, his reaction was entirely skeptical.",
+            "When professor Federico Rossano saw the Bunny and Stella videos, his reaction was entirely skeptical."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "According to Rossano, dogs and their owners will build stronger relationships during the instruction.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(Despite that,) he considers that (whether or not they can learn to talk,) the dogs will inevitably develop close bonds with their owners because of the many hours of training.”",
+          "lines": [
+            14
+          ],
+          "validTexts": [
+            "(Despite that,) he considers that (whether or not they can learn to talk,) the dogs will inevitably develop close bonds with their owners because of the many hours of training.",
+            "he considers that the dogs will inevitably develop close bonds with their owners because of the many hours of training."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “sofa” (noun) couch",
+      "answer": [],
+      "points": 0.25,
+      "line": 8
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “ask oneself” (verb)",
+      "answer": [
+        "wonder(ed)",
+        "wondered",
+        "wonder"
+      ],
+      "points": 0.25,
+      "line": 1
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “to make a mark on a surface using nails or claws”",
+      "answer": [
+        "scratch"
+      ],
+      "points": 0.25,
+      "line": 4
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “in the end, especially after a series of difficulties”",
+      "answer": [
+        "eventually"
+      ],
+      "points": 0.25,
+      "line": 9
+    }
+  ]
+}

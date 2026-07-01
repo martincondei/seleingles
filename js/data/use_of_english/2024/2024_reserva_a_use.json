@@ -51,7 +51,8 @@
         "did not smoke"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B17.2",
@@ -64,7 +65,8 @@
         "had travelled"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B18.1",
@@ -80,7 +82,8 @@
         "A"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B18.2",
@@ -96,7 +99,8 @@
         "B"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Preposiciones"
     },
     {
       "id": "B19",
@@ -107,7 +111,8 @@
       "answers": [
         "Joseph is going to prepare the burgers"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B20",
@@ -119,7 +124,8 @@
         "The decorations for the party haven’t been bought yet",
         "The decorations for the party have not been bought yet"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B21",
@@ -131,7 +137,8 @@
       "answers": [
         "Who told the students to remain silent?"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B22",
@@ -142,9 +149,9 @@
       "answers": [
         "The Chemistry teacher, who is usually on time, was late for her class that day",
         "The Chemistry teacher, who's usually on time, was late for her class that day"
-    
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B23",
@@ -156,7 +163,8 @@
         "It took them a week to repaint the kitchen",
         "them a week to repaint the kitchen"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B24",
@@ -169,7 +177,8 @@
       "manualCorrection": {
         "prompt": "¿Tu respuesta cumple esta estructura?",
         "structure": "subject + present simple // subject + can / may + infinitive"
-      }
+      },
+      "topic": "Verbos modales"
     },
     {
       "id": "B25",
@@ -180,7 +189,8 @@
       "answers": [
         "When King Charles arrived at the British Museum, everyone was waiting at the door"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B26",
@@ -207,9 +217,9 @@
         "Grace said, \"Will, I am sorry I have forgotten your birthday\"",
         "Grace said, \"Will, I’m sorry I've forgotten your birthday\"",
         "Grace said, \"Will, I am sorry I've forgotten your birthday\""
-
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B27",
@@ -221,7 +231,8 @@
         "The teacher told Peter that his exam would take place the following week",
         "The teacher said to Peter that his exam would take place the following week"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B28",
@@ -232,7 +243,8 @@
       "answers": [
         "My sister got her wedding dress designed by Armani"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     }
   ]
 }

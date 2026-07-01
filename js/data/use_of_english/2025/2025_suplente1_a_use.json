@@ -52,7 +52,8 @@
         "I wish you'd been able to come along to the theatre yesterday.",
         "I wish you could've come along to the theatre yesterday."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B2",
@@ -70,7 +71,8 @@
         "If Elena had had a driving license, she would've got the job.",
         "If Elena had had a driving license, she would've been able to get the job."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B3",
@@ -81,7 +83,8 @@
       "answers": [
         "In order to pick up his son from nursery school, Steven left early"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Oraciones subordinadas adverbiales"
     },
     {
       "id": "B4",
@@ -94,7 +97,8 @@
         "We might go to Isla Mágica tomorrow.",
         "We could go to Isla Mágica tomorrow."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B5",
@@ -105,7 +109,8 @@
       "answers": [
         "A lot of people are scared of spiders"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B6",
@@ -117,7 +122,8 @@
         "We shouldn’t pollute the environment",
         "We should not pollute the environment"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B7",
@@ -128,7 +134,8 @@
       "answers": [
         "None of my friends have failed their driving test"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B8",
@@ -139,7 +146,8 @@
       "answers": [
         "Does this sweater belong to you"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Preposiciones"
     },
     {
       "id": "B9",
@@ -152,7 +160,8 @@
         "Bill, whose car had broken down, had to take a taxi.",
         "Bill, whose car'd broken down, had to take a taxi."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B10",
@@ -169,7 +178,8 @@
         "Stephen apologised that he had dropped his tablet.",
         "Stephen apologised that he'd dropped his tablet."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B11",
@@ -185,7 +195,8 @@
         "Taylor Swift hasn't sung \"Change\" at a concert for five years.",
         "Taylor Swift hasn't performed \"Change\" at a concert for five years."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B12",
@@ -197,7 +208,8 @@
         "I am used to making financial decisions at work",
         "I'm used to making financial decisions at work"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
     }
   ]
 }

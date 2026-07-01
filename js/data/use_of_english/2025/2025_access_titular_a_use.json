@@ -54,7 +54,8 @@
         "If I had been sure, I'd've told you.",
         "If I'd been sure, I'd've told you."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B2",
@@ -66,7 +67,8 @@
         "The laundry is not dry enough to be taken off the clothesline.",
         "The laundry isn't dry enough to be taken off the clothesline."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B3",
@@ -78,7 +80,8 @@
         "I would rather not go on the field trip.",
         "I'd rather not go on the field trip."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B4",
@@ -96,7 +99,8 @@
         "They are not allowed to leave the class if the teacher doesn't give them permission.",
         "They aren't allowed to leave the class if the teacher doesn't give them permission."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B5",
@@ -110,7 +114,8 @@
         "I think it is time for them to go home.",
         "I think it's time for them to go home."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B6",
@@ -124,7 +129,8 @@
         "Manuel is considered an expert on manga.",
         "Manuel's considered an expert on manga."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B7",
@@ -136,7 +142,8 @@
         "Why is Lisa so curious about stick insects? he wondered.",
         "Why's Lisa so curious about stick insects? he wondered."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B8",
@@ -147,7 +154,8 @@
       "answers": [
         "How about going to Scotland next summer for a vacation"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B9",
@@ -158,7 +166,8 @@
       "answers": [
         "Alice gave up smoking three months ago"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B10",
@@ -169,7 +178,8 @@
       "answers": [
         "Anna sometimes gets gardenia bouquets delivered by Urban Flora"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B11",
@@ -181,7 +191,8 @@
         "Dimitri speaks English better than Alina",
         "Dimitri speaks better English than Alina"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B12",
@@ -193,7 +204,8 @@
         "Unless Masha gets top marks in the exam, she will be disappointed",
         "Unless Masha gets top marks in the exam, she'll be disappointed"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     }
   ]
 }

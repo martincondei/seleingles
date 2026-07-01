@@ -50,7 +50,8 @@
         "know"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B17.2",
@@ -62,7 +63,8 @@
         "had already left"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B18.1",
@@ -78,7 +80,8 @@
         "A"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B18.2",
@@ -94,7 +97,8 @@
         "B"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Preposiciones"
     },
     {
       "id": "B19",
@@ -105,7 +109,8 @@
       "answers": [
         "A driver using a mobile phone has caused the accident"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B20",
@@ -116,7 +121,8 @@
       "answers": [
         "Are the pizzas going to be ordered in the end"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B21",
@@ -128,7 +134,8 @@
       "answers": [
         "Whose car did they sell in just one week"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B22",
@@ -140,7 +147,8 @@
         "Detroit is the city where they lived when they were young",
         "Detroit is the city in which they lived when they were young"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B23",
@@ -152,7 +160,8 @@
         "You had better not stay long at the party",
         "You'd better not stay long at the party"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B24",
@@ -165,7 +174,8 @@
       "manualCorrection": {
         "prompt": "¿Tu respuesta cumple esta estructura?",
         "structure": "subject + will / can / may + infinitive // subject + present simple"
-      }
+      },
+      "topic": "Condicionales"
     },
     {
       "id": "B25",
@@ -176,7 +186,8 @@
       "answers": [
         "Despite the challenges, we managed to complete the project on time"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Oraciones subordinadas adverbiales"
     },
     {
       "id": "B26",
@@ -189,7 +200,8 @@
         "Could I see your driving license, please",
         "May I see your driving license, please"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B27",
@@ -203,7 +215,8 @@
         "Paul said that he had to return the car to his father the weekend after",
         "Paul said he had to return the car to his father the weekend after"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B28",
@@ -214,7 +227,8 @@
       "answers": [
         "There should be enough apple pie for everyone at the bakery"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     }
   ]
 }

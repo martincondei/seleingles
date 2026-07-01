@@ -51,7 +51,8 @@
         "If David had a phone, I would be able to contact him",
         "If David had a phone, I'd be able to contact him"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B2",
@@ -65,7 +66,8 @@
         "Despite the fact that she was really ill, Erika attended the meeting",
         "Despite her severe illness, Erika attended the meeting"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B3",
@@ -83,7 +85,8 @@
         "In case it gets cold later, take a jacket",
         "In case it gets colder later, take a jacket"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B4",
@@ -94,7 +97,8 @@
       "answers": [
         "He can’t have been at home during the fire"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B5",
@@ -107,7 +111,8 @@
         "The tickets for the show are already on sale",
         "The tickets for the show are already available"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B6",
@@ -119,7 +124,8 @@
         "This olive oil company, which employs about 5,000 people, has announced plans to increase the number of factories",
         "This olive oil company, which has announced plans to increase the number of factories, employs about 5,000 people"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B7",
@@ -130,7 +136,8 @@
       "answers": [
         "Our teacher asked us not to use AI to complete our project"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B8",
@@ -143,7 +150,8 @@
         "The bus was delayed due to the fact that it was snowing heavily",
         "The bus was delayed due to it snowing heavily"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Oraciones subordinadas adverbiales"
     },
     {
       "id": "B9",
@@ -161,7 +169,8 @@
         "I have done lettering for one year",
         "I've done lettering for one year"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B10",
@@ -173,7 +182,8 @@
         "Electric scooters used to be much more expensive a few years ago",
         "Electric scooters used to be more expensive a few years ago"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B11",
@@ -185,7 +195,8 @@
         "If only I had paid attention to what you said",
         "If only I'd paid attention to what you said"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B12",
@@ -197,7 +208,8 @@
         "Your outfit is the same as mine",
         "My outfit is the same as yours"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     }
   ]
 }

@@ -1,0 +1,229 @@
+{
+  "id": "2023_admision_titular_a_use",
+  "year": 2023,
+  "title": "Use of English – 2023 – Admisión Titular A",
+  "points": {
+    "total": 3,
+    "perQuestion": 0.5
+  },
+  "hasBlocks": true,
+  "blockRules": {
+    "chooseAny": true,
+    "questionsToAnswer": 6
+  },
+  "blocks": [
+    {
+      "id": "block_1",
+      "label": "Bloque 1",
+      "questionIds": [
+        "B17.1",
+        "B17.2",
+        "B19",
+        "B21",
+        "B23",
+        "B25",
+        "B27"
+      ]
+    },
+    {
+      "id": "block_2",
+      "label": "Bloque 2",
+      "questionIds": [
+        "B18.1",
+        "B18.2",
+        "B20",
+        "B22",
+        "B24",
+        "B26",
+        "B28"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "B17.1",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "Would you mind... John a hand at tomorrow’s meeting?",
+      "instruction": "(lend)",
+      "answers": [
+        "lending"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B17.2",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "Please, stay in your seats until the bell...",
+      "instruction": "(ring)",
+      "answers": [
+        "rings"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B18.1",
+      "type": "mcq",
+      "prompt": "Shall we take the poster... the wall? It’s outdated.",
+      "options": {
+        "A": "away",
+        "B": "up",
+        "C": "out of",
+        "D": "off"
+      },
+      "answer": [
+        "D"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Preposiciones"
+    },
+    {
+      "id": "B18.2",
+      "type": "mcq",
+      "prompt": "Emily invited some friends to her birthday dinner but... declined.",
+      "options": {
+        "A": "everyone",
+        "B": "neither",
+        "C": "anyone",
+        "D": "everything"
+      },
+      "answer": [
+        "A"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B19",
+      "type": "text",
+      "task": "active_voice",
+      "prompt": "Who is Peter being tutored by in his Study Abroad Programme?",
+      "instruction": "Turn into the active voice.",
+      "answers": [
+        "Who is tutoring Peter in his Study Abroad Programme?"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B20",
+      "type": "text",
+      "task": "passive",
+      "prompt": "They are going to pay Lisa’s debts as soon as the money gets through.",
+      "instruction": "Turn into the passive voice.",
+      "answers": [
+        "Lisa’s debts are going to be paid as soon as the money gets through"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B21",
+      "type": "text",
+      "task": "wh_question",
+      "prompt": "They could afford to go to France on holiday by saving every cent.",
+      "instruction": "Give a question for the underlined words.",
+      "answers": [
+        "How could they afford to go to France on holiday?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B22",
+      "type": "text",
+      "task": "relative",
+      "prompt": "The sound was like a shot. It woke me up.",
+      "instruction": "Join using a relative.",
+      "answers": [
+        "The sound that / which woke me up was like a shot",
+        "The sound was like a shot, which woke me up"
+      ],
+      "points": 0.5,
+      "topic": "Relative Clauses"
+    },
+    {
+      "id": "B23",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "I advise you not to stay in the blazing sun without a hat.",
+      "instruction": "You’d...",
+      "answers": [
+        "You’d better not stay in the blazing sun without a hat"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B24",
+      "type": "text",
+      "task": "conditional",
+      "prompt": "I finished all my assignments on Friday so that...",
+      "instruction": "Complete the sentence.",
+      "answers": [],
+      "points": 0.5,
+      "manualCorrection": {
+        "prompt": "¿Tu respuesta cumple esta estructura?",
+        "structure": "Multiple options are correct here."
+      },
+      "topic": "Condicionales"
+    },
+    {
+      "id": "B25",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "I didn’t notice that the man was in trouble, so I didn’t help him.",
+      "instruction": "If I...",
+      "answers": [
+        "If I had noticed that the man was in trouble, I would have helped him"
+      ],
+      "points": 0.5,
+      "topic": "Condicionales"
+    },
+    {
+      "id": "B26",
+      "type": "text",
+      "task": "error_correction",
+      "prompt": "Everybody here are looking forward to see you.",
+      "instruction": "Find the mistakes and rewrite correctly.",
+      "answers": [
+        "Everybody here is looking forward to seeing you"
+      ],
+      "points": 0.5,
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B27",
+      "type": "text",
+      "task": "reported_speech",
+      "prompt": "‘I’m sorry I have torn your shirt,’ Jake said.",
+      "instruction": "Turn into reported speech.",
+      "answers": [
+        "Jake apologised for tearing / having torn my shirt",
+        "Jake said (that) he was sorry for tearing / having torn my shirt",
+        "Jake said he was sorry for tearing / having torn my shirt"
+      ],
+      "points": 0.5,
+      "topic": "Reported Speech"
+    },
+    {
+      "id": "B28",
+      "type": "text",
+      "task": "word_order",
+      "prompt": "Use the words in the boxes to make a meaningful sentence. Use all and only the words in the boxes without changing their form.",
+      "instruction": "Words: money / her / enough / not / bank / was / the / account / in",
+      "answers": [
+        "The money in her bank account was not enough"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "id": "2023_access_titular_b_use",
+  "year": 2023,
+  "title": "Use of English – 2023 – Acceso Titular B",
+  "points": {
+    "total": 3,
+    "perQuestion": 0.5
+  },
+  "hasBlocks": true,
+  "blockRules": {
+    "chooseAny": true,
+    "questionsToAnswer": 6
+  },
+  "blocks": [
+    {
+      "id": "block_1",
+      "label": "Bloque 1",
+      "questionIds": [
+        "B17.1",
+        "B17.2",
+        "B19",
+        "B21",
+        "B23",
+        "B25",
+        "B27"
+      ]
+    },
+    {
+      "id": "block_2",
+      "label": "Bloque 2",
+      "questionIds": [
+        "B18.1",
+        "B18.2",
+        "B20",
+        "B22",
+        "B24",
+        "B26",
+        "B28"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "B17.1",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "I had the gas pipes... last week.",
+      "instruction": "(check)",
+      "answers": [
+        "checked"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B17.2",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "I’m looking forward to... promoted at work.",
+      "instruction": "(be)",
+      "answers": [
+        "being"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B18.1",
+      "type": "mcq",
+      "prompt": "My car broke... and that’s why I was late.",
+      "options": {
+        "A": "off",
+        "B": "down",
+        "C": "on",
+        "D": "up"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Preposiciones"
+    },
+    {
+      "id": "B18.2",
+      "type": "mcq",
+      "prompt": "Your sister is still mad... me.",
+      "options": {
+        "A": "at",
+        "B": "to",
+        "C": "after",
+        "D": "with"
+      },
+      "answer": [
+        "A"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Preposiciones"
+    },
+    {
+      "id": "B19",
+      "type": "text",
+      "task": "active_voice",
+      "prompt": "The cows are being milked now.",
+      "instruction": "Turn into the active voice.",
+      "answers": [
+        "Someone is / They are milking the cows now"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B20",
+      "type": "text",
+      "task": "passive",
+      "prompt": "Unfortunately, they don’t believe Jack is a great musician.",
+      "instruction": "Turn into the passive voice.",
+      "answers": [
+        "Unfortunately, Jack isn’t believed to be a great musician",
+        "Unfortunately, it isn’t believed that Jack is a great musician"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B21",
+      "type": "text",
+      "task": "wh_question",
+      "prompt": "The president is giving an interview at a local TV channel.",
+      "instruction": "Give a question for the underlined words.",
+      "answers": [
+        "Where is the president giving an interview?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B22",
+      "type": "text",
+      "task": "relative",
+      "prompt": "Paris is known as the City of Light. I’d like to go there.",
+      "instruction": "Join using a relative.",
+      "answers": [
+        "Paris, where I’d like to go, is known as the City of Light",
+        "I’d like to go to Paris, which is known as the City of Light"
+      ],
+      "points": 0.5,
+      "topic": "Relative Clauses"
+    },
+    {
+      "id": "B23",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "I’m sure Jim was in the garden when the phone rang.",
+      "instruction": "Jim must...",
+      "answers": [
+        "Jim must have been in the garden when the phone rang"
+      ],
+      "points": 0.5,
+      "topic": "Verbos modales"
+    },
+    {
+      "id": "B24",
+      "type": "text",
+      "task": "conditional",
+      "prompt": "What would you tell her...?",
+      "instruction": "Complete the sentence.",
+      "answers": [],
+      "points": 0.5,
+      "manualCorrection": {
+        "prompt": "¿Tu respuesta cumple esta estructura?",
+        "structure": "if + subject + simple past"
+      },
+      "topic": "Condicionales"
+    },
+    {
+      "id": "B25",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "Nobody won a medal except Jane.",
+      "instruction": "The only...",
+      "answers": [
+        "The only person / one who / that won a medal was Jane"
+      ],
+      "points": 0.5,
+      "topic": "Relative Clauses"
+    },
+    {
+      "id": "B26",
+      "type": "text",
+      "task": "error_correction",
+      "prompt": "I asked to them where had they parked the day before.",
+      "instruction": "Find the mistakes and rewrite correctly.",
+      "answers": [
+        "I asked them where they had parked the day before"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B27",
+      "type": "text",
+      "task": "reported_speech",
+      "prompt": "‘Shall we go to the cinema?’ Jane asked.",
+      "instruction": "Turn into reported speech.",
+      "answers": [
+        "Jane suggested going to the cinema",
+        "Jane suggested that we (could / should) go to the cinema",
+        "Jane suggested that we go to the cinema"
+      ],
+      "points": 0.5,
+      "topic": "Reported Speech"
+    },
+    {
+      "id": "B28",
+      "type": "text",
+      "task": "word_order",
+      "prompt": "Use the words in the boxes to make a meaningful sentence. Use all and only the words in the boxes without changing their form.",
+      "instruction": "Words: . / is / only / to / deal / talking / with / the / way / problems",
+      "answers": [
+        "Talking is the only way to deal with problems"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    }
+  ]
+}

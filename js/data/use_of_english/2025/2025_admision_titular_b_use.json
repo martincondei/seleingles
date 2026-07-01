@@ -47,7 +47,8 @@
       "answers": [
         "Julia’s performance was more impressive than Adriana’s"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B2",
@@ -71,7 +72,8 @@
         "If Mike did exercise, he'd be fitter.",
         "If Mike did some exercise, he'd be fitter."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Condicionales"
     },
     {
       "id": "B3",
@@ -85,7 +87,8 @@
         "I am going to have lunch with Joyce today.",
         "I'm going to have lunch with Joyce today."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B4",
@@ -96,7 +99,8 @@
       "answers": [
         "The babysitter looks after Tommy in the afternoon"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Preposiciones"
     },
     {
       "id": "B5",
@@ -109,7 +113,8 @@
         "We were having our house painted while we were away on holiday.",
         "We were getting our house painted while we were away on holiday."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B6",
@@ -123,7 +128,8 @@
         "The person whom you've been laughing at is Sam's little brother.",
         "The person whom you've been laughing at was Sam's little brother."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B7",
@@ -134,7 +140,8 @@
       "answers": [
         "Karen said that she had to hide Jane's birthday present before she got home."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B8",
@@ -150,7 +157,8 @@
         "John hasn’t got any siblings",
         "John has not got any siblings"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B9",
@@ -161,7 +169,8 @@
       "answers": [
         "It was such a heavy microwave that I needed help to carry it."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B10",
@@ -175,7 +184,8 @@
         "Due to a storm, the six o'clock train to Brighton couldn't leave.",
         "Due to a storm, the six o'clock train to Brighton could not leave."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B11",
@@ -187,7 +197,8 @@
         "They might not have heard the good news last night.",
         "They mightn't have heard the good news last night."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Verbos modales"
     },
     {
       "id": "B12",
@@ -198,7 +209,8 @@
       "answers": [
         "People believed that Houdini was a fabulous magician."
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     }
   ]
 }

@@ -1,0 +1,165 @@
+{
+  "id": "2023_admision_titular_b_reading_1",
+  "title": "How King Tut Conquered Pop Culture",
+  "text": "In late 1922 the British archaeologist Howard Carter discovered a royal tomb untouched for 3,300 years in Egypt’s Valley of the Kings. The occupant, teenage pharaoh Tutankhamun, became an instant media sensation. Newspapers couldn’t get enough of him or his wealth, exemplified by his solid gold death mask. As Carter carefully removed and catalogued the contents of his tomb, the king, who had died at the age of 19 without accomplishing much in real life, resurrected into a trend-setting superstar. Tutmania had arrived. Fashion and ancient Egyptian history don’t seem like a natural mix, but after Tut’s discovery the two converged. Fabrics for dresses and coats displayed motifs such as palm trees, lotus blossoms and sphinxes. Famous jewelers fashioned Egyptian- themed adornments. Handbags, umbrellas, and cigarette cases were Egyptianized. Beauty products also followed the trend, establishing a link to Egypt’s exotic royals. For instance, women began to line their eyes with Nile -inspired Kohl eyeliner even though makeup had been associated with sex workers until recently. The Egyptian discovery also inspired performers, writers and artists. Author Richard Goyne made a youthful King Tut the main character of his 1923 book entitled The Kiss of Pharaoh: The Love Story of Tut-Ankh-Amen. Fighting his way to the throne, Tut encounters many obstacles, such as the disappearance of the royal bride. In the movie world, The Mummy, starring Boris Karloff in 1932, told the story of an archaeologist, a linen-wrapped mummy and a curse. The idea for the plot arose from the series of strange deaths that occurred after the discovery of Tut’s tomb. These included Lord Carnarvon’s, the excavation’s aristocratic sponsor, who died less than five months after the discovery.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, the discovery of King Tut’s tomb...",
+      "options": {
+        "A": "went unnoticed",
+        "B": "took some time to get to the media",
+        "C": "was popular among teenagers",
+        "D": "hit the headlines"
+      },
+      "answer": [
+        "D"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, King Tut...",
+      "options": {
+        "A": "belonged to a 3,300-year-old dynasty",
+        "B": "became a maniac",
+        "C": "did not achieve a great deal during his reign",
+        "D": "had a long and prosperous reign"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "The inventory of King Tut’s treasure was carried out by an Egyptian team.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“(As) Carter carefully removed and catalogued the contents of his tomb (, the king, who had died at the age of 19 without accomplishing much in real life, resurrected into a trend-setting superstar.)”",
+          "lines": [
+            3,
+            4
+          ],
+          "validTexts": [
+            "(As) Carter carefully removed and catalogued the contents of his tomb (, the king, who had died at the age of 19 without accomplishing much in real life, resurrected into a trend-setting superstar.)",
+            "Carter carefully removed and catalogued the contents of his tomb"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "In Goyne’s novel, King Tut had to overcome many difficulties to become pharaoh.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": ". “(Author Richard Goyne made a youthful King Tut the main character of his 1923 book entitled The Kiss of Pharaoh: The Love Story of Tut-Ankh-Amen.) Fighting his way to the throne, Tut encounters many obstacles (, such as the disappearance of the royal bride.)”",
+          "lines": [
+            12,
+            13
+          ],
+          "validTexts": [
+            ". “(Author Richard Goyne made a youthful King Tut the main character of his 1923 book entitled The Kiss of Pharaoh: The Love Story of Tut-Ankh-Amen.) Fighting his way to the throne, Tut encounters many obstacles (, such as the disappearance of the royal bride.)",
+            ". “ Fighting his way to the throne, Tut encounters many obstacles"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "The screenplay of The Mummy was based on real events.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“The idea for the plot arose from the series of strange deaths that occurred after the discovery of Tut’s tomb.”",
+          "lines": [
+            15
+          ],
+          "validTexts": [
+            "The idea for the plot arose from the series of strange deaths that occurred after the discovery of Tut’s tomb."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "The digging of Tut’s tomb was paid by Carter himself.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“These included Lord Carnarvon’s, the excavation’s aristocratic sponsor (, who died less than five months after the discovery.)”",
+          "lines": [
+            15,
+            16
+          ],
+          "validTexts": [
+            "These included Lord Carnarvon’s, the excavation’s aristocratic sponsor (, who died less than five months after the discovery.)",
+            "These included Lord Carnarvon’s, the excavation’s aristocratic sponsor"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE OPPOSITE FOR: “poverty” (noun)",
+      "answer": [
+        "wealth"
+      ],
+      "points": 0.25,
+      "line": 3
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “intact” (adjective)",
+      "answer": [
+        "untouched"
+      ],
+      "points": 0.25,
+      "line": 1
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a connection between two things or situations”",
+      "answer": [
+        "link"
+      ],
+      "points": 0.25,
+      "line": 9
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a container used to store and protect things”",
+      "answer": [
+        "case(s)",
+        "cases",
+        "case"
+      ],
+      "points": 0.25,
+      "line": 8
+    }
+  ]
+}

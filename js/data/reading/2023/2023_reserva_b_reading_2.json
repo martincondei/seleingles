@@ -1,0 +1,162 @@
+{
+  "id": "2023_reserva_b_reading_2",
+  "title": "All Uk Number 1 Hits",
+  "text": "The UK singles chart, a weekly countdown of the most popular songs on the radio, has been a constant in our lives for seventy years. But to Dave Watson, it’s a lifestyle. Watson has been collecting copies of UK Number 1 hits since the late 1980s; today, he owns all 1,404 UK Number 1 singles, reaching back to the birth of the charts in 1952. He believes it’s the only complete collection of its kind. Watson’s devotion to music charts began more than thirty years ago. Starting a collection made sense: his mother had worked in a record store, and he enjoyed collecting things. When he started his mission in 1988, the charts had already seen 605 Number 1 singles. With the single “Don’t Turn Around” under his arm, he decided to find the previous 604 releases. In his treasure hunt, Watson used to get trains to London to visit music fairs and second-hand record shops. He also responded to selling adverts in Time Out and Loot magazines and wrote to record dealers. “I spent endless hours searching through dealers’ stock,” he says. “I had a handwritten list that I photocopied and took around with me to spread the word. Some sellers answered back saying which singles they had and how much they would be.” His first wish list was already several pages long. Then he started crossing titles out and he told himself, “Well, I have a chance of doing all this.” Discovering eBay around the millennium was a turning point. With a mouse click, Watson found there the last ten singles he needed. With the 1953 single “Doggy in the Window” Watson brought the collection up to date.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, the UK singles chart started...",
+      "options": {
+        "A": "in the 1950s",
+        "B": "30 years ago",
+        "C": "in the 1970s",
+        "D": "in the late 1980s"
+      },
+      "answer": [
+        "A"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, Dave Watson’s collection...",
+      "options": {
+        "A": "was advertised in Time Out and Loot magazines",
+        "B": "has 605 UK Number 1 singles",
+        "C": "was entirely purchased on eBay",
+        "D": "is probably unique"
+      },
+      "answer": [
+        "D"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "Watson took up his hobby to please his mother.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“(Starting a collection made sense: his mother had worked in a record store, and) he enjoyed collecting things.”",
+          "lines": [
+            6
+          ],
+          "validTexts": [
+            "(Starting a collection made sense: his mother had worked in a record store, and) he enjoyed collecting things.",
+            "he enjoyed collecting things."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "The single “Don’t Turn Around” was the first UK Number 1 hit.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“(When he started his mission in 1988, the charts had already seen 605 Number 1 singles.) With the single ‘Don’t Turn Around’ under his arm, he decided to find the previous 604 releases.”",
+          "lines": [
+            7
+          ],
+          "validTexts": [
+            "(When he started his mission in 1988, the charts had already seen 605 Number 1 singles.) With the single ‘Don’t Turn Around’ under his arm, he decided to find the previous 604 releases.",
+            "With the single ‘Don’t Turn Around’ under his arm, he decided to find the previous 604 releases."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "Watson never left his hometown to buy the singles.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“(In his treasure hunt,) Watson used to get trains to London to visit music fairs and second-hand record shops.”",
+          "lines": [
+            8
+          ],
+          "validTexts": [
+            "(In his treasure hunt,) Watson used to get trains to London to visit music fairs and second-hand record shops.",
+            "Watson used to get trains to London to visit music fairs and second-hand record shops."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "Online shopping was key to making his collection complete.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "Doggy in the Window",
+          "lines": [
+            13,
+            13,
+            14
+          ],
+          "validTexts": [
+            "Doggy in the Window"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “used” (adjective)",
+      "answer": [
+        "second-hand"
+      ],
+      "points": 0.25,
+      "line": 8
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “possibility” (noun) chance",
+      "answer": [],
+      "points": 0.25,
+      "line": 12
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “an event where people show and sell goods”",
+      "answer": [
+        "fair(s)",
+        "fairs",
+        "fair"
+      ],
+      "points": 0.25,
+      "line": 8
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “a supply of something for use or sale”",
+      "answer": [
+        "stock"
+      ],
+      "points": 0.25,
+      "line": 10
+    }
+  ]
+}

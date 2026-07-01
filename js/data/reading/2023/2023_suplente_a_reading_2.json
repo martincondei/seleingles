@@ -1,0 +1,165 @@
+{
+  "id": "2023_suplente_a_reading_2",
+  "title": "Sanas Can Change Your Accent",
+  "text": "English is the world’s most widely used language. An estimated 1.5 billion people speak it, and most of them aren’t native speakers. In the United States alone, millions of people speak English as a second language. A new company called Sanas is testing out artificial intelligence-powered software that aims to eliminate miscommunication by changing people’s accents in real time. A call center worker in the Philippines, for example, could speak normally into the microphone and end up sounding more like someone from Kansas to a customer on the other end. The American accent sounds somewhat artificial, Siri-like, but they are working on improving the technology. The idea is that, rather than learning to pronounce words differently, you could have technology do it for you. And understanding would be nearly instantaneous. The three founders of Sanas met at Stanford University, but they’re all from different countries originally. All three say they’ve experienced over the years how accents can get in the way. “We all come from international backgrounds. We’ve seen firsthand how people treat you differently just because of the way you speak,” Maxim Serebryakov, one of the founders, says. He also remarks that people’s accents and identities can be closely linked, and he stresses that the company isn’t trying to erase accents or imply that one way of speaking is better than another. Eventually, they hope the app they’re developing will be used by a variety of industries and individuals. It could help doctors better understand patients. Someday, they say, it could also assist language learners and improve dubbing in movies. It could even help smart speakers in homes and voice assistants in cars understand different accents.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, the majority of English speakers...",
+      "options": {
+        "A": "have an American accent",
+        "B": "live in the US",
+        "C": "don’t have English as their first language",
+        "D": "use apps to help their pronunciation"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, Sanas...",
+      "options": {
+        "A": "takes too long to process the change of accent",
+        "B": "intends to improve communication",
+        "C": "is not based on artificial intelligence",
+        "D": "translates from one language to another"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "Sanas technology has succeeded in replicating the sound of a real human accent.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": ": “The American accent sounds somewhat artificial, Siri-like, but they are working on improving the technology.”",
+          "lines": [
+            5,
+            6
+          ],
+          "validTexts": [
+            ": “The American accent sounds somewhat artificial, Siri-like, but they are working on improving the technology."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "According to the text, Sanas considers some accents superior to others.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": ": “(He also remarks that people’s accents and identities can be closely linked, and) he stresses that the company isn’t trying to erase accents or imply that one way of speaking is better than another.”",
+          "lines": [
+            11,
+            12
+          ],
+          "validTexts": [
+            ": “(He also remarks that people’s accents and identities can be closely linked, and) he stresses that the company isn’t trying to erase accents or imply that one way of speaking is better than another.",
+            ": “ he stresses that the company isn’t trying to erase accents or imply that one way of speaking is better than another."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "The film industry is likely to benefit from software like Sanas.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": ": “Someday, they say, it could also (assist language learners and) improve dubbing in movies.”",
+          "lines": [
+            14
+          ],
+          "validTexts": [
+            ": “Someday, they say, it could also (assist language learners and) improve dubbing in movies.",
+            ": “Someday, they say, it could also improve dubbing in movies."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "Sanas might be used as an aid to improve the performance of home devices.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": ": “It could even help smart speakers in homes (and voice assistants in cars) understand different accents.”",
+          "lines": [
+            14,
+            15
+          ],
+          "validTexts": [
+            ": “It could even help smart speakers in homes (and voice assistants in cars) understand different accents.",
+            ": “It could even help smart speakers in homes understand different accents."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “emphasize” (verb)",
+      "answer": [
+        "stress(es)",
+        "stresses",
+        "stress"
+      ],
+      "points": 0.25,
+      "line": 11
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “client” (noun)",
+      "answer": [
+        "customer"
+      ],
+      "points": 0.25,
+      "line": 5
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “failure to transmit information successfully to somebody”",
+      "answer": [
+        "miscommunication"
+      ],
+      "points": 0.25,
+      "line": 3
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “obtained or experienced by direct personal observation”",
+      "answer": [
+        "firsthand"
+      ],
+      "points": 0.25,
+      "line": 9
+    }
+  ]
+}

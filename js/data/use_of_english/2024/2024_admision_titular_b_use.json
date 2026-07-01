@@ -50,7 +50,8 @@
         "to lock"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Verb + -ing form or infinitive"
     },
     {
       "id": "B17.2",
@@ -62,7 +63,8 @@
         "was reading"
       ],
       "points": 0.25,
-      "groupId": "B17"
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B18.1",
@@ -78,7 +80,8 @@
         "A"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Preposiciones"
     },
     {
       "id": "B18.2",
@@ -94,7 +97,8 @@
         "B"
       ],
       "points": 0.25,
-      "groupId": "B18"
+      "groupId": "B18",
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B19",
@@ -106,7 +110,8 @@
         "They never told us the truth",
         "They never told the truth to us"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B20",
@@ -118,7 +123,8 @@
         "You will be picked up after tonight’s event",
         "You'll be picked up after tonight’s event"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Voz pasiva"
     },
     {
       "id": "B21",
@@ -130,7 +136,8 @@
       "answers": [
         "How much does a sharpener cost"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     },
     {
       "id": "B22",
@@ -142,7 +149,8 @@
         "This is the hospital where I worked in the 90s",
         "This is the hospital in which I worked in the 90s"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Relative Clauses"
     },
     {
       "id": "B23",
@@ -157,7 +165,8 @@
         "It’s been a long time since I last had cheesecake",
         "It has been a long time since I last had cheesecake"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B24",
@@ -170,7 +179,8 @@
       "manualCorrection": {
         "prompt": "¿Tu respuesta cumple esta estructura?",
         "structure": "subject + would / could / might + infinitive"
-      }
+      },
+      "topic": "Condicionales"
     },
     {
       "id": "B25",
@@ -182,7 +192,8 @@
         "Tell us what you have been doing, please",
         "Tell us what you've been doing, please"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Tiempos verbales"
     },
     {
       "id": "B26",
@@ -195,7 +206,8 @@
         "Can you call an urgent meeting for tomorrow, please",
         "Could you call an urgent meeting for tomorrow, please"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B27",
@@ -207,7 +219,8 @@
         "Mike said that he was visiting his grandparents that afternoon",
         "Mike said he was visiting his grandparents that afternoon"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Reported Speech"
     },
     {
       "id": "B28",
@@ -218,7 +231,8 @@
       "answers": [
         "If only we could get rid of this problem"
       ],
-      "points": 0.5
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
     }
   ]
 }

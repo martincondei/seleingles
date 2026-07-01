@@ -1,6 +1,48 @@
 {
   "readings": [
     {
+      "id": "2025_access_titular_a_reading",
+      "year": 2025,
+      "title": "Dollar Princesses",
+      "file": "2025/2025_access_titular_a_reading.json"
+    },
+    {
+      "id": "2025_access_titular_b_reading",
+      "year": 2025,
+      "title": "The Forgotten Habit of Two Sleeps",
+      "file": "2025/2025_access_titular_b_reading.json"
+    },
+    {
+      "id": "2025_admision_titular_a_reading",
+      "year": 2025,
+      "title": "Beyond the Stars",
+      "file": "2025/2025_admision_titular_a_reading.json"
+    },
+    {
+      "id": "2025_admision_titular_b_reading",
+      "year": 2025,
+      "title": "Monsieur Tan-Tan",
+      "file": "2025/2025_admision_titular_b_reading.json"
+    },
+    {
+      "id": "2025_suplente1_a_reading",
+      "year": 2025,
+      "title": "A Proper Halloween",
+      "file": "2025/2025_suplente1_a_reading.json"
+    },
+    {
+      "id": "2025_suplente1_b_reading",
+      "year": 2025,
+      "title": "The Ingenious Story Behind Michelin Stars",
+      "file": "2025/2025_suplente1_b_reading.json"
+    },
+    {
+      "id": "2025_suplente2_a_reading",
+      "year": 2025,
+      "title": "Conspiracy Theories",
+      "file": "2025/2025_suplente2_a_reading.json"
+    },
+    {
       "id": "2024_access_titular_a_reading_1",
       "year": 2024,
       "title": "Young People’s Screen Time",
@@ -13,18 +55,6 @@
       "file": "2024/2024_access_titular_a_reading_2.json"
     },
     {
-      "id": "2024_admision_titular_a_reading_1",
-      "year": 2024,
-      "title": "La Catrina",
-      "file": "2024/2024_admision_titular_a_reading_1.json"
-    },
-    {
-      "id": "2024_admision_titular_a_reading_2",
-      "year": 2024,
-      "title": "The Disappearance of Michael Rockefeller",
-      "file": "2024/2024_admision_titular_a_reading_2.json"
-    },
-    {
       "id": "2024_access_titular_b_reading_1",
       "year": 2024,
       "title": "The Ethics of True Crime",
@@ -35,6 +65,18 @@
       "year": 2024,
       "title": "Pomfret, Vermont: The Town That Went Viral",
       "file": "2024/2024_access_titular_b_reading_2.json"
+    },
+    {
+      "id": "2024_admision_titular_a_reading_1",
+      "year": 2024,
+      "title": "La Catrina",
+      "file": "2024/2024_admision_titular_a_reading_1.json"
+    },
+    {
+      "id": "2024_admision_titular_a_reading_2",
+      "year": 2024,
+      "title": "The Disappearance of Michael Rockefeller",
+      "file": "2024/2024_admision_titular_a_reading_2.json"
     },
     {
       "id": "2024_admision_titular_b_reading_1",
@@ -85,46 +127,100 @@
       "file": "2024/2024_suplente_b_reading_2.json"
     },
     {
-      "id": "2025_admision_titular_a_reading",
-      "year": 2025,
-      "title": "Beyond the Stars",
-      "file": "2025/2025_admision_titular_a_reading.json"
+      "id": "2023_access_titular_a_reading_1",
+      "year": 2023,
+      "title": "War Letters",
+      "file": "2023/2023_access_titular_a_reading_1.json"
     },
     {
-      "id": "2025_access_titular_a_reading",
-      "year": 2025,
-      "title": "Dollar Princesses",
-      "file": "2025/2025_access_titular_a_reading.json"
+      "id": "2023_access_titular_a_reading_2",
+      "year": 2023,
+      "title": "Is World Heritage In Danger?",
+      "file": "2023/2023_access_titular_a_reading_2.json"
     },
     {
-      "id": "2025_access_titular_b_reading",
-      "year": 2025,
-      "title": "The Forgotten Habit of Two Sleeps",
-      "file": "2025/2025_access_titular_b_reading.json"
+      "id": "2023_access_titular_b_reading_1",
+      "year": 2023,
+      "title": "Staying Active In Later Life",
+      "file": "2023/2023_access_titular_b_reading_1.json"
     },
     {
-      "id": "2025_admision_titular_b_reading",
-      "year": 2025,
-      "title": "Monsieur Tan-Tan",
-      "file": "2025/2025_admision_titular_b_reading.json"
+      "id": "2023_access_titular_b_reading_2",
+      "year": 2023,
+      "title": "The History Of Jeans",
+      "file": "2023/2023_access_titular_b_reading_2.json"
     },
     {
-      "id": "2025_suplente1_a_reading",
-      "year": 2025,
-      "title": "A Proper Halloween",
-      "file": "2025/2025_suplente1_a_reading.json"
+      "id": "2023_admision_titular_a_reading_1",
+      "year": 2023,
+      "title": "Mysterious Stranger",
+      "file": "2023/2023_admision_titular_a_reading_1.json"
     },
     {
-      "id": "2025_suplente1_b_reading",
-      "year": 2025,
-      "title": "The Ingenious Story Behind Michelin Stars",
-      "file": "2025/2025_suplente1_b_reading.json"
+      "id": "2023_admision_titular_a_reading_2",
+      "year": 2023,
+      "title": "Can Dogs Talk?",
+      "file": "2023/2023_admision_titular_a_reading_2.json"
     },
     {
-      "id": "2025_suplente2_a_reading",
-      "year": 2025,
-      "title": "Conspiracy Theories",
-      "file": "2025/2025_suplente2_a_reading.json"
+      "id": "2023_admision_titular_b_reading_1",
+      "year": 2023,
+      "title": "How King Tut Conquered Pop Culture",
+      "file": "2023/2023_admision_titular_b_reading_1.json"
+    },
+    {
+      "id": "2023_admision_titular_b_reading_2",
+      "year": 2023,
+      "title": "Buzzing For Life",
+      "file": "2023/2023_admision_titular_b_reading_2.json"
+    },
+    {
+      "id": "2023_reserva_a_reading_1",
+      "year": 2023,
+      "title": "Anime: A Global Pop Culture Phenomenon",
+      "file": "2023/2023_reserva_a_reading_1.json"
+    },
+    {
+      "id": "2023_reserva_a_reading_2",
+      "year": 2023,
+      "title": "This Job Is A Piece Of Cake!",
+      "file": "2023/2023_reserva_a_reading_2.json"
+    },
+    {
+      "id": "2023_reserva_b_reading_1",
+      "year": 2023,
+      "title": "The History Of Tattoos",
+      "file": "2023/2023_reserva_b_reading_1.json"
+    },
+    {
+      "id": "2023_reserva_b_reading_2",
+      "year": 2023,
+      "title": "All Uk Number 1 Hits",
+      "file": "2023/2023_reserva_b_reading_2.json"
+    },
+    {
+      "id": "2023_suplente_a_reading_1",
+      "year": 2023,
+      "title": "Something Borrowed, Something Blue...",
+      "file": "2023/2023_suplente_a_reading_1.json"
+    },
+    {
+      "id": "2023_suplente_a_reading_2",
+      "year": 2023,
+      "title": "Sanas Can Change Your Accent",
+      "file": "2023/2023_suplente_a_reading_2.json"
+    },
+    {
+      "id": "2023_suplente_b_reading_1",
+      "year": 2023,
+      "title": "The Pink Sauce Disaster",
+      "file": "2023/2023_suplente_b_reading_1.json"
+    },
+    {
+      "id": "2023_suplente_b_reading_2",
+      "year": 2023,
+      "title": "No More Mondays",
+      "file": "2023/2023_suplente_b_reading_2.json"
     }
   ]
 }

@@ -1,0 +1,233 @@
+{
+  "id": "2023_admision_titular_b_use",
+  "year": 2023,
+  "title": "Use of English – 2023 – Admisión Titular B",
+  "points": {
+    "total": 3,
+    "perQuestion": 0.5
+  },
+  "hasBlocks": true,
+  "blockRules": {
+    "chooseAny": true,
+    "questionsToAnswer": 6
+  },
+  "blocks": [
+    {
+      "id": "block_1",
+      "label": "Bloque 1",
+      "questionIds": [
+        "B17.1",
+        "B17.2",
+        "B19",
+        "B21",
+        "B23",
+        "B25",
+        "B27"
+      ]
+    },
+    {
+      "id": "block_2",
+      "label": "Bloque 2",
+      "questionIds": [
+        "B18.1",
+        "B18.2",
+        "B20",
+        "B22",
+        "B24",
+        "B26",
+        "B28"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "B17.1",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "My parents can’t afford... so much money for a cruise in Norway.",
+      "instruction": "(pay)",
+      "answers": [
+        "to pay"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Verb + -ing form or infinitive"
+    },
+    {
+      "id": "B17.2",
+      "type": "text",
+      "task": "verb_form",
+      "prompt": "She... you since you were born.",
+      "instruction": "(know)",
+      "answers": [
+        "has known / ’s known",
+        "has known",
+        "’s known"
+      ],
+      "points": 0.25,
+      "groupId": "B17",
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B18.1",
+      "type": "mcq",
+      "prompt": "We had to learn all the poems... heart.",
+      "options": {
+        "A": "from",
+        "B": "by",
+        "C": "with",
+        "D": "in"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Preposiciones"
+    },
+    {
+      "id": "B18.2",
+      "type": "mcq",
+      "prompt": "A private detective is looking... the matter from another perspective.",
+      "options": {
+        "A": "on",
+        "B": "into",
+        "C": "in",
+        "D": "from"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.25,
+      "groupId": "B18",
+      "topic": "Preposiciones"
+    },
+    {
+      "id": "B19",
+      "type": "text",
+      "task": "active_voice",
+      "prompt": "The writer was asked to sign books after her lecture.",
+      "instruction": "Turn into the active voice.",
+      "answers": [
+        "They asked the writer to sign books after her lecture"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B20",
+      "type": "text",
+      "task": "passive",
+      "prompt": "They say that he is the party’s candidate for the general election.",
+      "instruction": "Turn into the passive voice.",
+      "answers": [
+        "He is said to be the party’s candidate for the general election",
+        "It is said (that) he is the party’s candidate for the general election",
+        "It is said he is the party’s candidate for the general election"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B21",
+      "type": "text",
+      "task": "wh_question",
+      "prompt": "I am going to phone Richard back early in the morning.",
+      "instruction": "Give a question for the underlined words.",
+      "answers": [
+        "When are you going to phone Richard back?"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    },
+    {
+      "id": "B22",
+      "type": "text",
+      "task": "relative",
+      "prompt": "The typical houses in Amsterdam have a narrow façade. They were cheap to build.",
+      "instruction": "Join using a relative.",
+      "answers": [
+        "The typical houses in Amsterdam, which were cheap to build, have a narrow façade",
+        "The typical houses in Amsterdam, which have a narrow façade, were cheap to build"
+      ],
+      "points": 0.5,
+      "topic": "Relative Clauses"
+    },
+    {
+      "id": "B23",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "Jane probably worked at that hotel last summer.",
+      "instruction": "Jane may...",
+      "answers": [
+        "Jane may have worked at that hotel last summer"
+      ],
+      "points": 0.5,
+      "topic": "Voz pasiva"
+    },
+    {
+      "id": "B24",
+      "type": "text",
+      "task": "conditional",
+      "prompt": "Don’t take the car...",
+      "instruction": "Complete the sentence.",
+      "answers": [],
+      "points": 0.5,
+      "manualCorrection": {
+        "prompt": "¿Tu respuesta cumple esta estructura?",
+        "structure": "if / in case / unless + subject + present simple / present continuous"
+      },
+      "topic": "Condicionales"
+    },
+    {
+      "id": "B25",
+      "type": "text",
+      "task": "rewrite",
+      "prompt": "We have never met anyone as famous as he is.",
+      "instruction": "He...",
+      "answers": [
+        "He is the most famous person (that) we have ever met",
+        "He is the most famous person we have ever met"
+      ],
+      "points": 0.5,
+      "topic": "Tiempos verbales"
+    },
+    {
+      "id": "B26",
+      "type": "text",
+      "task": "error_correction",
+      "prompt": "I would rather to work from home than coming to the office.",
+      "instruction": "Find the mistakes and rewrite correctly.",
+      "answers": [
+        "I would rather work from home than come to the office"
+      ],
+      "points": 0.5,
+      "topic": "Verbos modales"
+    },
+    {
+      "id": "B27",
+      "type": "text",
+      "task": "direct_speech",
+      "prompt": "Jake suggested ordering some pizza.",
+      "instruction": "Turn into direct speech.",
+      "answers": [
+        "Let’s order some pizza,” Jake said / told us",
+        "“Why don’t we order some pizza?” Jake said / told us"
+      ],
+      "points": 0.5,
+      "topic": "Reported Speech"
+    },
+    {
+      "id": "B28",
+      "type": "text",
+      "task": "word_order",
+      "prompt": "Use the words in the boxes to make a meaningful sentence. Use all and only the words in the boxes without changing their form.",
+      "instruction": "Words: everything / not / it / to / is / remember / read / possible / we",
+      "answers": [
+        "It is not possible to remember everything we read"
+      ],
+      "points": 0.5,
+      "topic": "Estructura de las oraciones"
+    }
+  ]
+}

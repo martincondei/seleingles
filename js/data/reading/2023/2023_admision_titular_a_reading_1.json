@@ -1,0 +1,169 @@
+{
+  "id": "2023_admision_titular_a_reading_1",
+  "title": "Mysterious Stranger",
+  "text": "The customer sat on the terrace, sipping lemonade and pretending to look at a holiday brochure. His sunglasses masked his eyes, but I knew he wasn’t reading it: he hadn’t turned a page for the last fifteen minutes. As I brought him his order of grilled beef, he coughed up a simple “thank you” and hardly paid attention to me. I tried not to stare at the tiny scar across his cheek. I walked back inside with my empty tray, shaking my head. He seemed familiar, but I couldn’t quite remember where from. Then it hit me. The car accident. The mysterious stranger who had helped me out of my smashed car, just before it exploded on that crucial night. I rushed back to his table. He was gone. As I was removing the remains of his lunch, I lifted his plate and found a small envelope underneath, along with a card: “I am deeply grateful to you. The night of your accident, I was on my way to rob a jewelry store. Saving your life brought things back in perspective. I now live an honest life, thanks to you.” I shivered. The night of my car accident I was heading for an interview in a dance club that had a terrible reputation. Missing that job interview and seeing human kindness through his heroic gesture made me see things differently and change my life. I opened the envelope. Among a bunch of one-dollar bills, there was a brand-new thousand-dollar bill with a pen mark underlining the printed words “In God We Trust.” I said a silent prayer for him and got back to work, smiling.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, the mysterious stranger was...",
+      "options": {
+        "A": "not served any food",
+        "B": "reading a brochure as he sat at the table",
+        "C": "the person who saved the narrator’s life",
+        "D": "a talkative person"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, the stranger...",
+      "options": {
+        "A": "was immediately recognized by the narrator",
+        "B": "left the narrator a generous gift with a message",
+        "C": "couldn’t forgive the narrator for causing the accident",
+        "D": "thanked the narrator for getting him out of the wrecked car"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "The narrator found the stranger’s eyes attractive.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“His sunglasses masked his eyes (, but I knew he wasn’t reading it: he hadn’t turned a page for the last fifteen minutes.)”",
+          "lines": [
+            1,
+            2
+          ],
+          "validTexts": [
+            "His sunglasses masked his eyes (, but I knew he wasn’t reading it: he hadn’t turned a page for the last fifteen minutes.)",
+            "His sunglasses masked his eyes"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "The stranger had a birthmark on his face.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "I tried not to stare at the tiny scar across his cheek.",
+          "lines": [
+            3,
+            4
+          ],
+          "validTexts": [
+            "I tried not to stare at the tiny scar across his cheek."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "The narrator never got to his/her destination on the night of the accident.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“Missing that job interview (and seeing human kindness through his heroic gesture made me see things differently and change my life.)”",
+          "lines": [
+            10,
+            11
+          ],
+          "validTexts": [
+            "Missing that job interview (and seeing human kindness through his heroic gesture made me see things differently and change my life.)",
+            "Missing that job interview"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "After the mysterious visit, the narrator decided to take the rest of the day off.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "“I (said a silent prayer for him and) got back to work (, smiling.)”",
+          "lines": [
+            13
+          ],
+          "validTexts": [
+            "I (said a silent prayer for him and) got back to work (, smiling.)",
+            "I got back to work"
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “blow up” (verb)",
+      "answer": [
+        "explode(d)",
+        "exploded",
+        "explode"
+      ],
+      "points": 0.25,
+      "line": 6
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE OPPOSITE FOR: “lower” (verb)",
+      "answer": [
+        "lift(ed)",
+        "lifted",
+        "lift"
+      ],
+      "points": 0.25,
+      "line": 7
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “to take something or somebody away from a place”",
+      "answer": [
+        "remov(e/ing)",
+        "remove/ing",
+        "remov"
+      ],
+      "points": 0.25,
+      "line": 7
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “the quality of being friendly, generous, and considerate”",
+      "answer": [
+        "kindness"
+      ],
+      "points": 0.25,
+      "line": 11
+    }
+  ]
+}

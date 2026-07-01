@@ -1,0 +1,163 @@
+{
+  "id": "2023_suplente_b_reading_1",
+  "title": "The Pink Sauce Disaster",
+  "text": "If you logged onto TikTok or Twitter recently, you might have seen people talking about something called Pink Sauce. No, it’s not pasta made with cream and tomatoes, but a condiment made by a TikTok user named Chef Pii. Pii advertises Pink Sauce by dumping it on tacos, wings, egg rolls, salads and more. The bottle has an adorable design, and she’s shipping it everywhere. The problem? Almost everything. Consumers are reporting all kinds of issues, ranging from misleading nutritional information to a spoiled smell. The chef posted videos of her preparing the sauce without gloves on. Once the negative reviews started pouring in, people realized that nobody knew what the actual ingredients were. In fact, Pink Sauce is unregulated and could likely make you sick. In a statement, Pii said “I guess when you’re great, you can’t make a mistake. My team’s working quickly to fix the issues.” Pink Sauce is not the only food product created by a TikTok user which has gone viral for the wrong reasons. Earlier this year, someone called Deva Tillis posted a video complaining about a “spicy bowl” containing crawfish and eggs that she ordered from a small business on the platform. The bowl took nine days to reach her, and the fish was rotten by the time it arrived. The product was falsely advertised as being shipped with dry ice to preserve the seafood. Small businesses selling unregulated food online isn’t new, according to an expert. “It’s not a TikTok phenomenon, but what’s different is that TikTok is really good at small consumption and making things go viral. However, just because it’s on TikTok, that doesn’t mean that it’s safe,” she concluded.",
+  "questions": [
+    {
+      "id": "A1",
+      "type": "mcq",
+      "prompt": "According to the text, Pink Sauce...",
+      "options": {
+        "A": "only reaches the local market",
+        "B": "can accompany many dishes",
+        "C": "is thick tomato soup",
+        "D": "doesn’t have a very attractive packaging"
+      },
+      "answer": [
+        "B"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A2",
+      "type": "mcq",
+      "prompt": "According to the text, customers...",
+      "options": {
+        "A": "are asking for a refund",
+        "B": "buy the product because it’s natural",
+        "C": "don’t know what the sauce is made of",
+        "D": "are posting videos to complain"
+      },
+      "answer": [
+        "C"
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A3",
+      "type": "tf",
+      "prompt": "Chef Pii followed hygiene standards.",
+      "answer": [
+        false
+      ],
+      "justification": [
+        {
+          "text": "The chef posted videos of her preparing the sauce without gloves on.",
+          "lines": [
+            5,
+            6
+          ],
+          "validTexts": [
+            "The chef posted videos of her preparing the sauce without gloves on."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A4",
+      "type": "tf",
+      "prompt": "When Deva Tillis received the package, there was putrid food in it.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(The bowl took nine days to reach her,) and the fish was rotten by the time it arrived.”",
+          "lines": [
+            11
+          ],
+          "validTexts": [
+            "(The bowl took nine days to reach her,) and the fish was rotten by the time it arrived.",
+            "and the fish was rotten by the time it arrived."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A5",
+      "type": "tf",
+      "prompt": "The “spicy bowl” manufacturers lied about their delivery policy.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“The product was falsely advertised as being shipped with dry ice to preserve the seafood.”",
+          "lines": [
+            11,
+            12
+          ],
+          "validTexts": [
+            "The product was falsely advertised as being shipped with dry ice to preserve the seafood."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A6",
+      "type": "tf",
+      "prompt": "TikTok can be a powerful marketing tool.",
+      "answer": [
+        true
+      ],
+      "justification": [
+        {
+          "text": "“(It’s not a TikTok phenomenon,) but what’s different is that TikTok is really good at small consumption and making things go viral.”",
+          "lines": [
+            13,
+            14
+          ],
+          "validTexts": [
+            "(It’s not a TikTok phenomenon,) but what’s different is that TikTok is really good at small consumption and making things go viral.",
+            "but what’s different is that TikTok is really good at small consumption and making things go viral."
+          ]
+        }
+      ],
+      "points": 0.5
+    },
+    {
+      "id": "A7.1",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “suppose” (verb)",
+      "answer": [
+        "guess"
+      ],
+      "points": 0.25,
+      "line": 8
+    },
+    {
+      "id": "A7.2",
+      "type": "word",
+      "prompt": "ONE SYNONYM FOR: “probably” (adverb)",
+      "answer": [
+        "likely"
+      ],
+      "points": 0.25,
+      "line": 7
+    },
+    {
+      "id": "A8.1",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “quickly and widely spread or popularized, especially by means of social media”",
+      "answer": [
+        "viral (lines 9;14)",
+        "viral lines 9;14",
+        "viral"
+      ],
+      "points": 0.25
+    },
+    {
+      "id": "A8.2",
+      "type": "word",
+      "prompt": "ONE WORD MEANING: “to prevent from decomposition”",
+      "answer": [
+        "preserve"
+      ],
+      "points": 0.25,
+      "line": 12
+    }
+  ]
+}
