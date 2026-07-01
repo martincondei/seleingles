@@ -73,7 +73,7 @@ async function boot() {
   try {
     examsIndex = await loadExamsIndex();
     setupNavigation();
-    renderDashboardView();
+    renderLandingView();
   } catch (error) {
     app.innerHTML = `
       <section class="screen panel">
@@ -89,6 +89,7 @@ function setupNavigation() {
   nav.querySelectorAll("[data-nav]").forEach(button => {
     button.addEventListener("click", () => {
       const target = button.dataset.nav;
+      if (target === "landing") renderLandingView();
       if (target === "dashboard") renderDashboardView();
       if (target === "reading") renderSectionHub("reading");
       if (target === "use") renderSectionHub("use");
@@ -114,6 +115,189 @@ function setView(view, title) {
 
 function attempts() {
   return loadProgressAttempts();
+}
+
+function renderLandingView() {
+  timer.reset();
+  currentSession = null;
+  currentResults = null;
+  setView("landing", "English Selectividad");
+  const inventory = buildInventory(examsIndex);
+
+  app.innerHTML = `
+    <section class="screen landing-screen">
+      <section class="landing-hero">
+        <div class="landing-hero-content">
+          <p class="eyebrow">PAU English Prep</p>
+          <h1>Prepara Inglés de la PAU con ejercicios reales y corrección mediante IA.</h1>
+          <p>Practica Reading, Use of English y Writing con convocatorias reales, corrección guiada y un panel de progreso pensado para estudiar con foco.</p>
+          <div class="hero-actions">
+            <button class="button button-primary" type="button" data-landing-action="start">Empezar gratis</button>
+            <button class="button button-secondary" type="button" data-landing-action="example">Ver un examen de ejemplo</button>
+          </div>
+        </div>
+        <div class="landing-product-preview" aria-label="Vista previa de la aplicación">
+          <div class="preview-topbar">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="preview-grid">
+            <div class="preview-panel preview-panel-large">
+              <small>Panel</small>
+              <strong>${attempts().length || 0} intentos</strong>
+              <div class="preview-bars">
+                <i style="width: 78%"></i>
+                <i style="width: 64%"></i>
+                <i style="width: 71%"></i>
+              </div>
+            </div>
+            <div class="preview-panel">
+              <small>Writing</small>
+              <strong>2.25 / 3</strong>
+              <p>Rúbrica, errores y consejos.</p>
+            </div>
+            <div class="preview-panel">
+              <small>Exámenes</small>
+              <strong>${inventory.exams}</strong>
+              <p>Convocatorias reales.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-section">
+        <div class="section-title-row">
+          <div>
+            <p class="eyebrow">Funciones</p>
+            <h2>¿Qué puedes hacer?</h2>
+          </div>
+        </div>
+        <div class="landing-feature-grid">
+          ${renderLandingFeature("📖", "Reading", "Practica textos reales, vocabulario, true/false y preguntas tipo test.")}
+          ${renderLandingFeature("✍️", "Writing con corrección", "Recibe nota sobre 3, desglose de rúbrica, errores concretos y consejos.")}
+          ${renderLandingFeature("📝", "Use of English", "Entrena transformaciones, gramática y bloques oficiales por convocatoria.")}
+          ${renderLandingFeature("📊", "Seguimiento del progreso", "Consulta medias por sección, historial e indicadores para decidir qué reforzar.")}
+        </div>
+      </section>
+
+      <section class="landing-section landing-audience">
+        <div>
+          <p class="eyebrow">Usuarios</p>
+          <h2>¿Para quién es?</h2>
+          <p>Una herramienta directa para preparar la prueba sin perder tiempo buscando materiales ni corrigiendo a ciegas.</p>
+        </div>
+        <div class="audience-list">
+          <div><strong>Estudiantes de Bachillerato</strong><span>Practica por partes o con examen completo.</span></div>
+          <div><strong>Profesores</strong><span>Úsalo como apoyo para tareas y correcciones.</span></div>
+          <div><strong>Academias</strong><span>Organiza sesiones con ejercicios reales y progreso visible.</span></div>
+        </div>
+      </section>
+
+      <section class="landing-section">
+        <div class="section-title-row">
+          <div>
+            <p class="eyebrow">Capturas</p>
+            <h2>Capturas de la aplicación</h2>
+          </div>
+        </div>
+        <div class="screenshot-grid">
+          ${renderScreenshotCard("Panel de progreso", "Medias por Reading, Use of English y Writing con historial de intentos.")}
+          ${renderScreenshotCard("Writing Corrector", "Corrección por rúbrica, tabla de errores y recursos útiles.")}
+          ${renderScreenshotCard("Examen completo", "Reading y Use of English con formato oficial y corrección automática.")}
+        </div>
+      </section>
+
+      <section class="landing-section faq-section">
+        <div>
+          <p class="eyebrow">FAQ</p>
+          <h2>Preguntas frecuentes</h2>
+        </div>
+        <div class="faq-list">
+          ${renderFaq("¿Es gratis empezar?", "Sí. Puedes entrar al panel y practicar con los materiales disponibles desde el primer momento.")}
+          ${renderFaq("¿La IA escribe el writing por mí?", "No. La IA solo evalúa, detecta errores concretos y da consejos. No genera una redacción completa alternativa.")}
+          ${renderFaq("¿Sirve para practicar por partes?", "Sí. Puedes trabajar solo Reading, solo Use of English, solo Writing o hacer un examen completo.")}
+          ${renderFaq("¿Se guarda mi progreso?", "Se guarda localmente en el navegador para que puedas ver historial y medias por sección.")}
+        </div>
+      </section>
+
+      <section class="landing-final-cta">
+        <p class="eyebrow">Listo para practicar</p>
+        <h2>Empieza gratis.</h2>
+        <p>Haz un primer intento, corrige tu Writing y usa el panel para decidir tu siguiente paso.</p>
+        <div class="hero-actions">
+          <button class="button button-primary" type="button" data-landing-action="start">Empezar gratis</button>
+          <button class="button button-secondary" type="button" data-landing-action="writing">Probar Writing</button>
+        </div>
+      </section>
+    </section>
+  `;
+
+  app.querySelectorAll("[data-landing-action]").forEach(button => {
+    button.addEventListener("click", () => handleLandingAction(button.dataset.landingAction));
+  });
+}
+
+function renderLandingFeature(icon, title, body) {
+  return `
+    <article class="landing-feature">
+      <span aria-hidden="true">${icon}</span>
+      <strong>${escapeHtml(title)}</strong>
+      <p>${escapeHtml(body)}</p>
+    </article>
+  `;
+}
+
+function renderScreenshotCard(title, body) {
+  return `
+    <article class="screenshot-card">
+      <div class="screenshot-window">
+        <div></div><div></div><div></div>
+      </div>
+      <strong>${escapeHtml(title)}</strong>
+      <p>${escapeHtml(body)}</p>
+    </article>
+  `;
+}
+
+function renderFaq(question, answer) {
+  return `
+    <details class="faq-item">
+      <summary>${escapeHtml(question)}</summary>
+      <p>${escapeHtml(answer)}</p>
+    </details>
+  `;
+}
+
+function handleLandingAction(action) {
+  if (action === "start") {
+    renderDashboardView();
+    return;
+  }
+
+  if (action === "example") {
+    startExampleExam();
+    return;
+  }
+
+  if (action === "writing") {
+    renderSectionHub("writing");
+  }
+}
+
+function startExampleExam() {
+  const year = getAvailableYears(examsIndex)[0];
+  const exam = getExamsForYear(examsIndex, year)[0];
+
+  if (!exam) {
+    showToast("No hay exámenes disponibles para mostrar.", "warning");
+    return;
+  }
+
+  startFullExam(exam, {
+    flow: FLOW.specific,
+    examMode: getDefaultModelForExam(exam),
+    modeLabel: "Examen de ejemplo",
+    canSkip: false
+  });
 }
 
 function renderDashboardView() {
